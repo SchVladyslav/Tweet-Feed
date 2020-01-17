@@ -1,6 +1,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 // import React, { Component } from "react";
 // import { withRouter } from "react-router-dom";
 
@@ -84,3 +85,10 @@ export default withRouter(Auth);
 =======
 // export default withRouter(Auth);
 >>>>>>> Jwt token added
+=======
+import React from "react";
+
+export const Auth = () => {
+  return <div></div>;
+};
+>>>>>>> common elements added
