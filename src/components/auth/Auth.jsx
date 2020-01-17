@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // import React, { Component } from "react";
 // import { withRouter } from "react-router-dom";
 
@@ -31,3 +32,10 @@
 // }
 
 // export default withRouter(Auth);
+=======
+import React from "react";
+
+export const Auth = () => {
+  return <div></div>;
+};
+>>>>>>> common elements added
