@@ -1,5 +1,9 @@
-import React from "react";
+import React, { Component } from "react";
+import "./SignInPage.css";
+import { AuthSignIn } from "../../components/auth/AuthSignIn";
 
-export default function SignInPage() {
-  return <div></div>;
+export default class SignInPage extends Component {
+  render() {
+    return <AuthSignIn />;
+  }
 }
