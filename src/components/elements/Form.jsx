@@ -97,3 +97,27 @@ export default class Form extends Component {
     );
   }
 }
+
+
+{
+  /* <Button
+          label="Sign Up"
+          className="button"
+          type="submit"
+          handleClick={event => this.handleClick(event)}
+          buttonState={this.state.formValid}
+        /> */
+}
+
+{
+  /* <Input
+              className="input input__password"
+              type="password"
+              placeholder="Password"
+              name="password"
+              value={this.state.password}
+              handleChange={event => this.handleUserInput(event)}
+            />
+            <i className="icon icon-lock input__icon"></i> */
+}
+
