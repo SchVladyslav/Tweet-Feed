@@ -1,36 +1,37 @@
-import React from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
 
-export const Input = props => {
-  const InputProps = {
-    className: props.className,
-    name: props.name,
-    type: props.type,
-    placeholder: props.placeholder,
-    value: props.value,
-    handleChange: props.handleChange,
-    label: props.label,
-    error: props.error
-  };
+export class Input extends Component {
+  constructor(props) {
+    super(props);
 
-  return (
-    <React.Fragment>
-      {/* <label htmlFor={props.name} className="input-label">
-        {InputProps.label}
-      </label> */}
-      <input
-        className={InputProps.className}
-        name={InputProps.name}
-        type={InputProps.type}
-        value={InputProps.value}
-        handleChange={InputProps.handleChange}
-        placeholder={InputProps.placeholder}
-        style={InputProps.error && { border: "1px solid red" }}
-      />
-      {InputProps.error && <p>{InputProps.error}</p>}
-    </React.Fragment>
-  );
-};
+    this.InputProps = {
+      className: props.settings.className,
+      name: props.settings.name,
+      type: props.settings.type,
+      placeholder: props.settings.placeholder,
+      value: props.settings.value,
+      label: props.settings.label,
+      error: props.settings.error
+    };
+  }
+
+  render() {
+    return (
+      <React.Fragment>
+        <input
+          className={this.InputProps.className}
+          name={this.InputProps.name}
+          type={this.InputProps.type}
+          value={this.InputProps.value}
+          placeholder={this.InputProps.placeholder}
+          style={this.InputProps.error && { border: "1px solid red" }}
+        />
+        {this.InputProps.error && <p>{this.InputProps.error}</p>}
+      </React.Fragment>
+    );
+  }
+}
 
 Input.defaultProps = {
   type: "text",
@@ -38,11 +39,17 @@ Input.defaultProps = {
 };
 
 Input.propTypes = {
-  name: PropTypes.string.isRequired,
+  name: PropTypes.string, //.isRequired
   type: PropTypes.string,
   type: PropTypes.oneOf(["text", "number", "password"]),
-  placeholder: PropTypes.string.isRequired,
+  placeholder: PropTypes.string, //.isRequired
   className: PropTypes.string,
-  value: PropTypes.any,
-  onChange: PropTypes.func.isRequired
+  value: PropTypes.any
+  //onChange: PropTypes.func.isRequired
 };
+
+{
+  /* <label htmlFor={props.name} className="input-label">
+        {InputProps.label}
+      </label> */
+}
