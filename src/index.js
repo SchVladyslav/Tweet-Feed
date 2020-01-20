@@ -7,6 +7,6 @@ import './index.scss';
 import App from './App';
 import { FakeAPI } from './helpers/FakeAPI';
 
-ReactDOM.render(<BrowserRouter> <App /> </BrowserRouter>, document.getElementById('root'));
+ReactDOM.render(<BrowserRouter><App /></BrowserRouter>, document.getElementById('root'));
 
 serviceWorker.unregister();
