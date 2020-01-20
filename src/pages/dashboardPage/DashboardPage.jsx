@@ -1,5 +1,12 @@
-import React from "react";
+import React, { Component } from "react";
+import Dashboard from "../../components/dashboard/Dashboard";
 
-export default function DashboardPage() {
-  return <div></div>;
+export default class DashboardPage extends Component {
+  render() {
+    return (
+      <div>
+        <Dashboard />
+      </div>
+    );
+  }
 }

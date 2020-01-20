@@ -3,10 +3,21 @@ import { authService } from "../../services/auth.service";
 import { userService } from "../../services/user.service";
 
 export default class Dashboard extends Component {
+<<<<<<< HEAD
   state = {
     currentUser: authService.currentUserValue,
     userFromApi: null
   };
+=======
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      currentUser: authService.currentUserValue,
+      userFromApi: null
+    };
+  }
+>>>>>>> Authorization added
 
   componentDidMount() {
     const { currentUser } = this.state;
@@ -19,9 +30,15 @@ export default class Dashboard extends Component {
   render() {
     const { currentUser, userFromApi } = this.state;
     return (
+<<<<<<< HEAD
       <div className="dashboard">
         <h1>Home</h1>
         <p>You're logged in!</p>
+=======
+      <div>
+        <h1>Home</h1>
+        <p>You're logged in with React & JWT!!</p>
+>>>>>>> Authorization added
         <p>
           Your role is: <strong>{currentUser.role}</strong>.
         </p>
@@ -36,12 +53,15 @@ export default class Dashboard extends Component {
             </ul>
           )}
         </div>
+<<<<<<< HEAD
 
         <div className="logOut">
           <h3>
             <a onClick={authService.logout}>Log Out</a>
           </h3>
         </div>
+=======
+>>>>>>> Authorization added
       </div>
     );
   }
