@@ -35,5 +35,6 @@ Button.propTypes = {
   name: PropTypes.string, //.isRequired
   type: PropTypes.string, //.isRequired
   label: PropTypes.string, //.isRequired
+  type: PropTypes.oneOf(["button", "submit"]),
   className: PropTypes.string
 };

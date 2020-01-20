@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Input } from "../common/Input";
 import { Button } from "../common/Button";
-<<<<<<< HEAD
 import { ValidateFields } from "../../helpers/ValidateFields";
 
 export default class Form extends Component {
@@ -9,26 +8,20 @@ export default class Form extends Component {
     super(props);
 
     this.formProps = {
-      state: props.state,
       inputSettings: props.inputSettings,
       buttonSettings: props.buttonSettings
     };
 
     this.state = {
-=======
-
-export default class Form extends Component {
-  constructor() {
-    super();
-    this.state = {
+      firstname: "",
+      lastname: "",
       email: "",
       password: "",
->>>>>>> common elements added
+      confirmPassword: "",
       formValid: false
     };
   }
 
-<<<<<<< HEAD
   handleUserInput = e => {
     const { name } = e.target;
     const { value } = e.target;
@@ -36,9 +29,27 @@ export default class Form extends Component {
     this.setState({ [name]: value }, () => {
       this.props.updateState(this.state);
     });
+
+    this.setState({ [name]: value });
     // , () => {
     //   ValidateFields(name, value);
     // });
+  };
+
+  handleSubmit = () => {
+    const { email, password } = this.state;
+    authService.login(email, password); //.then(
+    //   user => {
+    //     console.log(this.props);
+    //     const { from } = this.props.location.state || {
+    //       from: { pathname: "/dashboard" }
+    //     };
+    //     this.props.history.push(from);
+    //   },
+    //   error => {
+    //     console.log(error);
+    //   }
+    // );
   };
 
   renderInputs() {
@@ -113,6 +124,36 @@ export default class Form extends Component {
             <Input
               className="input__password"
 >>>>>>> common elements added
+=======
+  render() {
+    return (
+      <form
+        className="main__form"
+        action=""
+        onChange={this.handleUserInput}
+        onSubmit={this.handleSubmit}
+      >
+        <ul className="form__list">{this.renderInputs()}</ul>
+        {this.renderButtons()}
+      </form>
+    );
+  }
+}
+
+{
+  /* <Button
+          label="Sign Up"
+          className="button"
+          type="submit"
+          handleClick={event => this.handleClick(event)}
+          buttonState={this.state.formValid}
+        /> */
+}
+
+{
+  /* <Input
+              className="input input__password"
+>>>>>>> Authorization added
               type="password"
               placeholder="Password"
               name="password"
@@ -120,19 +161,6 @@ export default class Form extends Component {
               handleChange={event => this.handleUserInput(event)}
             />
 <<<<<<< HEAD
-            <i className="icon icon-lock input__icon"></i> */
-=======
-            <i className="icon icon-lock input__icon"></i>
-          </li>
-        </ul>
-        <Button
-          label="Sign Up"
-          className="button"
-          type="submit"
-          buttonState={this.state.formValid}
-        />
-      </form>
-    );
-  }
->>>>>>> common elements added
+<<<<<<< HEAD
+<i className="icon icon-lock input__icon"></i> */
 }
