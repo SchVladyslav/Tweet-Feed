@@ -1,12 +1,6 @@
 import React, { Component } from 'react';
 import { Route, Router, Switch, Redirect } from 'react-router-dom';
 
-import './App.scss';
-
-import Dashboard from "./pages/dashboardPage/DashboardPage";
-import SignIn from "./pages/SignInPage/SignInPage";
-import SignUp from "./pages/SignUpPage/SignUpPage";
-import { PrivateRoute } from "./helpers/PrivateRoute";
 import { authService } from './services/auth.service';
 import { Role } from './helpers/Role';
 import { history } from './helpers/History';
