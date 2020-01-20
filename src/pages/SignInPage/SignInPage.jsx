@@ -1,9 +1,30 @@
 import React, { Component } from "react";
 import "./SignInPage.css";
-import { AuthSignIn } from "../../components/auth/AuthSignIn";
+import AuthSignIn from "../../components/auth/AuthSignIn";
+import { Link, withRouter } from "react-router-dom";
 
-export default class SignInPage extends Component {
+class SignInPage extends Component {
   render() {
-    return <AuthSignIn />;
+    return (
+      <div className="container">
+        <main className="main-content">
+          <div className="main-logo">
+            <i className="icon icon-mountain"></i>
+          </div>
+          <h1 className="main__title">Sign In</h1>
+
+          <AuthSignIn />
+
+          <div className="form__controls">
+            <p className="main__social-text">Or sign up using</p>
+            <Link className="hint" to="/signup">
+              Don't have an account?
+            </Link>
+          </div>
+        </main>
+      </div>
+    );
   }
 }
+
+export default withRouter(SignInPage);

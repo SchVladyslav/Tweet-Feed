@@ -1,11 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-<<<<<<< HEAD:src/pages/eventsPage/EventsPage.jsx
-export default function EventsPage() {
-  return <div></div>;
-}
-=======
 export const Input = props => {
   const InputProps = {
     className: props.className,
@@ -51,4 +46,3 @@ Input.propTypes = {
   value: PropTypes.any,
   onChange: PropTypes.func.isRequired
 };
->>>>>>> common elements added:src/components/common/Input.jsx

@@ -31,9 +31,11 @@ function signIn(email, password) {
         });
 }
 
+
 function getUserDataFromToken(token) {
     return jwt.decode(token);
 }
+
 
 function signUp(firstname, lastname, email, password) {
     const requestOptions = {

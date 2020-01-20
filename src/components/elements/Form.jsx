@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Input } from "../common/Input";
 import { Button } from "../common/Button";
+
 import { ValidateFields } from "../../helpers/ValidateFields";
 
 export default class Form extends Component {
@@ -8,12 +9,18 @@ export default class Form extends Component {
     super(props);
 
     this.formProps = {
-      state: props.state,
       inputSettings: props.inputSettings,
       buttonSettings: props.buttonSettings
     };
 
     this.state = {
+      firstname: "",
+      lastname: "",
+      email: "",
+      password: "",
+
+      confirmPassword: "",
+
       formValid: false
       //this.props.updateState(this.state);
     };
@@ -98,6 +105,34 @@ export default class Form extends Component {
   }
 }
 
+{
+  /* <Button
+          label="Sign Up"
+          className="button"
+          type="submit"
+          handleClick={event => this.handleClick(event)}
+          buttonState={this.state.formValid}
+        /> */
+}
+
+{
+  /* <Input
+              className="input input__password"
+=======
+  render() {
+    return (
+      <form
+        className="main__form"
+        action=""
+        onChange={this.handleUserInput}
+        onSubmit={this.handleSubmit}
+      >
+        <ul className="form__list">{this.renderInputs()}</ul>
+        {this.renderButtons()}
+      </form>
+    );
+  }
+}
 
 {
   /* <Button
@@ -112,12 +147,14 @@ export default class Form extends Component {
 {
   /* <Input
               className="input input__password"
+>>>>>>> Authorization added
+>>>>>>> Authorization added
               type="password"
               placeholder="Password"
               name="password"
               value={this.state.password}
               handleChange={event => this.handleUserInput(event)}
             />
+<<<<<<< HEAD
             <i className="icon icon-lock input__icon"></i> */
 }
-
