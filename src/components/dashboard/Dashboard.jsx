@@ -10,6 +10,7 @@ export default class Dashboard extends Component {
 
   componentDidMount() {
     const { currentUser } = this.state;
+    const userData = authService.getUserDataFromToken(currentUser.token);
     userService
       .getById(currentUser.id)
       .then(userFromApi => this.setState({ userFromApi }));
