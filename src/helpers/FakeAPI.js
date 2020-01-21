@@ -13,7 +13,6 @@ export const FakeAPI = (() => {
     ];
 
     const _fetch = window.fetch;
-
     window.fetch = function (url, opts) {
         const authHeader = opts.headers['Authorization'];
         const isLoggedIn = authHeader && authHeader.startsWith('Bearer ');

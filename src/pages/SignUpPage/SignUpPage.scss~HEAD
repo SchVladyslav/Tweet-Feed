@@ -31,7 +31,7 @@
   width: 100%;
 }
 
-.main-logo {
+.main-logo-page {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -81,8 +81,8 @@
 }
 
 /* .form__item + .form__item {
-    margin-top: 20px;
-  } */
+      margin-top: 20px;
+    } */
 
 .input__icon {
   display: block;
@@ -135,4 +135,17 @@
 
 .hint:hover {
   color: #a64bf4;
+}
+
+.form__item + .form__item {
+  margin-top: 0px;
+}
+
+.main-back {
+  align-self: flex-start;
+}
+
+.alert-error {
+  color: red;
+  border-bottom: red;
 }
