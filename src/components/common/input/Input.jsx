@@ -1,19 +1,37 @@
 import React from "react";
 import './input.scss';
 
-export default function Input({key, className, placeholder, type, errorMessage, onChange}) {
+function getClassName(classesArray, property) {
+    if (classesArray[property]) {
+        return classesArray[property];
+    } else {
+        return false;
+    }
+}
 
-    return <React.Fragment>
-        <div className='input-wrap' key={key}>
+export default function Input({key, className, placeholder, type, errorMessage, onChange, iconName}) {
+
+    const iconNames = {
+        user: 'icon-user',
+        email: 'icon-user',
+        password: 'icon-lock',
+    };
+    const iconClass = getClassName(iconNames, iconName);
+    return <div className='input' key={key}>
+        <div className="input__control">
             <input
-                className={`${className ? className : ''} input${errorMessage ? ' input_invalid' : ''}`}
+                className={`${className ? className : ''} input__field${errorMessage ? ' input__field_invalid' : ''}`}
                 placeholder={placeholder}
                 type={type}
                 onChange={onChange}
             />
-            <i className="icon icon-user input__icon"/>
+        </div>
+        {iconClass ? <i className={`icon ${iconClass} input__icon`}/>
+            : null
+        }
+        <div className="input__error">
             {errorMessage ? <p className='error-message'>{errorMessage}</p> : null}
         </div>
 
-    </React.Fragment>
+    </div>
 }

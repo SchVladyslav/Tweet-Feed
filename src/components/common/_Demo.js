@@ -24,10 +24,10 @@ function _Demo(props) {
 
 
             <div style={{width: '300px'}}>
-                <Input placeholder='E-mail' type='email' errorMessage='Enter an E-mail!'/>
+                <Input placeholder='E-mail' type='email' errorMessage='Enter an E-mail!' iconName='user'/>
             </div>
             <div style={{width: '300px'}}>
-                <Input placeholder='E-mail' type='email'/>
+                <Input placeholder='E-mail' type='email' iconName='password'/>
             </div>
 
 

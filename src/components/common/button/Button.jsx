@@ -9,7 +9,7 @@ function getClassName(classesArray, property) {
     }
 }
 
-export default function Button({children, className, type, onClick, buttonColorScheme, buttonSize, disabled, key}) {
+export default function Button({children, className, type, onClick, onSubmit, buttonColorScheme, buttonSize, disabled, key}) {
     const colorSchemes = {
         primary: 'button_primary',
         danger: 'button_danger',
@@ -28,9 +28,10 @@ export default function Button({children, className, type, onClick, buttonColorS
     const buttonSizeClass = getClassName(buttonSizes, buttonSize);
 
     return <button key={key}
-        type={type}
-        className={`button ${colorSchemeClass} ${buttonSizeClass} ${className ? className : ''}`}
-        onClick={onClick}
-        disabled={disabled}>{children}
+                   type={type}
+                   className={`button ${colorSchemeClass} ${buttonSizeClass} ${className ? className : ''}`}
+                   onClick={onClick}
+                   onSubmit={onSubmit}
+                   disabled={disabled}>{children}
     </button>;
 }
