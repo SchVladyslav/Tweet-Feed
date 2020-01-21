@@ -1,27 +1,25 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
-export const Button = (props, { buttonState }) => {
-  return (
-    <button
-      className={props.className}
-      type={props.type}
-      disabled={!buttonState}
-    >
-      {props.label}
-    </button>
-  );
-};
+import "./SignUpPage.scss";
 
-Button.defaultProps = {
-  type: "button",
-  className: ""
-};
+import { AuthSignUp } from "../../components/auth/AuthSignUp";
 
-Button.propTypes = {
-  name: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
-  type: PropTypes.oneOf(["button", "submit"]),
-  className: PropTypes.string
-};
+export default class SignUpPage extends Component {
+  render() {
+    return (
+      <div className="container">
+        <main className="main-content">
+          <div className="main-back">
+            <Link to="/signin">&larr;</Link>
+          </div>
+          <div className="main-logo-page">
+            <i className="icon icon-mountains"></i>
+          </div>
+          <h1 className="main__title">Sign Up</h1>
+          <AuthSignUp />
+        </main>
+      </div>
+    );
+  }
+}
