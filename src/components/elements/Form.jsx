@@ -147,6 +147,7 @@ export default class Form extends Component {
               className="input input__password"
 =======
   render() {
+<<<<<<< HEAD
     return (
 <<<<<<< HEAD
 =======
@@ -169,6 +170,8 @@ export default class Form extends Component {
 >>>>>>> common elements added
 =======
   render() {
+=======
+>>>>>>> Added method for getting jwt token
     const { handleSubmit } = this.props;
     return (
 >>>>>>> Jwt token added
@@ -198,8 +201,11 @@ export default class Form extends Component {
 {
   /* <Input
               className="input input__password"
+<<<<<<< HEAD
 >>>>>>> Authorization added
 >>>>>>> Authorization added
+=======
+>>>>>>> Added method for getting jwt token
               type="password"
               placeholder="Password"
               name="password"
@@ -207,5 +213,9 @@ export default class Form extends Component {
               handleChange={event => this.handleUserInput(event)}
             />
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> Added method for getting jwt token
             <i className="icon icon-lock input__icon"></i> */
 }
