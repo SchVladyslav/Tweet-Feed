@@ -1,5 +1,6 @@
 import { Role } from './Role';
 <<<<<<< HEAD
+<<<<<<< HEAD
 import jwt from 'jsonwebtoken';
 
 export const FakeAPI = (() => {
@@ -21,17 +22,20 @@ export const FakeAPI = (() => {
         const roleString = isLoggedIn && authHeader.split('.')[1];
         const role = roleString ? Role[roleString] : null; // ? role.User
 =======
+=======
+import jwt from 'jsonwebtoken';
+>>>>>>> Jwt token added
 
 export function FakeAPI() {
     let _users = [
-        { id: 0, email: 'admin@gmail.com', password: 'admin', firstName: 'Admin', lastName: 'User', role: Role.admin },
-        { id: 1, email: 'user@gmail.com', password: 'user', firstName: 'Normal', lastName: 'User', role: Role.user }
+        { id: 0, email: 'admin@gmail.com', password: 'admin', firstName: 'Admin', lastName: 'User', role: Role.Admin },
+        { id: 1, email: 'user@gmail.com', password: 'user', firstName: 'Normal', lastName: 'User', role: Role.User }
     ];
 
     let realFetch = window.fetch;
     window.fetch = function (url, opts) {
         const authHeader = opts.headers['Authorization'];
-        const isLoggedIn = authHeader && authHeader.startsWith('Bearer fake-jwt-token');
+        const isLoggedIn = authHeader && authHeader.startsWith('Bearer ');
         const roleString = isLoggedIn && authHeader.split('.')[1];
         const role = roleString ? Role[roleString] : null;
 >>>>>>> Authorization added
@@ -39,6 +43,7 @@ export function FakeAPI() {
         return new Promise((resolve, reject) => {
             // wrap in timeout to simulate server api call
             setTimeout(() => {
+<<<<<<< HEAD
 <<<<<<< HEAD
                 if (url.endsWith('/users/authenticate') && opts.method === 'POST') {
                     const params = JSON.parse(opts.body);
@@ -54,6 +59,15 @@ export function FakeAPI() {
                     console.log(opts);
                     const user = _users.find(x => x.email === params.email && x.password === params.password);
 >>>>>>> Authorization added
+=======
+                if (url.endsWith('/users/authenticate') && opts.method === 'POST') {
+                    const params = JSON.parse(opts.body);
+                    //console.log(opts);
+                    const user = _users.find(user => user.email === params.email && user.password === params.password);
+
+                    let token = jwt.sign({ user: user }, 'secretkey');
+
+>>>>>>> Jwt token added
                     if (!user) return error('Username or password is incorrect');
                     return ok({
                         id: user.id,
@@ -61,6 +75,7 @@ export function FakeAPI() {
                         firstName: user.firstName,
                         lastName: user.lastName,
                         role: user.role,
+<<<<<<< HEAD
 <<<<<<< HEAD
                         token: token
                     });
@@ -81,6 +96,9 @@ export function FakeAPI() {
 
 =======
                         token: `fake-jwt-token.${user.role}`
+=======
+                        token: token
+>>>>>>> Jwt token added
                     });
                 }
 
@@ -95,6 +113,7 @@ export function FakeAPI() {
 
                     // only allow normal users access to their own record
 <<<<<<< HEAD
+<<<<<<< HEAD
                     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
                     if (id !== currentUser.id && role !== Role.Admin) return unauthorised();
                     const user = _users.find(user => user.id === id);
@@ -104,11 +123,17 @@ export function FakeAPI() {
 
                     const user = _users.find(x => x.id === id);
 >>>>>>> Authorization added
+=======
+                    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+                    if (id !== currentUser.id && role !== Role.Admin) return unauthorised();
+                    const user = _users.find(user => user.id === id);
+>>>>>>> Jwt token added
                     return ok(user);
                 }
 
                 // get all users - admin only
                 if (url.endsWith('/users') && opts.method === 'GET') {
+<<<<<<< HEAD
 <<<<<<< HEAD
                     if (role !== Role.Admin) return unauthorised();
                     return ok(_users);
@@ -117,21 +142,27 @@ export function FakeAPI() {
                 _fetch(url, opts).then(response => resolve(response));
 =======
                     if (role !== Role.admin) return unauthorised();
+=======
+                    if (role !== Role.Admin) return unauthorised();
+>>>>>>> Jwt token added
                     return ok(_users);
                 }
 
-                // pass through any requests not handled above
                 realFetch(url, opts).then(response => resolve(response));
 
+<<<<<<< HEAD
                 // private helper functions
 >>>>>>> Authorization added
 
+=======
+>>>>>>> Jwt token added
                 function ok(body) {
                     resolve({ ok: true, text: () => Promise.resolve(JSON.stringify(body)) })
                 }
 
                 function unauthorised() {
-                    resolve({ status: 401, text: () => Promise.resolve(JSON.stringify({ message: 'Unauthorised' })) })
+                    console.log("401")
+                    // resolve({ status: 401, text: () => Promise.resolve(JSON.stringify({ message: 'Unauthorised' })) })
                 }
 
                 function error(message) {

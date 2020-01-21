@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./SignInPage.css";
 import AuthSignIn from "../../components/auth/AuthSignIn";
-import { Link, withRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 class SignInPage extends Component {
   render() {
@@ -27,4 +27,4 @@ class SignInPage extends Component {
   }
 }
 
-export default withRouter(SignInPage);
+export default SignInPage;

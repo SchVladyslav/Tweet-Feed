@@ -4,10 +4,14 @@ import { userService } from "../../services/user.service";
 
 export default class Dashboard extends Component {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> Jwt token added
   state = {
     currentUser: authService.currentUserValue,
     userFromApi: null
   };
+<<<<<<< HEAD
 =======
   constructor(props) {
     super(props);
@@ -18,6 +22,8 @@ export default class Dashboard extends Component {
     };
   }
 >>>>>>> Authorization added
+=======
+>>>>>>> Jwt token added
 
   componentDidMount() {
     const { currentUser } = this.state;
