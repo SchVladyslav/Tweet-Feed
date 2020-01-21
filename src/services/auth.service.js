@@ -5,13 +5,14 @@ import { HandleResponse } from '../helpers/HandleResponse';
 const currentUserSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('currentUser')));
 
 export const authService = {
-    login,
+    signIn,
+    signUp,
     logout,
     currentUser: currentUserSubject.asObservable(),
     get currentUserValue() { return currentUserSubject.value }
 };
 
-function login(email, password) {
+function signIn(email, password) {
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -27,6 +28,20 @@ function login(email, password) {
 
             return user;
         });
+}
+
+function signUp(firstname, lastname, email, password) {
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ firstname, lastname, email, password }),
+    }
+
+    return fetch(`/users/authorization`, requestOptions)
+        .then(HandleResponse)
+        .then(user => {
+
+        })
 }
 
 function logout() {

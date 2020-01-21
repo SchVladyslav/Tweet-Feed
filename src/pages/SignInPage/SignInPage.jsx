@@ -8,7 +8,7 @@ class SignInPage extends Component {
     return (
       <div className="container">
         <main className="main-content">
-          <div className="main-logo">
+          <div className="main-logo-page">
             <i className="icon icon-mountains"></i>
           </div>
           <h1 className="main__title">Sign In</h1>
