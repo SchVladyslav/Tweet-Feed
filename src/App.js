@@ -12,7 +12,6 @@ import { authService } from './services/auth.service';
 import { Role } from './helpers/Role';
 import { history } from './helpers/History';
 
-
 export default class App extends Component {
   constructor(props) {
     super(props);
@@ -24,10 +23,11 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    authService.currentUser.subscribe(item => this.setState({
-      currentUser: item,
-      isAdmin: item && item.role === Role.Admin
-    }));
+    const isLoggedIn = authService.currentUser;
+    this.setState({
+      currentUser: isLoggedIn,
+      isAdmin: isLoggedIn && isLoggedIn.role === Role.Admin
+    });
   }
 
   logout() {
