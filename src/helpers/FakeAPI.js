@@ -82,7 +82,8 @@ export const FakeAPI = (() => {
                 }
 
                 function unauthorised() {
-                    resolve({ status: 401, text: () => Promise.resolve(JSON.stringify({ message: 'Unauthorised' })) })
+                    console.log("401")
+                    // resolve({ status: 401, text: () => Promise.resolve(JSON.stringify({ message: 'Unauthorised' })) })
                 }
 
                 function error(message) {

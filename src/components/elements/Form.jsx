@@ -8,16 +8,12 @@ export default class Form extends Component {
     super(props);
 
     this.formProps = {
+      state: props.state,
       inputSettings: props.inputSettings,
       buttonSettings: props.buttonSettings
     };
 
     this.state = {
-      firstname: "",
-      lastname: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
       formValid: false
     };
   }
@@ -34,22 +30,6 @@ export default class Form extends Component {
     // , () => {
     //   ValidateFields(name, value);
     // });
-  };
-
-  handleSubmit = () => {
-    const { email, password } = this.state;
-    authService.login(email, password); //.then(
-    //   user => {
-    //     console.log(this.props);
-    //     const { from } = this.props.location.state || {
-    //       from: { pathname: "/dashboard" }
-    //     };
-    //     this.props.history.push(from);
-    //   },
-    //   error => {
-    //     console.log(error);
-    //   }
-    // );
   };
 
   renderInputs() {
@@ -106,32 +86,14 @@ export default class Form extends Component {
               className="input input__password"
 =======
   render() {
-    return (
-      <form className="main__form" action="">
-        <ul className="form__list">
-          <li>
-            <Input
-              className="input__email"
-              type="email"
-              placeholder="E-mail"
-              name="email"
-              value={this.state.email}
-              handleChange={event => this.handleUserInput(event)}
-            />
-            <i className="icon icon-user input__icon"></i>
-          </li>
-          <li>
-            <Input
-              className="input__password"
->>>>>>> common elements added
 =======
-  render() {
+>>>>>>> Jwt token added
     return (
       <form
         className="main__form"
         action=""
         onChange={this.handleUserInput}
-        onSubmit={this.handleSubmit}
+        onSubmit={handleSubmit}
       >
         <ul className="form__list">{this.renderInputs()}</ul>
         {this.renderButtons()}
