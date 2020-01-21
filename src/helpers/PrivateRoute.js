@@ -7,15 +7,8 @@ export const PrivateRoute = ({ component: Component, roles, ...rest }) => (
         const currentUser = authService.currentUserValue;
         if (!currentUser) {
             // not logged in so redirect to login page with the return url
-<<<<<<< HEAD
-<<<<<<< HEAD
+
             return <Redirect to={{ pathname: '/signin', state: { from: props.location } }} />
-=======
-            return <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
->>>>>>> Authorization added
-=======
-            return <Redirect to={{ pathname: '/signin', state: { from: props.location } }} />
->>>>>>> Jwt token added
         }
 
         // check if route is restricted by role
