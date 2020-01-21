@@ -8,7 +8,7 @@ import jwt from 'jsonwebtoken';
 export const authService = {
     signIn,
     signUp,
-    logout,
+    login,
     getUserDataFromToken,
     currentUser: JSON.parse(localStorage.getItem('currentUser')),
     get currentUserValue() { return JSON.parse(localStorage.getItem('currentUser')) }
@@ -32,10 +32,10 @@ function signIn(email, password) {
 }
 
 
+
 function getUserDataFromToken(token) {
     return jwt.decode(token);
 }
-
 
 function signUp(firstname, lastname, email, password) {
     const requestOptions = {

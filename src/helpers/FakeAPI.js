@@ -41,12 +41,17 @@ export function FakeAPI() {
     ];
 
     const _fetch = window.fetch;
+
     window.fetch = function (url, opts) {
         const authHeader = opts.headers['Authorization'];
         const isLoggedIn = authHeader && authHeader.startsWith('Bearer ');
         const roleString = isLoggedIn && authHeader.split('.')[1];
+<<<<<<< HEAD
         const role = roleString ? Role[roleString] : null;
 >>>>>>> Authorization added
+=======
+        const role = roleString ? Role[roleString] : null; // ? role.User
+>>>>>>> Added styles
 
         return new Promise((resolve, reject) => {
             // wrap in timeout to simulate server api call
@@ -110,7 +115,23 @@ export function FakeAPI() {
                     });
                 }
 
+<<<<<<< HEAD
 >>>>>>> Authorization added
+=======
+                if (url.endsWith('/users/authorization') && opts.method === 'POST') {
+                    const params = JSON.parse(opts.body);
+                    console.log(params);
+
+                    const user = {
+                        id: this.Math.random() * 10,
+                        email: params.email,
+                        password: params.password,
+                        firstName: params.firstName,
+                        lastName: params.lastName
+                    }
+                }
+
+>>>>>>> Added styles
                 // get user by id - admin or user (user can only access their own record)
                 if (url.match(/\/users\/\d+$/) && opts.method === 'GET') {
                     if (!isLoggedIn) return unauthorised();
@@ -169,8 +190,7 @@ export function FakeAPI() {
                 }
 
                 function unauthorised() {
-                    console.log("401")
-                    // resolve({ status: 401, text: () => Promise.resolve(JSON.stringify({ message: 'Unauthorised' })) })
+                    resolve({ status: 401, text: () => Promise.resolve(JSON.stringify({ message: 'Unauthorised' })) })
                 }
 
                 function error(message) {
