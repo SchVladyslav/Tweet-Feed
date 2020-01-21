@@ -20,7 +20,7 @@ export default class Dashboard extends Component {
     return (
       <div className="dashboard">
         <h1>Home</h1>
-        <p>You're logged in with React & JWT!!</p>
+        <p>You're logged in!</p>
         <p>
           Your role is: <strong>{currentUser.role}</strong>.
         </p>
