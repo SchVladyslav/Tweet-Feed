@@ -3,14 +3,10 @@ import { authService } from "../../services/auth.service";
 import { userService } from "../../services/user.service";
 
 export default class Dashboard extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      currentUser: authService.currentUserValue,
-      userFromApi: null
-    };
-  }
+  state = {
+    currentUser: authService.currentUserValue,
+    userFromApi: null
+  };
 
   componentDidMount() {
     const { currentUser } = this.state;

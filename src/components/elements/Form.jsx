@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Input } from "../common/Input";
 import { Button } from "../common/Button";
-import { authService } from "../../services/auth.service";
 import { ValidateFields } from "../../helpers/ValidateFields";
 
 export default class Form extends Component {
@@ -9,16 +8,12 @@ export default class Form extends Component {
     super(props);
 
     this.formProps = {
+      state: props.state,
       inputSettings: props.inputSettings,
       buttonSettings: props.buttonSettings
     };
 
     this.state = {
-      firstname: "",
-      lastname: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
       formValid: false
     };
   }
@@ -27,26 +22,12 @@ export default class Form extends Component {
     const { name } = e.target;
     const { value } = e.target;
 
-    this.setState({ [name]: value });
+    this.setState({ [name]: value }, () => {
+      this.props.updateState(this.state);
+    });
     // , () => {
     //   ValidateFields(name, value);
     // });
-  };
-
-  handleSubmit = () => {
-    const { email, password } = this.state;
-    authService.login(email, password); //.then(
-    //   user => {
-    //     console.log(this.props);
-    //     const { from } = this.props.location.state || {
-    //       from: { pathname: "/dashboard" }
-    //     };
-    //     this.props.history.push(from);
-    //   },
-    //   error => {
-    //     console.log(error);
-    //   }
-    // );
   };
 
   renderInputs() {
@@ -73,12 +54,13 @@ export default class Form extends Component {
   }
 
   render() {
+    const { handleSubmit } = this.props;
     return (
       <form
         className="main__form"
         action=""
         onChange={this.handleUserInput}
-        onSubmit={this.handleSubmit}
+        onSubmit={handleSubmit}
       >
         <ul className="form__list">{this.renderInputs()}</ul>
         {this.renderButtons()}

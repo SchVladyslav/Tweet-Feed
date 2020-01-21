@@ -26,7 +26,7 @@ export default class App extends Component {
   componentDidMount() {
     authService.currentUser.subscribe(item => this.setState({
       currentUser: item,
-      isAdmin: item && item.role === Role.admin
+      isAdmin: item && item.role === Role.Admin
     }));
   }
 
@@ -36,13 +36,13 @@ export default class App extends Component {
   }
 
   render() {
-    const { currentUser, isAdmin } = this.state;
+    //const { currentUser, isAdmin } = this.state;
     return (
       <Router history={history}>
         <Switch>
           <Route path="/signin" component={SignIn} />
           <Route path="/signup" component={SignUp} />
-          <PrivateRoute path="/dashboard" roles={[Role.user]} component={Dashboard} />
+          <PrivateRoute path="/dashboard" roles={[Role.User, Role.Admin]} component={Dashboard} />
           <Redirect to="/signin" />
         </Switch>
       </Router >
