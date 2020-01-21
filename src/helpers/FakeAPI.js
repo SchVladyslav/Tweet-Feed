@@ -4,6 +4,7 @@ import { Role } from './Role';
 import jwt from 'jsonwebtoken';
 
 export const FakeAPI = (() => {
+<<<<<<< HEAD
     let _users = [
         { id: 0, email: 'admin@gmail.com', password: 'admin', firstName: 'Admin', lastName: 'User', role: Role.Admin },
         { id: 1, email: 'user@gmail.com', password: 'user', firstName: 'Normal', lastName: 'User', role: Role.User }
@@ -27,12 +28,19 @@ import jwt from 'jsonwebtoken';
 >>>>>>> Jwt token added
 
 export function FakeAPI() {
+=======
+>>>>>>> Added: Scss, layout for dashboard component, minor fixes for fakeAPI
     let _users = [
         { id: 0, email: 'admin@gmail.com', password: 'admin', firstName: 'Admin', lastName: 'User', role: Role.Admin },
         { id: 1, email: 'user@gmail.com', password: 'user', firstName: 'Normal', lastName: 'User', role: Role.User }
     ];
 
-    let realFetch = window.fetch;
+    const _news = [
+        { id: 0, text: "News #1" },
+        { id: 1, text: "News #2" },
+    ];
+
+    const _fetch = window.fetch;
     window.fetch = function (url, opts) {
         const authHeader = opts.headers['Authorization'];
         const isLoggedIn = authHeader && authHeader.startsWith('Bearer ');
@@ -148,7 +156,7 @@ export function FakeAPI() {
                     return ok(_users);
                 }
 
-                realFetch(url, opts).then(response => resolve(response));
+                _fetch(url, opts).then(response => resolve(response));
 
 <<<<<<< HEAD
                 // private helper functions
@@ -171,6 +179,7 @@ export function FakeAPI() {
             }, 500);
         });
     }
+<<<<<<< HEAD
 <<<<<<< HEAD
 
     return {
@@ -268,3 +277,12 @@ export function FakeAPI() {
 //     }
 // })();
 >>>>>>> Authorization added
+=======
+
+    return {
+        _fetch
+        //authSignIn,
+        //newsGetList,
+    }
+})();
+>>>>>>> Added: Scss, layout for dashboard component, minor fixes for fakeAPI

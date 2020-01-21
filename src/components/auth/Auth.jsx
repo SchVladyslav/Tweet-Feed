@@ -10,7 +10,6 @@
 >>>>>>> common elements added
 // import React, { Component } from "react";
 // import { withRouter } from "react-router-dom";
-<<<<<<< HEAD
 
 // const { Provider, Consumer: AuthConsumer } = React.createContext({
 //   isAuthorized: false
@@ -99,6 +98,7 @@ export default withRouter(Auth);
 =======
 =======
 
+<<<<<<< HEAD
 >>>>>>> Authorization added
 import React from "react";
 
@@ -157,6 +157,9 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 =======
 >>>>>>> Jwt token added
+=======
+
+>>>>>>> Added: Scss, layout for dashboard component, minor fixes for fakeAPI
 
 // const { Provider, Consumer: AuthConsumer } = React.createContext({
 //   isAuthorized: false

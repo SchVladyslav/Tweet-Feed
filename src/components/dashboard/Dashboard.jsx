@@ -37,11 +37,15 @@ export default class Dashboard extends Component {
     const { currentUser, userFromApi } = this.state;
     return (
 <<<<<<< HEAD
+<<<<<<< HEAD
       <div className="dashboard">
         <h1>Home</h1>
         <p>You're logged in!</p>
 =======
       <div>
+=======
+      <div className="dashboard">
+>>>>>>> Added: Scss, layout for dashboard component, minor fixes for fakeAPI
         <h1>Home</h1>
         <p>You're logged in with React & JWT!!</p>
 >>>>>>> Authorization added
@@ -60,14 +64,20 @@ export default class Dashboard extends Component {
           )}
         </div>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> Added: Scss, layout for dashboard component, minor fixes for fakeAPI
 
         <div className="logOut">
           <h3>
             <a onClick={authService.logout}>Log Out</a>
           </h3>
         </div>
+<<<<<<< HEAD
 =======
 >>>>>>> Authorization added
+=======
+>>>>>>> Added: Scss, layout for dashboard component, minor fixes for fakeAPI
       </div>
     );
   }
