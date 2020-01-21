@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
 import React, { Component } from "react";
 import Form from "../elements/Form";
 import { authService } from "../../services/auth.service";
@@ -14,7 +12,6 @@ class AuthSignIn extends Component {
       password: ""
     };
 
-<<<<<<< HEAD
     this.inputSettings = [
       {
         className: "input input__email",
@@ -77,17 +74,10 @@ class AuthSignIn extends Component {
 }
 
 export default withRouter(AuthSignIn);
-=======
-import React from "react";
-import { Link } from "react-router-dom";
-=======
-import React, { Component } from "react";
->>>>>>> Authorization added
 import Form from "../elements/Form";
 import { authService } from "../../services/auth.service";
 import { withRouter } from "react-router-dom";
 
-<<<<<<< HEAD
 export const AuthSignIn = () => {
   return (
     <div className="container">
@@ -107,14 +97,11 @@ export const AuthSignIn = () => {
     </div>
   );
 };
->>>>>>> common elements added
-=======
+
 class AuthSignIn extends Component {
   constructor(props) {
     super(props);
 
-=======
->>>>>>> Jwt token added
     this.inputSettings = [
       {
         className: "input input__email",
@@ -177,4 +164,3 @@ class AuthSignIn extends Component {
 }
 
 export default withRouter(AuthSignIn);
->>>>>>> Authorization added

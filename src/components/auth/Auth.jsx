@@ -41,6 +41,7 @@
 // }
 
 // export default withRouter(Auth);
+<<<<<<< HEAD
 =======
 import React from "react";
 
@@ -114,6 +115,8 @@ import { withRouter } from "react-router-dom";
 // import React, { Component } from "react";
 // import { withRouter } from "react-router-dom";
 >>>>>>> Jwt token added
+=======
+>>>>>>> Conflicts fixed
 
 // const { Provider, Consumer: AuthConsumer } = React.createContext({
 //   isAuthorized: false
@@ -149,6 +152,7 @@ export default withRouter(Auth);
 >>>>>>> Authorization added
 =======
 // export default withRouter(Auth);
+<<<<<<< HEAD
 >>>>>>> Jwt token added
 =======
 >>>>>>> common elements added
@@ -196,3 +200,5 @@ export default withRouter(Auth);
 =======
 // export default withRouter(Auth);
 >>>>>>> Jwt token added
+=======
+>>>>>>> Conflicts fixed
