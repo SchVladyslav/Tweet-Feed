@@ -1,26 +1,7 @@
 body {
-  font-family: "Raleway", sans-serif;
+  font-family: "Arial", sans-serif;
   color: #000;
 
   width: 100%;
   min-height: 100vh;
-}
-
-.main-logo {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-bottom: 10px;
-  width: 54px;
-  height: 42px;
-  font-size: 35px;
-  color: #000;
-  border-radius: 50%;
-  background: linear-gradient(to right, #00dbde, #fc00ff, #00dbde, #fc00ff);
-  background-size: 300% 100%;
-  transition: all 0.4s;
-  cursor: pointer;
-  &:hover {
-    background-position: 50% 0;
-  }
 }
