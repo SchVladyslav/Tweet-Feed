@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./SignInPage.css";
+import "./SignInPage.scss";
 import AuthSignIn from "../../components/auth/AuthSignIn";
 import { Link } from "react-router-dom";
 
@@ -9,7 +9,7 @@ class SignInPage extends Component {
       <div className="container">
         <main className="main-content">
           <div className="main-logo">
-            <i className="icon icon-mountain"></i>
+            <i className="icon icon-mountains"></i>
           </div>
           <h1 className="main__title">Sign In</h1>
 
