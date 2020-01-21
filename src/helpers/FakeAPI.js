@@ -13,6 +13,7 @@ export const FakeAPI = (() => {
     ];
 
     const _fetch = window.fetch;
+
     window.fetch = function (url, opts) {
         const authHeader = opts.headers['Authorization'];
         const isLoggedIn = authHeader && authHeader.startsWith('Bearer ');
@@ -81,8 +82,7 @@ export const FakeAPI = (() => {
                 }
 
                 function unauthorised() {
-                    console.log("401")
-                    // resolve({ status: 401, text: () => Promise.resolve(JSON.stringify({ message: 'Unauthorised' })) })
+                    resolve({ status: 401, text: () => Promise.resolve(JSON.stringify({ message: 'Unauthorised' })) })
                 }
 
                 function error(message) {
