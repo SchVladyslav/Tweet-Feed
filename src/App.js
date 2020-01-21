@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { Route, Router, Switch, Redirect } from 'react-router-dom';
 
-import './App.css';
-import Routes from './Routes';
+import './App.scss';
 
 import Dashboard from "./pages/dashboardPage/DashboardPage";
 import SignIn from "./pages/SignInPage/SignInPage";

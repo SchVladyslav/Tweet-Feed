@@ -18,7 +18,7 @@ export default class Dashboard extends Component {
   render() {
     const { currentUser, userFromApi } = this.state;
     return (
-      <div>
+      <div className="dashboard">
         <h1>Home</h1>
         <p>You're logged in with React & JWT!!</p>
         <p>
@@ -34,6 +34,12 @@ export default class Dashboard extends Component {
               </li>
             </ul>
           )}
+        </div>
+
+        <div className="logOut">
+          <h3>
+            <a onClick={authService.logout}>Log Out</a>
+          </h3>
         </div>
       </div>
     );
