@@ -150,7 +150,7 @@ class AuthSignIn extends Component {
   handleSubmit = e => {
     e.preventDefault();
     const { email, password } = this.state;
-    authService.login(email, password).then(
+    authService.signIn(email, password).then(
       () => {
         const { from } = this.props.location.state || {
           from: { pathname: "/dashboard" }

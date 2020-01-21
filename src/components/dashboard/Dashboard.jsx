@@ -47,8 +47,12 @@ export default class Dashboard extends Component {
       <div className="dashboard">
 >>>>>>> Added: Scss, layout for dashboard component, minor fixes for fakeAPI
         <h1>Home</h1>
+<<<<<<< HEAD
         <p>You're logged in with React & JWT!!</p>
 >>>>>>> Authorization added
+=======
+        <p>You're logged in!</p>
+>>>>>>> Added styles
         <p>
           Your role is: <strong>{currentUser.role}</strong>.
         </p>
