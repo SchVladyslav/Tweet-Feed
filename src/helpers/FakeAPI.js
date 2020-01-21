@@ -1,26 +1,29 @@
 import { Role } from './Role';
+import jwt from 'jsonwebtoken';
 
 export function FakeAPI() {
     let _users = [
-        { id: 0, email: 'admin@gmail.com', password: 'admin', firstName: 'Admin', lastName: 'User', role: Role.admin },
-        { id: 1, email: 'user@gmail.com', password: 'user', firstName: 'Normal', lastName: 'User', role: Role.user }
+        { id: 0, email: 'admin@gmail.com', password: 'admin', firstName: 'Admin', lastName: 'User', role: Role.Admin },
+        { id: 1, email: 'user@gmail.com', password: 'user', firstName: 'Normal', lastName: 'User', role: Role.User }
     ];
 
     let realFetch = window.fetch;
     window.fetch = function (url, opts) {
         const authHeader = opts.headers['Authorization'];
-        const isLoggedIn = authHeader && authHeader.startsWith('Bearer fake-jwt-token');
+        const isLoggedIn = authHeader && authHeader.startsWith('Bearer ');
         const roleString = isLoggedIn && authHeader.split('.')[1];
         const role = roleString ? Role[roleString] : null;
 
         return new Promise((resolve, reject) => {
             // wrap in timeout to simulate server api call
             setTimeout(() => {
-                // authenticate - public
                 if (url.endsWith('/users/authenticate') && opts.method === 'POST') {
                     const params = JSON.parse(opts.body);
-                    console.log(opts);
-                    const user = _users.find(x => x.email === params.email && x.password === params.password);
+                    //console.log(opts);
+                    const user = _users.find(user => user.email === params.email && user.password === params.password);
+
+                    let token = jwt.sign({ user: user }, 'secretkey');
+
                     if (!user) return error('Username or password is incorrect');
                     return ok({
                         id: user.id,
@@ -28,7 +31,7 @@ export function FakeAPI() {
                         firstName: user.firstName,
                         lastName: user.lastName,
                         role: user.role,
-                        token: `fake-jwt-token.${user.role}`
+                        token: token
                     });
                 }
 
@@ -41,30 +44,27 @@ export function FakeAPI() {
                     let id = parseInt(urlParts[urlParts.length - 1]);
 
                     // only allow normal users access to their own record
-                    const currentUser = _users.find(x => x.role === role);
-                    if (id !== currentUser.id && role !== Role.admin) return unauthorised();
-
-                    const user = _users.find(x => x.id === id);
+                    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+                    if (id !== currentUser.id && role !== Role.Admin) return unauthorised();
+                    const user = _users.find(user => user.id === id);
                     return ok(user);
                 }
 
                 // get all users - admin only
                 if (url.endsWith('/users') && opts.method === 'GET') {
-                    if (role !== Role.admin) return unauthorised();
+                    if (role !== Role.Admin) return unauthorised();
                     return ok(_users);
                 }
 
-                // pass through any requests not handled above
                 realFetch(url, opts).then(response => resolve(response));
-
-                // private helper functions
 
                 function ok(body) {
                     resolve({ ok: true, text: () => Promise.resolve(JSON.stringify(body)) })
                 }
 
                 function unauthorised() {
-                    resolve({ status: 401, text: () => Promise.resolve(JSON.stringify({ message: 'Unauthorised' })) })
+                    console.log("401")
+                    // resolve({ status: 401, text: () => Promise.resolve(JSON.stringify({ message: 'Unauthorised' })) })
                 }
 
                 function error(message) {
