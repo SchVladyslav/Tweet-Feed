@@ -1,15 +1,12 @@
-import { BehaviorSubject } from 'rxjs';
-
 import { HandleResponse } from '../helpers/HandleResponse';
-
-const currentUserSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('currentUser')));
+import jwt from 'jsonwebtoken';
 
 export const authService = {
     signIn,
     signUp,
     logout,
-    currentUser: currentUserSubject.asObservable(),
-    get currentUserValue() { return currentUserSubject.value }
+    getUserDataFromToken,
+    get currentUser() { return JSON.parse(localStorage.getItem('currentUser')) }
 };
 
 function signIn(email, password) {
@@ -18,14 +15,11 @@ function signIn(email, password) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })
     };
-
     return fetch(`/users/authenticate`, requestOptions)
         .then(HandleResponse)
         .then(user => {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
             localStorage.setItem('currentUser', JSON.stringify(user));
-            currentUserSubject.next(user);
-
             return user;
         });
 }
@@ -33,7 +27,6 @@ function signIn(email, password) {
 function getUserDataFromToken(token) {
     return jwt.decode(token);
 }
-
 
 function signUp(firstname, lastname, email, password) {
     const requestOptions = {
@@ -51,5 +44,4 @@ function signUp(firstname, lastname, email, password) {
 
 function logout() {
     localStorage.removeItem('currentUser');
-    currentUserSubject.next(null);
 }

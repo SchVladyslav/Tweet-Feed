@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
-import "./SignUpPage.css";
+import "./SignUpPage.scss";
 
 import { AuthSignUp } from "../../components/auth/AuthSignUp";
 
