@@ -3,6 +3,7 @@ import Button from "./button/Button";
 import Input from './input/Input'
 import Textarea from "./textarea/Textarea";
 import Dropdown from "./dropdown/Dropdown";
+import Preloader from "./preloader/Preloader";
 
 function _Demo(props) {
     return (
@@ -33,6 +34,7 @@ function _Demo(props) {
 
             <Textarea name="title" cols="30" rows="10" isInvalid={true} placeholder='title'/>
             <Textarea name="title" cols="30" rows="10" isInvalid={false} placeholder='description'/>
+            <Preloader/>
 
         </React.Fragment>
     );
