@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import './Layout.scss';
 import {NavLink} from "react-router-dom";
+import Dropdown from "../common/dropdown/Dropdown";
+import Button from "../common/button/Button";
 
 class Layout extends Component {
 
@@ -9,7 +11,9 @@ class Layout extends Component {
             <div>
                 <nav className="navbar">
                     <i className="icon icon-mountains main-logo"/>
-                    <i className="icon icon-user icon-32"/>
+                    <Dropdown>
+                        <Button type='submit' buttonColorScheme='transparent' color='black' buttonSize='small'>Logout</Button>
+                    </Dropdown>
                 </nav>
                 <main>
                     <div className="main">
