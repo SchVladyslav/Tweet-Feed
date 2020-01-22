@@ -29,19 +29,14 @@ export default class App extends Component {
     });
   }
 
-  logout() {
-    authService.logout();
-    history.push('/signin');
-  }
-
   render() {
     //const { currentUser, isAdmin } = this.state;
     return (
       <Router history={history}>
         <Switch>
-          <Route path="/signin" component={SignIn} />
-          <Route path="/signup" component={SignUp} />
-          <PrivateRoute path="/dashboard" roles={[Role.User, Role.Admin]} component={Dashboard} />
+          <Route exact path="/signin" component={SignIn} />
+          <Route exact path="/signup" component={SignUp} />
+          <PrivateRoute exact path="/dashboard" roles={[Role.User, Role.Admin]} component={Dashboard} />
           <Redirect to="/signin" />
         </Switch>
       </Router >

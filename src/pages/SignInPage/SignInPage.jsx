@@ -1,7 +1,8 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
+
 import "./SignInPage.scss";
 import AuthSignIn from "../../components/auth/AuthSignIn";
-import { Link } from "react-router-dom";
 
 class SignInPage extends Component {
   render() {
