@@ -1,7 +1,13 @@
-import React, { Component } from "react";
+import React from "react";
+import { FormSignUp } from "../forms/FormSignUp";
 
-export default class AuthSignUp extends Component {
-  render() {
-    return <div></div>;
-  }
-}
+export const AuthSignUp = () => {
+  // this.state = {
+  //   firstName: "",
+  //   lastName: "",
+  //   email: "",
+  //   password: ""
+  // };
+
+  return <FormSignUp />;
+};
