@@ -1,16 +1,16 @@
-.input-wrap {
+.input {
   position: relative;
   height: 73px;
 }
 
-.icon {
+.input__icon {
   position: absolute;
   top: 13px;
   left: 11px;
   color: #9a9a9a;
 }
 
-.input {
+.input__field {
   border: transparent;
   background: 0 0;
   cursor: text;

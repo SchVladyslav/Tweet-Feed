@@ -1,15 +1,36 @@
 import React from "react";
 import './dropdown.scss'
 
-export default function Dropdown({children}) {
-    return <div className="dropdown">
-        <img className='user-avatar_small'
-             width='40'
-             height='40'
-             src={require('../../../assets/img/user_avatar.svg')}
-             alt="user avatar"/>
-        <div className="dropdown-content">
-            {children}
+export default class Dropdown extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isOpen: false,
+        };
+        this.handleClick = this.handleClick.bind(this);
+    }
+
+    componentWillMount() {
+        document.addEventListener('click', this.handleClick, false);
+    }
+
+    handleClick(e) {
+        const dropdown_content = document.querySelector('.dropdown__content');
+        const dropdown = document.querySelector('.dropdown__user-icon');
+        if (!e.path.includes(dropdown_content) && this.state.isOpen || dropdown === e.target) {
+            this.setState({
+                isOpen: !this.state.isOpen
+            })
+        }
+    }
+
+    render() {
+        return <div className="dropdown">
+            <i className={`icon icon-user icon-32 dropdown__user-icon ${this.state.isOpen ? 'dropdown__user-icon_flip': null}`}/>
+            {this.state.isOpen ? (<div className="dropdown__content">
+                {this.props.children}
+            </div>) : null}
+
         </div>
-    </div>
+    }
 }

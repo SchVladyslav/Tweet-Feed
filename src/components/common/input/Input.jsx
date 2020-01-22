@@ -1,28 +1,45 @@
 import React from "react";
 import "./input.scss";
 
-export function Input({
+function getClassName(classesArray, property) {
+  if (classesArray[property]) {
+    return classesArray[property];
+  } else {
+    return false;
+  }
+}
+
+export default function Input({
   key,
   className,
   placeholder,
   type,
-  name,
   errorMessage,
-  onChange
+  onChange,
+  iconName
 }) {
+  const iconNames = {
+    user: "icon-user",
+    email: "icon-user",
+    password: "icon-lock"
+  };
+  const iconClass = getClassName(iconNames, iconName);
   return (
-    <div className="input-wrap" key={key}>
-      <input
-        className={`${className ? className : ""} input${
-          errorMessage ? " input_invalid" : ""
-        }`}
-        name={name}
-        placeholder={placeholder}
-        type={type}
-        onChange={onChange}
-      />
-      <i className="icon icon-user input__icon" />
-      {errorMessage ? <p className="error-message">{errorMessage}</p> : null}
+    <div className="input" key={key}>
+      <div className="input__control">
+        <input
+          className={`${className ? className : ""} input__field${
+            errorMessage ? " input__field_invalid" : ""
+          }`}
+          placeholder={placeholder}
+          type={type}
+          onChange={onChange}
+        />
+      </div>
+      {iconClass ? <i className={`icon ${iconClass} input__icon`} /> : null}
+      <div className="input__error">
+        {errorMessage ? <p className="error-message">{errorMessage}</p> : null}
+      </div>
     </div>
   );
 }

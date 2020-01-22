@@ -9,15 +9,17 @@ function getClassName(classesArray, property) {
   }
 }
 
-export function Button({
+export default function Button({
   children,
   className,
   type,
   onClick,
+  onSubmit,
   buttonColorScheme,
   buttonSize,
   disabled,
-  key
+  key,
+  color
 }) {
   const colorSchemes = {
     primary: "button_primary",
@@ -44,7 +46,9 @@ export function Button({
         className ? className : ""
       }`}
       onClick={onClick}
+      onSubmit={onSubmit}
       disabled={disabled}
+      style={{ color: color }}
     >
       {children}
     </button>
