@@ -1,4 +1,4 @@
-.navbar {
+.header {
   width: 100%;
   background-color: #343a40;
   color: #ffff;
@@ -27,13 +27,6 @@
 
     &__item {
       padding: 20px 50px;
-      font-size: 24px;
-      font-weight: bold;
-
-      &__link {
-        text-decoration: none;
-        color: #222222;
-      }
 
       &:hover {
         cursor: pointer;
@@ -45,11 +38,6 @@
       }
     }
   }
-
-  &__icon {
-    padding: 10px;
-    margin-left: 80%;
-  }
 }
 
 .main {
@@ -60,9 +48,20 @@
   &__content {
     position: relative;
     left: 254px;
+    width: calc(100% - 254px);
   }
 }
 
-.icon:hover {
-  cursor: pointer;
+.link {
+  text-decoration: none;
+  color: #222222;
+  font-size: 24px;
+  font-weight: bold;
 }
+
+.active {
+  color: #007bff;
+  text-decoration: underline;
+}
+
+

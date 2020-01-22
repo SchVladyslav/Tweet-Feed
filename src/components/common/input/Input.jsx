@@ -16,6 +16,7 @@ export function Input({
   placeholder,
   type,
   name,
+  value,
   errorMessage,
   onChange,
   iconName
@@ -37,6 +38,7 @@ export function Input({
           name={name}
           type={type}
           onChange={onChange}
+          value={value}
         />
       </div>
       {iconClass ? <i className={`icon ${iconClass} input__icon`} /> : null}
