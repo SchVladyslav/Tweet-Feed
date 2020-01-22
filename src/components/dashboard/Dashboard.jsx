@@ -4,7 +4,7 @@ import { userService } from "../../services/user.service";
 
 export default class Dashboard extends Component {
   state = {
-    currentUser: authService.currentUserValue,
+    currentUser: authService.currentUser,
     userFromApi: null
   };
 
@@ -12,16 +12,17 @@ export default class Dashboard extends Component {
     super(props);
 
     this.state = {
-      currentUser: authService.currentUserValue,
+      currentUser: authService.currentUser,
       userFromApi: null
     };
   }
 
   componentDidMount() {
     const { currentUser } = this.state;
-    userService
-      .getById(currentUser.id)
-      .then(userFromApi => this.setState({ userFromApi }));
+    // console.log(currentUser);
+    // userService
+    //   .getById(currentUser.id)
+    //   .then(userFromApi => this.setState({ userFromApi }));
   }
 
   render() {
@@ -29,35 +30,24 @@ export default class Dashboard extends Component {
     return (
       <div className="dashboard">
         <h1>Home</h1>
-
-        <p>You're logged in with React & JWT!!</p>
-
         <p>You're logged in!</p>
+        <p>
+          Your role is: <strong>{currentUser.role}</strong>.
+        </p>
+        <p>This page can be accessed by all authenticated users.</p>
+        <div>
+          Current user from secure api end point:
+          {userFromApi && (
+            <ul>
+              <li>{/* {userFromApi.firstName} {userFromApi.lastName} */}</li>
+            </ul>
+          )}
+        </div>
 
-        <div className="dashboard">
-          <h1>Home</h1>
-          <p>You're logged in!</p>
-
-          <p>
-            Your role is: <strong>{currentUser.role}</strong>.
-          </p>
-          <p>This page can be accessed by all authenticated users.</p>
-          <div>
-            Current user from secure api end point:
-            {userFromApi && (
-              <ul>
-                <li>
-                  {userFromApi.firstName} {userFromApi.lastName}
-                </li>
-              </ul>
-            )}
-          </div>
-
-          <div className="logOut">
-            <h3>
-              <a onClick={authService.logout}>Log Out</a>
-            </h3>
-          </div>
+        <div className="logOut">
+          <h3>
+            <a onClick={authService.logout}>Log Out</a>
+          </h3>
         </div>
       </div>
     );
