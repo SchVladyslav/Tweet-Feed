@@ -1,7 +1,5 @@
 import React, {Component} from "react";
-import Button from "../../common/button/Button";
-import Input from "../../common/input/Input";
-import Select from "../../common/select/Select";
+import {Button, Input, Select, Checkbox} from "../../common/index";
 import './ProfileForm.scss';
 
 class ProfileForm extends Component {
@@ -16,7 +14,7 @@ class ProfileForm extends Component {
 
     onSubmitHandler = event => {
         event.preventDefault();
-        console.warn(this.state);
+        console.log(this.state);
     };
 
     handleFirstName = (event) => this.setState({firstName: event.target.value});
@@ -27,40 +25,40 @@ class ProfileForm extends Component {
     render() {
         return (
             <div className="profile-form">
-            <form onSubmit={this.onSubmitHandler} className="form">
-                <div className="input-container">
-                <Input
-                    placeholder="Enter your first name"
-                    value={this.state.firstName}
-                    onChange={this.handleFirstName}
-                />
-                <Input
-                    placeholder="Enter your last name"
-                    value={this.state.lastName}
-                    onChange={this.handleLastName}
-                />
-                <Input
-                    placeholder="Enter your email"
-                    value={this.state.email}
-                    onChange={event => console.log(event.target.value)}
-                />
-                <Input
-                    placeholder="Enter your age"
-                    value={this.state.age}
-                    type="number"
-                    onChange={this.handleAge}
-                />
-                <Select
-                    label={'Choose your gender:'}
-                    onChangeHandler={this.handleGender}
-                />
-                </div>
-                <Button
-                    buttonColorScheme={'primary'}
-                    type={'submit'}
-                > Save profile
-                </Button>
-            </form>
+                <form onSubmit={this.onSubmitHandler} className="form">
+                    <div className="input-container">
+                        <Input
+                            placeholder="Enter your first name"
+                            value={this.state.firstName}
+                            onChange={this.handleFirstName}
+                        />
+                        <Input
+                            placeholder="Enter your last name"
+                            value={this.state.lastName}
+                            onChange={this.handleLastName}
+                        />
+                        <Input
+                            placeholder="Enter your email"
+                            value={this.state.email}
+                            onChange={event => console.log(event.target.value)}
+                        />
+                        <Input
+                            placeholder="Enter your age"
+                            value={this.state.age}
+                            type="number"
+                            onChange={this.handleAge}
+                        />
+                        <Select
+                            label={'Choose your gender:'}
+                            onChangeHandler={this.handleGender}
+                        />
+                    </div>
+                    <Button
+                        buttonColorScheme={'primary'}
+                        type={'submit'}
+                    > Save profile
+                    </Button>
+                </form>
             </div>
         )
     }

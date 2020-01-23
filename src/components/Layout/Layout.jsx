@@ -6,15 +6,21 @@ import Dropdown from "../common/dropdown/Dropdown";
 class Layout extends Component {
 
     render() {
+        console.log(window.location.pathname !== '/signin' && window.location.pathname !== '/signup');
         return (
             <>
                 <header className="header">
                     <i className="icon icon-mountains main-logo"/>
-                    <Dropdown>
-                        <NavLink to={'/signin'} className="link">Logout</NavLink>
-                    </Dropdown>
+                    { window.location.pathname !== '/signin' && window.location.pathname !== '/signup' ?
+                        <Dropdown>
+                            <NavLink to={'/signin'} className="link">Logout</NavLink>
+                        </Dropdown>
+                        : null
+                    }
                 </header>
                 <main className="main">
+                    { window.location.pathname !== '/signin' && window.location.pathname !== '/signup' ?
+                        <>
                         <aside className="sidebar">
                             <ul className="sidebar__list">
                                 <div>
@@ -48,6 +54,8 @@ class Layout extends Component {
                         <div className="main__content">
                             {this.props.children}
                         </div>
+                        </>
+                        : this.props.children }
                 </main>
             </>
         )

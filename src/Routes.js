@@ -1,12 +1,6 @@
 import React from "react";
-import {Switch, Route} from "react-router";
-import SignInPage from "./pages/SignInPage";
-import SignUpPage from "./pages/SignUpPage";
-import DashboardPage from "./pages/DashboardPage";
-import PostPage from "./pages/PostPage";
-import EventsPage from "./pages/EventsPage";
-import EventPage from "./pages/EventPage";
-import ProfilePage from "./pages/ProfilePage";
+import { Switch, Route } from "react-router";
+import { SignInPage, SignUpPage, PostPage, ProfilePage, EventPage, EventsPage, DashboardPage } from './pages/index';
 
 export default function Routes() {
     return(

@@ -10,7 +10,7 @@ function getClassName(classesArray, property) {
   }
 }
 
-export function Input({
+export default function Input({
   key,
   className,
   placeholder,

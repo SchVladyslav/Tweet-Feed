@@ -1,9 +1,16 @@
 import React from 'react';
 import './Select.scss';
+import PropTypes from 'prop-types';
 
-export default function Select({onChangeHandler}) {
+export default function Select({label, onChangeHandler}) {
+
+    Select.propTypes = {
+        label: PropTypes.string.isRequired,
+        onChangeHandler: PropTypes.func.isRequired
+    };
+
     return (
-        <label className="label">Choose your gender:
+        <label className="label">{label}
             <select
                 className="select select__text"
                 defaultValue="default"

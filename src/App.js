@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Router, Switch, Redirect } from 'react-router-dom';
-
+import { BrowserRouter } from 'react-router-dom';
 import './App.scss';
 
 import { DashboardPage } from "./pages/dashboardPage/DashboardPage";
@@ -9,6 +8,7 @@ import { SignUpPage } from "./pages/SignUpPage/SignUpPage";
 import { PrivateRoute } from "./helpers/PrivateRoute";
 import { authService } from './services/auth.service';
 import { Role } from './helpers/Role';
+import Routes from "./Routes";
 import { history } from './helpers/History';
 import { EventsPage } from './pages/eventsPage/EventsPage';
 import { PostPage } from './pages/postPage/PostPage';
