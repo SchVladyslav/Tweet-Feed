@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { authService } from "../../services/auth.service";
 import { userService } from "../../services/user.service";
+import { Logout } from "../common/logout/Logout";
 
 export default class Dashboard extends Component {
   state = {
@@ -8,21 +9,11 @@ export default class Dashboard extends Component {
     userFromApi: null
   };
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      currentUser: authService.currentUser,
-      userFromApi: null
-    };
-  }
-
   componentDidMount() {
     const { currentUser } = this.state;
-    // console.log(currentUser);
-    // userService
-    //   .getById(currentUser.id)
-    //   .then(userFromApi => this.setState({ userFromApi }));
+    userService
+      .getById(currentUser.id)
+      .then(userFromApi => this.setState({ userFromApi }));
   }
 
   render() {
@@ -39,14 +30,16 @@ export default class Dashboard extends Component {
           Current user from secure api end point:
           {userFromApi && (
             <ul>
-              <li>{/* {userFromApi.firstName} {userFromApi.lastName} */}</li>
+              <li>
+                {userFromApi.firstName} {userFromApi.lastName}
+              </li>
             </ul>
           )}
         </div>
 
         <div className="logOut">
           <h3>
-            <a onClick={authService.logout}>Log Out</a>
+            <Logout />
           </h3>
         </div>
       </div>

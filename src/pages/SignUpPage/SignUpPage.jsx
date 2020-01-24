@@ -5,7 +5,7 @@ import "./SignUpPage.scss";
 
 import { AuthSignUp } from "../../components/auth/AuthSignUp";
 
-export default class SignUpPage extends Component {
+export class SignUpPage extends Component {
   render() {
     return (
       <div className="container">

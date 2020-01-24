@@ -13,7 +13,7 @@ class AuthSignIn extends Component {
       password: ""
     };
 
-    if (authService.currentUserValue) {
+    if (authService.currentUser) {
       this.props.history.push("/dashboard");
     }
   }
@@ -50,13 +50,3 @@ class AuthSignIn extends Component {
 }
 
 export default withRouter(AuthSignIn);
-
-// () => {
-//   const { from } = this.props.location.state || {
-//     from: { pathname: "/dashboard" }
-//   };
-//   this.props.history.push(from);
-// },
-// error => {
-//   console.log(error);
-// }

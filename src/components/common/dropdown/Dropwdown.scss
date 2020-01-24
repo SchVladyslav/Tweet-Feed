@@ -28,7 +28,7 @@
   border-left: 6px solid transparent;
   transition: transform 0.4s;
 }
-.dropdown__user-icon_flip::after{
+.dropdown__user-icon_flip::after {
   transform: rotate(180deg);
   transform-origin: center center;
 }

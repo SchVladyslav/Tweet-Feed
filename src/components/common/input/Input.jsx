@@ -1,5 +1,5 @@
 import React from "react";
-import "./input.scss";
+import "./Input.scss";
 import PropTypes from "prop-types";
 
 function getClassName(classesArray, property) {
@@ -10,11 +10,12 @@ function getClassName(classesArray, property) {
   }
 }
 
-export default function Input({
+export function Input({
   key,
   className,
   placeholder,
   type,
+  name,
   errorMessage,
   onChange,
   iconName
@@ -33,6 +34,7 @@ export default function Input({
             errorMessage ? " input__field_invalid" : ""
           }`}
           placeholder={placeholder}
+          name={name}
           type={type}
           onChange={onChange}
         />
@@ -49,6 +51,7 @@ Input.propTypes = {
   className: PropTypes.string,
   placeholder: PropTypes.string,
   type: PropTypes.string,
+  name: PropTypes.string,
   onChange: PropTypes.func,
   errorMessage: PropTypes.string,
   iconName: PropTypes.string

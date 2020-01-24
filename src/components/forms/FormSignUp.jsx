@@ -2,15 +2,10 @@ import React, { Component } from "react";
 import { Input } from "../common/input/Input";
 import { Button } from "../common/button/Button";
 import { ValidateFields } from "../../helpers/ValidateFields";
-import { authService } from "../../services/auth.service";
 
 export class FormSignUp extends Component {
   constructor(props) {
     super(props);
-
-    this.formProps = {
-      state: props.state
-    };
 
     this.state = {
       ...props.state,
@@ -43,35 +38,40 @@ export class FormSignUp extends Component {
             type="text"
             placeholder="First Name"
             name="firstName"
-            errorMessage="Enter your First Name!"
+            iconName="user"
+            //errorMessage="Enter your First Name!"
           />
           <Input
             className="input input"
             type="text"
             placeholder="Last Name"
             name="lastName"
-            errorMessage="Enter your Last Name!"
+            iconName="user"
+            //errorMessage="Enter your Last Name!"
           />
           <Input
             className="input input__email"
             type="email"
             placeholder="E-mail"
             name="email"
-            errorMessage="Enter an E-mail!"
+            iconName="user"
+            //errorMessage="Enter an E-mail!"
           />
           <Input
             className="input input__password"
             type="password"
             placeholder="Password"
             name="password"
-            errorMessage="Enter a Password!"
+            iconName="password"
+            //errorMessage="Enter a Password!"
           />
           <Input
             className="input input__password"
             type="password"
             placeholder="Confirm Password"
             name="password"
-            errorMessage="Passwords aren't matched!"
+            iconName="password"
+            //errorMessage="Passwords aren't matched!"
           />
         </ul>
         <Button

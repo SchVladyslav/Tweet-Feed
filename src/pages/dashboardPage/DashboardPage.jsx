@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 import "./DashboardPage.scss";
 import Dashboard from "../../components/dashboard/Dashboard";
 
-export default class DashboardPage extends Component {
+export class DashboardPage extends Component {
   render() {
     return (
       <div>

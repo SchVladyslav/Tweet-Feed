@@ -4,15 +4,14 @@
   outline: 0;
   border-radius: 25px;
   color: #fff;
-  transition: disabled .4s;
-
+  transition: disabled 0.4s;
 
   &:hover {
     opacity: 0.8;
   }
 
   &:disabled {
-    opacity: .4;
+    opacity: 0.4;
   }
 
   &_small {
@@ -60,15 +59,22 @@
 
   &_pearl {
     background-color: #a64bf4;
-    background: -webkit-gradient(linear, left top, right top, from(#00dbde), color-stop(#fc00ff), color-stop(#00dbde), to(#fc00ff));
+    background: -webkit-gradient(
+      linear,
+      left top,
+      right top,
+      from(#00dbde),
+      color-stop(#fc00ff),
+      color-stop(#00dbde),
+      to(#fc00ff)
+    );
     background: linear-gradient(to right, #00dbde, #fc00ff, #00dbde, #fc00ff);
     background-size: 300% 100%;
     text-transform: capitalize;
-    transition: background-position .4s;
+    transition: background-position 0.4s;
 
     &:hover {
       background-position: 50% 0;
     }
   }
-
 }
