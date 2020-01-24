@@ -13,6 +13,7 @@ export default class SignUpPage extends Component {
                         <div className="main-back">
                             <Link to="/signin">&larr;</Link>
                         </div>
+                            <i className="icon icon-mountains main-logo"/>
                         <h1 className="main__title">Sign Up</h1>
                         <AuthSignUp/>
                     </main>
@@ -20,4 +21,5 @@ export default class SignUpPage extends Component {
             </Layout>
         );
     }
+}
 

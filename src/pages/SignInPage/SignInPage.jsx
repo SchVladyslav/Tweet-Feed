@@ -5,7 +5,7 @@ import "./SignInPage.scss";
 import AuthSignIn from "../../components/auth/AuthSignIn";
 import Layout from "../../components/Layout/Layout";
 
-export class SignInPage extends Component {
+class SignInPage extends Component {
   render() {
     return (
         <Layout>
@@ -27,3 +27,5 @@ export class SignInPage extends Component {
     );
   }
 }
+
+export default SignInPage;

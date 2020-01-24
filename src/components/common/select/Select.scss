@@ -8,12 +8,16 @@
   font-family: 'Raleway', sans-serif;
   text-transform: uppercase;
   padding: 5px;
-  border-radius: 4px;
-  border: 1px solid black;
+  border: 1px solid rgba(74,74,74,0.95);
   margin-left: 15px;
+  color: rgba(74,74,74,0.95);
 
   &:hover {
     cursor: pointer;
+  }
+
+  &:focus {
+    outline: #00dbde 2px solid;
   }
 
   &__text {
