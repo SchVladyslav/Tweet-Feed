@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 
-import { Form } from "../forms/Form";
 import { authService } from "../../services/auth.service";
+import FormSignIn from "../forms/FormSignIn/FormSignIn";
 
 class AuthSignIn extends Component {
   constructor(props) {
@@ -40,7 +40,7 @@ class AuthSignIn extends Component {
 
   render() {
     return (
-      <Form
+      <FormSignIn
         state={this.state}
         updateState={this.updateState}
         handleSubmit={this.handleSubmit}

@@ -3,27 +3,29 @@ import { Link } from "react-router-dom";
 
 import "./SignInPage.scss";
 import AuthSignIn from "../../components/auth/AuthSignIn";
+import Layout from "../../components/Layout/Layout";
 
-export class SignInPage extends Component {
+class SignInPage extends Component {
   render() {
     return (
-      <div className="container">
-        <main className="main-content">
-          <div className="main-logo-page">
-            <i className="icon icon-mountains"></i>
-          </div>
-          <h1 className="main__title">Sign In</h1>
+        <Layout>
+            <div className="container">
+                <div className="main-content">
+                    <h1 className="main__title">Sign In</h1>
 
-          <AuthSignIn />
+                    <AuthSignIn />
 
-          <div className="form__controls">
-            <p className="main__social-text">Or sign up using</p>
-            <Link className="hint" to="/signup">
-              Don't have an account?
-            </Link>
-          </div>
-        </main>
-      </div>
+                    <div className="form__controls">
+                        <p className="main__social-text">Or sign up using</p>
+                        <Link className="hint" to="/signup">
+                            Don't have an account?
+                        </Link>
+                    </div>
+                </div>
+            </div>
+        </Layout>
     );
   }
 }
+
+export default SignInPage;

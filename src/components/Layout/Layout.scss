@@ -1,4 +1,4 @@
-.navbar {
+.header {
   width: 100%;
   background-color: #343a40;
   color: #ffff;
@@ -15,6 +15,7 @@
   position: fixed;
   height: 100%;
   box-shadow: 4px 0 5px -5px rgba(0, 0, 0, 0.5);
+  background-color: #fff;
 
   &__list {
     display: flex;
@@ -27,13 +28,6 @@
 
     &__item {
       padding: 20px 50px;
-      font-size: 24px;
-      font-weight: bold;
-
-      &__link {
-        text-decoration: none;
-        color: #222222;
-      }
 
       &:hover {
         cursor: pointer;
@@ -45,11 +39,6 @@
       }
     }
   }
-
-  &__icon {
-    padding: 10px;
-    margin-left: 80%;
-  }
 }
 
 .main {
@@ -60,9 +49,20 @@
   &__content {
     position: relative;
     left: 254px;
+    width: calc(100% - 254px);
   }
 }
 
-.icon:hover {
-  cursor: pointer;
+.link {
+  text-decoration: none;
+  color: #222222;
+  font-size: 24px;
+  font-weight: bold;
 }
+
+.active {
+  color: #007bff;
+  text-decoration: underline;
+}
+
+

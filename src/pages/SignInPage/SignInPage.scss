@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-
+  width: 100%;
   min-height: 100vh;
   color: #9a9a9a;
 
@@ -67,7 +67,7 @@
   left: 3%;
 }
 
-.input {
+/*.input {
   position: relative;
 
   height: 45px;
@@ -79,7 +79,7 @@
 
   border-bottom: 2px solid #d9d9d9;
   transition: 0.3s ease all;
-}
+}*/
 
 .input:focus {
   border-bottom: 2px solid #7f7f7f;

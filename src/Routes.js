@@ -1,15 +1,13 @@
 import React from "react";
-import {Switch, Route} from "react-router";
-import SignInPage from "./pages/SignInPage";
-import SignUpPage from "./pages/SignUpPage";
-import DashboardPage from "./pages/DashboardPage";
-import PostPage from "./pages/PostPage";
-import EventsPage from "./pages/EventsPage";
-import EventPage from "./pages/EventPage";
-import ProfilePage from "./pages/ProfilePage";
+import { Switch, Route, Router } from "react-router";
+import { SignInPage, SignUpPage, PostPage, ProfilePage, EventPage, EventsPage, DashboardPage } from './pages/index';
+import {PrivateRoute} from "./helpers/PrivateRoute";
+import {Role} from "./helpers/Role";
+import { history } from './helpers/History';
 
 export default function Routes() {
     return(
+        <Router history={history}>
         <Switch>
             <Route path={'/signin'} component={SignInPage}/>
             <Route path={'/signup'} component={SignUpPage}/>
@@ -19,6 +17,7 @@ export default function Routes() {
             <Route path={'/event/:id'} component={EventPage}/>
             <Route path={'/profile'} component={ProfilePage}/>
             <Route exact path={'/'} component={DashboardPage}/>
+            <PrivateRoute exact path="/dashboard" roles={[Role.User, Role.Admin]} component={DashboardPage} />
             <Route
                 exact path={'**'}
                 component={() =>
@@ -28,5 +27,6 @@ export default function Routes() {
                     </h1>}
             />
         </Switch>
+        </Router>
     )
 }

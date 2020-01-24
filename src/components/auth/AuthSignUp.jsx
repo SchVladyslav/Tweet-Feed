@@ -1,5 +1,5 @@
 import React from "react";
-import { FormSignUp } from "../forms/FormSignUp";
+import { FormSignUp } from "../forms/FormSignUp/FormSignUp";
 import { Component } from "react";
 import { authService } from "../../services/auth.service";
 

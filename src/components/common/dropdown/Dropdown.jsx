@@ -3,6 +3,7 @@ import "./Dropdown.scss";
 import PropTypes from "prop-types";
 
 export default class Dropdown extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -11,7 +12,7 @@ export default class Dropdown extends React.Component {
     this.toggleVisibility = this.toggleVisibility.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     document.addEventListener("click", this.toggleVisibility, false);
   }
 
@@ -43,6 +44,7 @@ export default class Dropdown extends React.Component {
     );
   }
 }
+
 Dropdown.propTypes = {
   children: PropTypes.element
 };
