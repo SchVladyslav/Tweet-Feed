@@ -1,5 +1,6 @@
 import React from "react";
 import './dropdown.scss'
+import PropTypes from "prop-types";
 
 export default class Dropdown extends React.Component {
     constructor(props) {
@@ -7,17 +8,17 @@ export default class Dropdown extends React.Component {
         this.state = {
             isOpen: false,
         };
-        this.handleClick = this.handleClick.bind(this);
+        this.toggleVisibility = this.toggleVisibility.bind(this);
     }
 
     componentWillMount() {
-        document.addEventListener('click', this.handleClick, false);
+        document.addEventListener('click', this.toggleVisibility, false);
     }
 
-    handleClick(e) {
+    toggleVisibility(e) {
         const dropdown_content = document.querySelector('.dropdown__content');
         const dropdown = document.querySelector('.dropdown__user-icon');
-        if (!e.path.includes(dropdown_content) && this.state.isOpen || dropdown === e.target) {
+        if ((!e.path.includes(dropdown_content) && this.state.isOpen) || dropdown === e.target) {
             this.setState({
                 isOpen: !this.state.isOpen
             })
@@ -34,3 +35,7 @@ export default class Dropdown extends React.Component {
         </div>
     }
 }
+Dropdown.propTypes = {
+    children: PropTypes.element
+};
+

@@ -1,5 +1,6 @@
 import React from "react";
 import './input.scss';
+import PropTypes from "prop-types";
 
 function getClassName(classesArray, property) {
     if (classesArray[property]) {
@@ -35,3 +36,12 @@ export default function Input({key, className, placeholder, type, errorMessage, 
 
     </div>
 }
+Input.propTypes = {
+    key: PropTypes.string,
+    className: PropTypes.string,
+    placeholder: PropTypes.string,
+    type: PropTypes.string,
+    onChange: PropTypes.func,
+    errorMessage: PropTypes.string,
+    iconName: PropTypes.string
+};
