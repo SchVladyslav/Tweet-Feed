@@ -10,7 +10,7 @@ function getClassName(classesArray, property) {
   }
 }
 
-export default function Button({
+export function Button({
   children,
   className,
   type,

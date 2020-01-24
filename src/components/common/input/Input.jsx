@@ -1,5 +1,5 @@
 import React from "react";
-import "./input.scss";
+import "./Input.scss";
 import PropTypes from "prop-types";
 
 function getClassName(classesArray, property) {
@@ -10,11 +10,12 @@ function getClassName(classesArray, property) {
   }
 }
 
-export default function Input({
+export function Input({
   key,
   className,
   placeholder,
   type,
+  name,
   errorMessage,
   onChange,
   iconName
