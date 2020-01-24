@@ -33,6 +33,7 @@ export default function Input({
             errorMessage ? " input__field_invalid" : ""
           }`}
           placeholder={placeholder}
+          name={name}
           type={type}
           onChange={onChange}
         />
@@ -49,6 +50,7 @@ Input.propTypes = {
   className: PropTypes.string,
   placeholder: PropTypes.string,
   type: PropTypes.string,
+  name: PropTypes.string,
   onChange: PropTypes.func,
   errorMessage: PropTypes.string,
   iconName: PropTypes.string

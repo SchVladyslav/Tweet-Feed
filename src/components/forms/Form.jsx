@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Input } from "../common/input/Input";
 import { Button } from "../common/button/Button";
 import { ValidateFields } from "../../helpers/ValidateFields";
-import { authService } from "../../services/auth.service";
 
 export class Form extends Component {
   constructor(props) {
@@ -43,6 +42,7 @@ export class Form extends Component {
             type="email"
             placeholder="E-mail"
             name="email"
+            iconName="email"
             // errorMessage="Enter an E-mail!"
           />
           <Input
@@ -50,6 +50,7 @@ export class Form extends Component {
             type="password"
             placeholder="Password"
             name="password"
+            iconName="password"
             // errorMessage="Enter a Password!"
           />
         </ul>

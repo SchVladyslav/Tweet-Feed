@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import "./SignInPage.scss";
 import AuthSignIn from "../../components/auth/AuthSignIn";
 
-class SignInPage extends Component {
+export class SignInPage extends Component {
   render() {
     return (
       <div className="container">
@@ -27,5 +27,3 @@ class SignInPage extends Component {
     );
   }
 }
-
-export default SignInPage;

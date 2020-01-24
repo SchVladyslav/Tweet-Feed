@@ -5,7 +5,6 @@ import { authService } from '../services/auth.service';
 export const PrivateRoute = ({ component: Component, roles, ...rest }) => {
     return <Route {...rest} render={props => {
         const currentUser = authService.currentUser;
-        // console.log(currentUser);
         if (!currentUser) {
             return <Redirect to={{ pathname: '/signin', state: { from: props.location } }} />
         }
