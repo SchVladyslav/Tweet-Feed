@@ -1,5 +1,6 @@
 import React from "react";
 import "./Button.scss";
+import PropTypes from "prop-types";
 
 function getClassName(classesArray, property) {
   if (classesArray[property]) {
@@ -54,3 +55,17 @@ export default function Button({
     </button>
   );
 }
+
+Button.propTypes = {
+  key: PropTypes.string,
+  type: PropTypes.string,
+  className: PropTypes.string,
+  buttonColorScheme: PropTypes.string,
+  buttonSize: PropTypes.string,
+  color: PropTypes.string,
+  onClick: PropTypes.func,
+  onSubmit: PropTypes.func,
+  disabled: PropTypes.bool,
+  style: PropTypes.string,
+  children: PropTypes.string
+};
