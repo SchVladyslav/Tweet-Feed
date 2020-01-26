@@ -6,22 +6,12 @@ import Button from "../common/button/Button"
 import Preloader from "../common/preloader/Preloader";
 import {Logout} from "../common/logout/Logout";
 import './Dashboard.scss'
+import Post from "./Post";
 import ModalDashboard from "../modal/modalDashboard/ModalDashboard";
-// import Route from "react-router/modules/Route";
-// import PostPage from "../../pages/postPage/PostPage";
-// import Link from "react-router-dom/modules/Link";
-// import PostPage from "../../pages/postPage/PostPage";
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Link
-} from "react-router-dom";
 
 export default class Dashboard extends Component {
     state = {
         currentUser: authService.currentUser,
-        userFromApi: null,
         newsList: null,
         title: '',
         description: '',
@@ -30,9 +20,6 @@ export default class Dashboard extends Component {
 
     componentDidMount() {
         const {currentUser} = this.state;
-        userService
-            .getById(currentUser.id)
-            .then(userFromApi => this.setState({userFromApi}));
         this.getNewsList();
     }
 
@@ -41,29 +28,17 @@ export default class Dashboard extends Component {
             .then(newsList => this.setState({newsList}))
     }
 
-    removeNews(id) {
-        newsService.removeNews(id)
-            .then(newsList => this.setState({newsList}))
-    }
+    toggleModalVisibility = () => {
+        this.setState({
+            isModalOpen: !this.state.isModalOpen
+        });
+    };
 
-    renderPosts() {
-        return this.state.newsList ? (<div>
-            {this.state.newsList.map((item) => {
-                return <div className="post" key={item.id}>
-                    <h3 className="post__title">{item.title}</h3>
-                    <p className="post__description">{item.description}</p>
-                    {this.state.currentUser.role === 'Admin' ? (<div className="post__control-buttons">
-                        <Button type='submit' buttonColorScheme='transparent'
-                                buttonSize='small' onClick={() => this.removeNews(item.id)}>Delete</Button>
-                    </div>) : null}
-                    <Route>
-                        <Link to={`/post/${item.id}`}><Button type='submit' buttonColorScheme='transparent'
-                                                              buttonSize='small' className='post__link'>details</Button></Link>
-                    </Route>
-                </div>
-            })}
-        </div>) : <Preloader/>;
-    }
+    handleModalInput = e => {
+        const {name} = e.target;
+        const {value} = e.target;
+        this.setState({[name]: value});
+    };
 
     createPost = e => {
         e.preventDefault();
@@ -77,17 +52,24 @@ export default class Dashboard extends Component {
         this.toggleModalVisibility();
         this.getNewsList();
     };
-    handleModalInput = e => {
-        const {name} = e.target;
-        const {value} = e.target;
-        this.setState({[name]: value});
+
+    removeNews = (id) => {
+        newsService.removeNews(id)
+            .then(newsList => this.setState({newsList}))
     };
 
-    toggleModalVisibility = () => {
-        this.setState({
-            isModalOpen: !this.state.isModalOpen
-        });
-    };
+
+    renderPosts() {
+        return this.state.newsList ? (<div>
+            {this.state.newsList.map((item) => {
+                return <Post post={item}
+                             currentUserRole={this.state.currentUser.role}
+                             key={item.id}
+                             deleteHandler={this.removeNews}
+                />
+            })}
+        </div>) : <Preloader/>;
+    }
 
     render() {
         return (
@@ -107,7 +89,6 @@ export default class Dashboard extends Component {
                     </div>) : <div style={{height: '10px'}}/>}
 
                     <div className="posts">
-
                         {this.renderPosts()}
                     </div>
                     <div className="logOut">
@@ -115,32 +96,5 @@ export default class Dashboard extends Component {
                     </div>
                 </div>
             </React.Fragment>)
-        // const { currentUser, userFromApi } = this.state;
-        // return (
-        //   <div className="dashboard">
-        //     <h1>Home</h1>
-        //     <p>You're logged in!</p>
-        //     <p>
-        //       Your role is: <strong>{currentUser.role}</strong>.
-        //     </p>
-        //     <p>This page can be accessed by all authenticated users.</p>
-        //     <div>
-        //       Current user from secure api end point:
-        //       {userFromApi && (
-        //         <ul>
-        //           <li>
-        //             {userFromApi.firstName} {userFromApi.lastName}
-        //           </li>
-        //         </ul>
-        //       )}
-        //     </div>
-        //
-        //     <div className="logOut">
-        //       <h3>
-        //         <Logout />
-        //       </h3>
-        //     </div>
-        //   </div>
-        // );
     }
 }
