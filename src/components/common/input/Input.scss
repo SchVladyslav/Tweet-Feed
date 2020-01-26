@@ -1,6 +1,6 @@
 .input {
   position: relative;
-  height: 73px;
+  height: 40px;
 }
 
 .input__icon {
@@ -44,7 +44,8 @@
 }
 
 .error-message {
-  margin: 10px 0 0 0;
+  margin: -13px 0 0 0;
+  font-size: 13px;
   color: red;
   text-align: center;
 }
