@@ -80,9 +80,8 @@ export const FakeAPI = (() => {
             const params = JSON.parse(opts.body);
             const user = _users.find(user => user.email === params.email && user.password === params.password);
 
-            let token = jwt.sign({ user: user }, SECRET_KEY);
-
             if (!user) return error('Username or password is incorrect');
+            let token = jwt.sign({ user: user }, SECRET_KEY);
 
             return ok({ token: token });
         }
