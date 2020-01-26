@@ -8,18 +8,18 @@ export const validateFields = (fieldName, value, state) => {
 
     switch (fieldName) {
         case "firstName":
-            stateObj.formErrors.firstName = value.length ? "" : "Enter your First Name";
+            stateObj.formErrors.firstName = value.length ? "" : "Enter Your First Name!";
             break;
         case "lastName":
-            stateObj.formErrors.lastName = value.length ? "" : "Enter your Last Name";
+            stateObj.formErrors.lastName = value.length ? "" : "Enter Your Last Name!";
             break;
         case "email":
             emailValid = value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
-            stateObj.formErrors.email = emailValid ? "" : "Email is invalid!";
+            stateObj.formErrors.email = emailValid ? "" : "Email is Invalid!";
             break;
         case "password":
             passValid = value.length >= MIN_PASS_LENGTH;
-            stateObj.formErrors.password = passValid ? "" : "Password is too short! Expected at least 4 symbols.";
+            stateObj.formErrors.password = passValid ? "" : "Password is too short! Expected at least 4 symbols!";
             break;
         case "confirmPassword":
             confirmPasswordValid = value === stateObj.password ? true : false;
