@@ -123,7 +123,6 @@ export const FakeAPI = (() => {
     const removeNews = (url, opts, ok, unauthorised) => {
         if (url.match(/\/news\/\d+$/) && opts.method === 'DELETE') {
             if (!isLoggedIn) return unauthorised();
-            // get id from request url
             let urlParts = url.split('/');
             let id = parseInt(urlParts[urlParts.length - 1]);
             _news.forEach((item, i) => {
