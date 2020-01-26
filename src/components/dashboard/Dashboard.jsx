@@ -24,10 +24,6 @@ export default class Dashboard extends Component {
   };
 
   componentDidMount() {
-    const { currentUser } = this.state;
-    userService
-      .getById(currentUser.id)
-      .then(userFromApi => this.setState({ userFromApi }));
     this.getNewsList();
   }
 
@@ -135,38 +131,8 @@ export default class Dashboard extends Component {
           )}
 
           <div className="posts">{this.renderPosts()}</div>
-          <div className="logOut">
-            <Logout />
-          </div>
         </div>
       </React.Fragment>
     );
-    // const { currentUser, userFromApi } = this.state;
-    // return (
-    //   <div className="dashboard">
-    //     <h1>Home</h1>
-    //     <p>You're logged in!</p>
-    //     <p>
-    //       Your role is: <strong>{currentUser.role}</strong>.
-    //     </p>
-    //     <p>This page can be accessed by all authenticated users.</p>
-    //     <div>
-    //       Current user from secure api end point:
-    //       {userFromApi && (
-    //         <ul>
-    //           <li>
-    //             {userFromApi.firstName} {userFromApi.lastName}
-    //           </li>
-    //         </ul>
-    //       )}
-    //     </div>
-    //
-    //     <div className="logOut">
-    //       <h3>
-    //         <Logout />
-    //       </h3>
-    //     </div>
-    //   </div>
-    // );
   }
 }
