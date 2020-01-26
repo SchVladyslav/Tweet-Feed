@@ -12,6 +12,7 @@ import ModalDashboard from "../modal/modalDashboard/ModalDashboard";
 export default class Dashboard extends Component {
     state = {
         currentUser: authService.currentUser,
+        userFromApi: null,
         newsList: null,
         title: '',
         description: '',
@@ -20,6 +21,10 @@ export default class Dashboard extends Component {
 
     componentDidMount() {
         const {currentUser} = this.state;
+
+        userService
+            .getById(currentUser.id)
+            .then(userFromApi => this.setState({ userFromApi }));
         this.getNewsList();
     }
 
@@ -43,14 +48,14 @@ export default class Dashboard extends Component {
     createPost = e => {
         e.preventDefault();
         const {title, description} = this.state;
-        newsService.createNews(title, description);
+        newsService.createNews(title, description).then(this.getNewsList);
         this.setState({
             ...this.state,
             title: '',
             description: ''
         });
         this.toggleModalVisibility();
-        this.getNewsList();
+
     };
 
     removeNews = (id) => {
