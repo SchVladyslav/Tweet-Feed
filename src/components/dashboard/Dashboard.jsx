@@ -3,7 +3,7 @@ import { authService } from "../../services/auth.service";
 import { userService } from "../../services/user.service";
 import { newsService } from "../../services/news.service";
 import Button from "../common/button/Button";
-import Preloader from "../common/preloader/Preloader";
+import { Preloader } from "../common/preloader/Preloader";
 import { Logout } from "../common/logout/Logout";
 import "./Dashboard.scss";
 import ModalDashboard from "../modal/modalDashboard/ModalDashboard";
