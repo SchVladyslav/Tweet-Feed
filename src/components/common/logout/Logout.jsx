@@ -4,19 +4,19 @@ import { Button } from "../index";
 
 export class Logout extends Component {
   state = {
-    isLoggedIn: false
+    isLoggedOut: false
   };
 
   logout = e => {
     e.preventDefault();
     localStorage.removeItem("currentUser");
-    this.setState({ isLoggedIn: true });
+    this.setState({ isLoggedOut: true });
   };
 
   render() {
-    const { isLoggedIn } = this.state;
+    const { isLoggedOut } = this.state;
 
-    if (isLoggedIn) {
+    if (isLoggedOut) {
       return <Redirect to="/signin" push={true} />;
     }
 
@@ -25,8 +25,8 @@ export class Logout extends Component {
         children="Logout"
         className="button"
         type="submit"
-        buttonColorScheme="primary"
-        buttonSize="medium"
+        buttonColorScheme="transparent"
+        buttonSize="small"
         onClick={this.logout}
       />
     );

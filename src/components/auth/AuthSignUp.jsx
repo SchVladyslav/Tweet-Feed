@@ -1,9 +1,10 @@
-import React from "react";
+import React, { Component } from "react";
+import { withRouter } from "react-router";
 import { FormSignUp } from "../forms/FormSignUp/FormSignUp";
-import { Component } from "react";
 import { authService } from "../../services/auth.service";
+import { Preloader } from "../common/preloader/Preloader";
 
-export class AuthSignUp extends Component {
+class AuthSignUp extends Component {
   constructor(props) {
     super(props);
 
@@ -12,7 +13,8 @@ export class AuthSignUp extends Component {
       lastName: "",
       email: "",
       password: "",
-      confirmPassword: ""
+      confirmPassword: "",
+      isFetching: false
     };
   }
 
@@ -35,12 +37,13 @@ export class AuthSignUp extends Component {
       password,
       confirmPassword
     } = this.state;
+    this.setState({ isFetching: true });
     authService
       .signUp(firstName, lastName, email, password, confirmPassword)
       .then(
         () => {
           const { from } = this.props.location.state || {
-            from: { pathname: "/dashboard" }
+            from: { pathname: "/signin" }
           };
           this.props.history.push(from);
         },
@@ -51,12 +54,18 @@ export class AuthSignUp extends Component {
   };
 
   render() {
+    const { isFetching } = this.state;
     return (
-      <FormSignUp
-        state={this.state}
-        updateState={this.updateState}
-        handleSubmit={this.handleSubmit}
-      />
+      <>
+        {isFetching ? <Preloader /> : ""}
+        <FormSignUp
+          state={this.state}
+          updateState={this.updateState}
+          handleSubmit={this.handleSubmit}
+        />
+      </>
     );
   }
 }
+
+export default withRouter(AuthSignUp);

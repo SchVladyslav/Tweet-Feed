@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Button, Input } from "../../common/index";
-import { ValidateFields } from "../../../helpers/ValidateFields";
-import { authService } from "../../../services/auth.service";
+import { validateFields } from "../../../helpers/ValidateFields";
 
 class FormSignIn extends Component {
   constructor(props) {
@@ -13,6 +12,10 @@ class FormSignIn extends Component {
 
     this.state = {
       ...props.state,
+      formErrors: {
+        email: "",
+        password: ""
+      },
       formValid: false
     };
   }
@@ -22,7 +25,7 @@ class FormSignIn extends Component {
     const { value } = e.target;
 
     this.setState({ [name]: value }, () => {
-      //ValidateFields(name, value);
+      validateFields(name, value, this.state);
       this.props.updateState(this.state);
     });
   };
@@ -32,7 +35,6 @@ class FormSignIn extends Component {
     return (
       <form
         className="main__form"
-        action=""
         onChange={this.handleUserInput}
         onSubmit={handleSubmit}
       >
@@ -43,7 +45,7 @@ class FormSignIn extends Component {
             placeholder="E-mail"
             name="email"
             iconName="email"
-            // errorMessage="Enter an E-mail!"
+            errorMessage={this.state.formErrors.email}
           />
           <Input
             className="input input__password"
@@ -51,15 +53,16 @@ class FormSignIn extends Component {
             placeholder="Password"
             name="password"
             iconName="password"
-            // errorMessage="Enter a Password!"
+            errorMessage={this.state.formErrors.password}
           />
         </ul>
         <Button
+          disabled={this.state.formValid ? false : true}
           children="Sign In"
           className="button"
           type="submit"
-          buttonColorScheme="primary"
-          buttonSize="small"
+          buttonColorScheme="pearl"
+          buttonSize="large"
         />
       </form>
     );

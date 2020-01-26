@@ -14,6 +14,7 @@ function signIn(email, password) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })
     };
+
     return fetch(`/users/authenticate`, requestOptions)
         .then(HandleResponse)
         .then(token => {
@@ -23,18 +24,15 @@ function signIn(email, password) {
         });
 }
 
-function signUp(firstname, lastname, email, password, confirmPassword) {
+function signUp(firstName, lastName, email, password, confirmPassword) {
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ firstname, lastname, email, password, confirmPassword }),
+        body: JSON.stringify({ firstName, lastName, email, password, confirmPassword }),
     }
 
     return fetch(`/users/authorization`, requestOptions)
-        .then(HandleResponse)
-        .then(token => {
-
-        })
+        .then(HandleResponse);
 }
 
 function getUserDataFromToken(user) {
