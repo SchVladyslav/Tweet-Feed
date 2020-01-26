@@ -2,16 +2,16 @@
 @import "./assets/SCSS/normalize";
 
 body {
-  font-family: 'Raleway', sans-serif;
+  font-family: "Raleway", sans-serif;
   min-height: 100vh;
-  background: no-repeat center/cover url('./assets/img/bg-01.jpg');
+  background: no-repeat center/cover url("./assets/img/bg-01.jpg");
 }
 
 .main-logo {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-bottom: 10px;
+  padding-bottom: 5px;
   width: 54px;
   height: 52px;
   font-size: 35px;
@@ -26,4 +26,3 @@ body {
     background-position: 50% 0;
   }
 }
-

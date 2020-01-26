@@ -3,6 +3,7 @@ import { withRouter } from "react-router-dom";
 
 import { authService } from "../../services/auth.service";
 import FormSignIn from "../forms/FormSignIn/FormSignIn";
+import { Preloader } from "../common/preloader/Preloader";
 
 class AuthSignIn extends Component {
   constructor(props) {
@@ -10,7 +11,8 @@ class AuthSignIn extends Component {
 
     this.state = {
       email: "",
-      password: ""
+      password: "",
+      isFetching: false
     };
 
     if (authService.currentUser) {
@@ -25,6 +27,7 @@ class AuthSignIn extends Component {
   handleSubmit = e => {
     e.preventDefault();
     const { email, password } = this.state;
+    this.setState({ isFetching: true });
     authService.signIn(email, password).then(
       () => {
         const { from } = this.props.location.state || {
@@ -39,12 +42,16 @@ class AuthSignIn extends Component {
   };
 
   render() {
+    const { isFetching } = this.state;
     return (
-      <FormSignIn
-        state={this.state}
-        updateState={this.updateState}
-        handleSubmit={this.handleSubmit}
-      />
+      <>
+        {isFetching ? <Preloader /> : ""}
+        <FormSignIn
+          state={this.state}
+          updateState={this.updateState}
+          handleSubmit={this.handleSubmit}
+        />
+      </>
     );
   }
 }

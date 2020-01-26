@@ -3,18 +3,14 @@ import jwt from 'jsonwebtoken';
 
 export const FakeAPI = (() => {
     const SECRET_KEY = "Tweet-Feed";
+    const USER_AUTHENTICATE = '/users/authenticate';
+    const USER_AUTHORIZATION = '/users/authorization';
 
     let _users = [
         { id: 0, email: 'admin@gmail.com', password: 'admin', firstName: 'Admin', lastName: 'User', role: Role.Admin },
         { id: 1, email: 'user@gmail.com', password: 'user', firstName: 'Normal', lastName: 'User', role: Role.User }
     ];
 
-    const _news = [
-        { id: 0, text: "News #1" },
-        { id: 1, text: "News #2" },
-    ];
-
-    const _fetch = window.fetch;
     let isLoggedIn, role;
 
     window.fetch = function (url, opts) {
@@ -53,9 +49,8 @@ export const FakeAPI = (() => {
     };
 
     const signIn = (url, opts, ok, error) => {
-        if (url.endsWith('/users/authenticate') && opts.method === 'POST') {
+        if (url.endsWith(USER_AUTHENTICATE) && opts.method === 'POST') {
             const params = JSON.parse(opts.body);
-            //console.log(opts);
             const user = _users.find(user => user.email === params.email && user.password === params.password);
 
             let token = jwt.sign({ user: user }, SECRET_KEY);
@@ -67,16 +62,16 @@ export const FakeAPI = (() => {
     }
 
     const signUp = (url, opts) => {
-        if (url.endsWith('/users/authorization') && opts.method === 'POST') {
+        if (url.endsWith(USER_AUTHORIZATION) && opts.method === 'POST') {
             const params = JSON.parse(opts.body);
-            //console.log(params);
 
             const user = {
-                id: this.Math.random() * 10,
+                id: Math.floor(Math.random() * 100),
                 email: params.email,
                 password: params.password,
                 firstName: params.firstName,
-                lastName: params.lastName
+                lastName: params.lastName,
+                role: Role.User
             }
 
             _users.push(user);
@@ -86,17 +81,13 @@ export const FakeAPI = (() => {
     const getUserById = (url, opts, ok, unauthorised) => {
         if (url.match(/\/users\/\d+$/) && opts.method === 'GET') {
             if (!isLoggedIn) return unauthorised();
-            // get id from request url
             let urlParts = url.split('/');
             let id = parseInt(urlParts[urlParts.length - 1]);
 
             // only allow normal users access to their own record
+            if (role === Role.Admin) return unauthorised();
 
-            const currentUser = _users.find(user => user.role === role);
-
-            if (id !== currentUser.id && role !== Role.Admin) return unauthorised();
             const user = _users.find(user => user.id === id);
-
             return ok(user);
         }
     }

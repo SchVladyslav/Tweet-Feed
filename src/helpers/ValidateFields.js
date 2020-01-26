@@ -1,43 +1,49 @@
-export const ValidateFields = (fieldName, value) => {
-    let message = "";
+export const validateFields = (fieldName, value, state) => {
+    const stateObj = state;
+
+    const MIN_PASS_LENGTH = 4;
+    const SignIn_STATE_LENGTH = 5;
+
+    let emailValid, passValid, confirmPasswordValid;
 
     switch (fieldName) {
         case "firstName":
-            message = value.length ? "" : "Enter your First Name";
+            stateObj.formErrors.firstName = value.length ? "" : "Enter your First Name";
             break;
         case "lastName":
-            message = value.length ? "" : "Enter your Last Name";
+            stateObj.formErrors.lastName = value.length ? "" : "Enter your Last Name";
             break;
         case "email":
-            let emailValid = value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
-            message = emailValid ? "" : "Email is invalid!";
+            emailValid = value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
+            stateObj.formErrors.email = emailValid ? "" : "Email is invalid!";
             break;
         case "password":
-            message = value.length > 6 ? "" : "Password is too short";
+            passValid = value.length >= MIN_PASS_LENGTH;
+            stateObj.formErrors.password = passValid ? "" : "Password is too short! Expected at least 4 symbols.";
             break;
-        case "сonfirmPassword":
-            message = value.length > 6 ? "" : "Passwords are not matching!";
+        case "confirmPassword":
+            confirmPasswordValid = value === stateObj.password ? true : false;
+            stateObj.formErrors.confirmPassword = confirmPasswordValid ? "" : "Passwords are not matching!";
             break;
         default:
             break;
     }
-    // this.setState( //destructuring?
-    //     {
-    //         firstName: value,
-    //         formErrors: fieldName,
-    //         emailValid: fieldName,
-    //         passwordValid: fieldName,
-    //         confirmPasswordValid: fieldName
-    //     },
-    //     this.validateForm
-    // );
+
+    Object.keys(stateObj).length === SignIn_STATE_LENGTH
+        ? validSignInForm(emailValid, passValid, stateObj)
+        : validSignUpForm(stateObj.firstName.length, stateObj.lastName.length, emailValid, confirmPasswordValid, stateObj);
 }
 
-const validateForm = () => {
-    this.setState({
-        formValid:
-            this.state.emailValid &&
-            this.state.passwordValid &&
-            this.state.confirmPasswordValid
-    });
+const validSignInForm = (emailValid, passValid, stateObj) => {
+    if (emailValid !== null && passValid)
+        stateObj.formValid = true;
+    else
+        stateObj.formValid = false;
+}
+
+const validSignUpForm = (firstName, lastName, emailValid, confirmPasswordValid, stateObj) => {
+    if (emailValid !== null && firstName && lastName && confirmPasswordValid)
+        stateObj.formValid = true;
+    else
+        stateObj.formValid = false;
 }

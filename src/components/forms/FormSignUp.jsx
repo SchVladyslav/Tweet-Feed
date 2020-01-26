@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { Button, Input } from "../../common/index";
-import { validateFields } from "../../../helpers/ValidateFields";
+import { Input } from "../common/input/Input";
+import { Button } from "../common/button/Button";
+import { ValidateFields } from "../../helpers/ValidateFields";
 
 export class FormSignUp extends Component {
   constructor(props) {
@@ -8,13 +9,6 @@ export class FormSignUp extends Component {
 
     this.state = {
       ...props.state,
-      formErrors: {
-        firstName: "",
-        lastName: "",
-        email: "",
-        password: "",
-        confirmPassword: ""
-      },
       formValid: false
     };
   }
@@ -24,7 +18,7 @@ export class FormSignUp extends Component {
     const { value } = e.target;
 
     this.setState({ [name]: value }, () => {
-      validateFields(name, value, this.state);
+      //ValidateFields(name, value);
       this.props.updateState(this.state);
     });
   };
@@ -45,7 +39,7 @@ export class FormSignUp extends Component {
             placeholder="First Name"
             name="firstName"
             iconName="user"
-            errorMessage={this.state.formErrors.firstName}
+            //errorMessage="Enter your First Name!"
           />
           <Input
             className="input input"
@@ -53,7 +47,7 @@ export class FormSignUp extends Component {
             placeholder="Last Name"
             name="lastName"
             iconName="user"
-            errorMessage={this.state.formErrors.lastName}
+            //errorMessage="Enter your Last Name!"
           />
           <Input
             className="input input__email"
@@ -61,7 +55,7 @@ export class FormSignUp extends Component {
             placeholder="E-mail"
             name="email"
             iconName="user"
-            errorMessage={this.state.formErrors.email}
+            //errorMessage="Enter an E-mail!"
           />
           <Input
             className="input input__password"
@@ -69,24 +63,23 @@ export class FormSignUp extends Component {
             placeholder="Password"
             name="password"
             iconName="password"
-            errorMessage={this.state.formErrors.password}
+            //errorMessage="Enter a Password!"
           />
           <Input
             className="input input__password"
             type="password"
             placeholder="Confirm Password"
-            name="confirmPassword"
+            name="password"
             iconName="password"
-            errorMessage={this.state.formErrors.confirmPassword}
+            //errorMessage="Passwords aren't matched!"
           />
         </ul>
         <Button
           children="Sign Up"
           className="button"
           type="submit"
-          buttonColorScheme="pearl"
-          buttonSize="large"
-          disabled={this.state.formValid ? false : true}
+          buttonColorScheme="button_pearl"
+          buttonSize="small"
         />
       </form>
     );
