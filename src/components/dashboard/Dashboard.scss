@@ -1,0 +1,42 @@
+.main__content{
+  margin-left: 255px;
+  position: static!important;
+}
+.dashboard-container{
+  padding: 0 5vw;
+}
+.add-news-button-wrap{
+  display: flex;
+  justify-content: flex-end;
+  margin: 30px 0 15px 0;
+}
+.post {
+  //background-color: #fff;
+  //padding: 12px 5% 12px 20px;
+  padding: 10px 0;
+  margin: 0;
+  //padding-right: 5%;
+  position: relative;
+  border-bottom: 1px solid #ccc;
+  //border-right: 1px solid #ccc;
+}
+.post__title {
+  font-size: 20px;
+  font-weight: 500;
+  padding-right: 70px;
+}
+.post__description {
+  font-size: 16px;
+  line-height: 24px;
+  margin-top: 10px;
+}
+.post__control-buttons {
+  position: absolute;
+  right: 0;
+  top: 13px;
+  cursor: pointer;
+}
+.post__link{
+  //margin-left: auto;
+  margin: 10px 0 7px 0;
+}

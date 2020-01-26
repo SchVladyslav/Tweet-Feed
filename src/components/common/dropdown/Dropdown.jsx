@@ -13,7 +13,11 @@ export default class Dropdown extends React.Component {
   }
 
   componentDidMount() {
-    document.addEventListener("click", this.toggleVisibility, false);
+    document.addEventListener("click", this.toggleVisibility);
+  }
+
+  componentWillUnmount(){
+    document.removeEventListener("click", this.toggleVisibility);
   }
 
   toggleVisibility(e) {
