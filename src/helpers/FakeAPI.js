@@ -35,7 +35,6 @@ export const FakeAPI = (() => {
         },
     ];
 
-    const _fetch = window.fetch;
     let isLoggedIn, role;
 
     window.fetch = function (url, opts) {
