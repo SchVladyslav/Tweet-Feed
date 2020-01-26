@@ -23,9 +23,6 @@ function createNews(title, description) {
 
     return fetch(`/news/add`, requestOptions)
         .then(HandleResponse)
-        .then(token => {
-
-        })
 }
 function removeNews(id) {
     const requestOptions = { method: 'DELETE', headers: AuthHeader() };
