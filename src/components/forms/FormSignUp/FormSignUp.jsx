@@ -86,7 +86,7 @@ export class FormSignUp extends Component {
           type="submit"
           buttonColorScheme="pearl"
           buttonSize="large"
-          disabled={this.state.formValid ? false : true}
+          disabled={!this.state.formValid}
         />
       </form>
     );

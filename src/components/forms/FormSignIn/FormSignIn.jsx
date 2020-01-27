@@ -57,7 +57,7 @@ class FormSignIn extends Component {
           />
         </ul>
         <Button
-          disabled={this.state.formValid ? false : true}
+          disabled={!this.state.formValid}
           children="Sign In"
           className="button"
           type="submit"
