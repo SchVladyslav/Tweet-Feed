@@ -48,6 +48,7 @@ function Modal(props) {
             <Checkbox handleCheckboxChange={checkBox} className="modalcheckbox"></Checkbox>
             <Button className="modalsubmitbutton" onClick={ModalClose}>Submit</Button>
         </div>
+        
     );
 }
 
