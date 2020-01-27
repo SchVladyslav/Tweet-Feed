@@ -1,10 +1,12 @@
 import React from "react";
 import "./Preloader.scss";
 
-export const Preloader = () => {
+const Preloader = () => {
   return (
     <section>
-      <div className="sk-rotating-plane"></div>
+      <div className="sk-rotating-plane"/>
     </section>
   );
 };
+
+export default Preloader;

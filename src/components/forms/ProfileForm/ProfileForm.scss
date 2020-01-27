@@ -2,6 +2,9 @@
   width: 50%;
   display: inline-block;
   color: rgba(74,74,74,0.95);
+  @media only screen and (min-device-width: 320px) and (max-device-width: 800px) {
+    width: 90%;
+  }
 }
 
 .form {

@@ -1,7 +1,23 @@
 .profile {
-  margin-top: 40px;
+  padding-top: 40px;
   text-align: center;
+  background-size: cover;
+
   h1 {
     color: #ffffff;
+    margin-top: 45px;
   }
+
+  &_btn_container {
+    text-align: end;
+    margin-right: 30px;
+  }
+}
+
+.modal-close {
+  color: #ffffff;
+  position: absolute;
+  z-index: 10;
+  font-size: 50px;
+  right: 50px;
 }

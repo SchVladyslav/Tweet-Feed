@@ -1,17 +1,10 @@
-import React, { Component } from "react";
-import { authService } from "../../services/auth.service";
-import { userService } from "../../services/user.service";
-import { newsService } from "../../services/news.service";
-import Button from "../common/button/Button";
-import { Preloader } from "../common/preloader/Preloader";
-import { Logout } from "../common/logout/Logout";
+import React, {Component} from "react";
+import {authService} from "../../services/auth.service";
+import {newsService} from "../../services/news.service";
+import {Button, Preloader} from "../common/index";
 import "./Dashboard.scss";
-import ModalDashboard from "../modal/modalDashboard/ModalDashboard";
-// import Route from "react-router/modules/Route";
-// import PostPage from "../../pages/postPage/PostPage";
-// import Link from "react-router-dom/modules/Link";
-// import PostPage from "../../pages/postPage/PostPage";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import ModalDashboard from "../modals/modalDashboard/ModalDashboard";
+import {Route, Link} from "react-router-dom";
 
 export default class Dashboard extends Component {
   state = {

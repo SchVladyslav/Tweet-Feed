@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { withRouter } from "react-router";
 import { FormSignUp } from "../forms/FormSignUp/FormSignUp";
 import { authService } from "../../services/auth.service";
-import { Preloader } from "../common/preloader/Preloader";
+import { Preloader } from "../common/index";
 
 class AuthSignUp extends Component {
   constructor(props) {

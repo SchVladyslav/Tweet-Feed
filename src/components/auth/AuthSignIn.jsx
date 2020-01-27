@@ -3,7 +3,7 @@ import { withRouter } from "react-router-dom";
 
 import { authService } from "../../services/auth.service";
 import FormSignIn from "../forms/FormSignIn/FormSignIn";
-import { Preloader } from "../common/preloader/Preloader";
+import { Preloader } from "../common/index";
 
 class AuthSignIn extends Component {
   constructor(props) {
