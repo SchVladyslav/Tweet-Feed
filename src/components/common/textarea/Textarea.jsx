@@ -3,7 +3,7 @@ import './textarea.scss'
 import PropTypes from "prop-types";
 import Preloader from "../preloader/Preloader";
 
-function Textarea({key, className, name, cols, rows, placeholder, children, isInvalid, onChange, value}) {
+function Textarea({key, className, name, cols, rows, placeholder, children, isInvalid, onChange, value, onBlur, onFocus}) {
     return (
         <textarea
             name={name}
@@ -13,6 +13,8 @@ function Textarea({key, className, name, cols, rows, placeholder, children, isIn
             className={`textarea ${className ? className : ''} ${isInvalid ? 'textarea_invalid' : ''}`}
             key={key}
             onChange={onChange}
+            onFocus={onFocus}
+            onBlur={onBlur}
             value={value}
 
         >{children}</textarea>
