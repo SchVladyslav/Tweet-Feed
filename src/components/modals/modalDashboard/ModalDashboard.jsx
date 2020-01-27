@@ -6,6 +6,14 @@ import {authService} from "../../../services/auth.service";
 
 class ModalDashboard extends Component {
 
+    constructor(props) {
+        super(props);
+        this.state={
+            isFormInvalid: {title: false, description: false}
+        }
+    }
+
+
     componentDidMount() {
         document.addEventListener('click', this.toggleVisibility);
     }
@@ -22,7 +30,35 @@ class ModalDashboard extends Component {
         }
     };
 
+    validateField = e =>{
+        console.log();
+        const name = e.target.name;
+        console.log(name);
+        const value = e.target.value;
+        if (value.length < 1){
+            this.setState({
+                ...this.state,
+                isFormInvalid:{
+                    ...this.state.isFormInvalid,
+                    [name]: true
+                    // e.target
+                }
+            })
+        }
+        else {
+            this.setState({
+                ...this.state,
+                isFormInvalid:{
+                    ...this.state.isFormInvalid,
+                    [name]: false
+                    // e.target
+                }
+            })
+        }
+    };
+
     render() {
+        console.log(this.state.isFormInvalid);
         const { title, buttonText, handleSubmit, handleModalInput, isModalOpen, toggleModalVisibility, formTitle, formDescription } = this.props;
         return (
             <React.Fragment>
@@ -33,10 +69,21 @@ class ModalDashboard extends Component {
                         <h2 className="news-modal__title">{title}</h2>
                         <form className="news-modal__form" onSubmit={handleSubmit}
                               noValidate="">
-                            <Textarea className='mb-20 news-modal__textarea' name="title" isInvalid={false}
-                                      placeholder='Title' value={formTitle}  onChange={(e) => handleModalInput(e)}/>
-                            <Textarea className='mb-20 news-modal__textarea' name="description" rows="5" isInvalid={false}
-                                      placeholder='Description' value={formDescription}  onChange={(e) => handleModalInput(e)}/>
+                            <Textarea className='mb-20 news-modal__textarea' name="title"
+                                      placeholder='Title'
+                                      value={formTitle}
+                                      onBlur={(e) => this.validateField(e) }
+                                      onChange={(e) => handleModalInput(e)}
+                                      isInvalid ={this.state.isFormInvalid.title}
+                            />
+                            <Textarea className='mb-20 news-modal__textarea'
+                                      name="description" rows="5"
+                                      placeholder='Description'
+                                      value={formDescription}
+                                      onBlur={(e) => this.validateField(e) }
+                                      onChange={(e) => handleModalInput(e)}
+                                      isInvalid ={this.state.isFormInvalid.description}
+                            />
                             <Button type='submit' buttonColorScheme='blue' buttonSize='large'>{buttonText}</Button>
                         </form>
                     </div>
