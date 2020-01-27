@@ -22,7 +22,6 @@ class ModalDashboard extends Component {
         }
     };
 
-
     render() {
         const { title, buttonText, handleSubmit, handleModalInput, isModalOpen, toggleModalVisibility, formTitle, formDescription } = this.props;
         return (

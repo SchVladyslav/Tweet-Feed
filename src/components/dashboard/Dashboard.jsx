@@ -1,6 +1,5 @@
 import React, {Component} from "react";
 import {authService} from "../../services/auth.service";
-import {userService} from "../../services/user.service";
 import {newsService} from "../../services/news.service";
 import Button from "../common/button/Button"
 import Preloader from "../common/preloader/Preloader";
@@ -65,6 +64,7 @@ export default class Dashboard extends Component {
                              currentUserRole={this.state.currentUser.role}
                              key={item.id}
                              deleteHandler={this.removeNews}
+                             isDetails={true}
                 />
             })}
         </div>) : <Preloader/>;
