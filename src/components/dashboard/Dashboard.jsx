@@ -12,7 +12,6 @@ import ModalDashboard from "../modal/modalDashboard/ModalDashboard";
 export default class Dashboard extends Component {
     state = {
         currentUser: authService.currentUser,
-        userFromApi: null,
         newsList: null,
         title: '',
         description: '',
@@ -20,18 +19,13 @@ export default class Dashboard extends Component {
     };
 
     componentDidMount() {
-        const {currentUser} = this.state;
-
-        userService
-            .getById(currentUser.id)
-            .then(userFromApi => this.setState({ userFromApi }));
         this.getNewsList();
     }
 
-    getNewsList() {
+    getNewsList = () => {
         newsService.getNewsList()
             .then(newsList => this.setState({newsList}))
-    }
+    };
 
     toggleModalVisibility = () => {
         this.setState({
@@ -48,19 +42,19 @@ export default class Dashboard extends Component {
     createPost = e => {
         e.preventDefault();
         const {title, description} = this.state;
-        newsService.createNews(title, description).then(this.getNewsList);
+        newsService.createNews(title, description);
         this.setState({
             ...this.state,
             title: '',
             description: ''
         });
         this.toggleModalVisibility();
-
+        this.getNewsList();
     };
 
     removeNews = (id) => {
         newsService.removeNews(id)
-            .then(newsList => this.setState({newsList}))
+            .then(this.getNewsList)
     };
 
 
@@ -77,6 +71,7 @@ export default class Dashboard extends Component {
     }
 
     render() {
+
         return (
             <React.Fragment>
                 <ModalDashboard title="Create news" buttonText="Add" handleSubmit={this.createPost}
