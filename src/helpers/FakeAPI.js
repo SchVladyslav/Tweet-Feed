@@ -52,8 +52,9 @@ export const FakeAPI = (() => {
                 getUserById(url, opts, ok, unauthorised);
                 getAllUsers(url, opts, ok, unauthorised);
                 getNewsList(url, opts, ok, unauthorised);
-                createNews(url, opts, ok);
-                removeNews(url, opts, ok, unauthorised)
+                createNews(url, opts, ok, unauthorised);
+                removeNews(url, opts, ok, unauthorised);
+                getPostById(url, opts, ok, unauthorised);
 
                 //_fetch(url, opts).then(response => resolve(response));
 
@@ -105,8 +106,9 @@ export const FakeAPI = (() => {
         }
     };
 
-    const createNews = (url, opts) => {
+    const createNews = (url, opts, ok, unauthorised) => {
         if (url.endsWith('/news/add') && opts.method === 'POST') {
+            if (!isLoggedIn) return unauthorised();
             const params = JSON.parse(opts.body);
             const news = {
                 id: Math.floor(100 + Math.random() * (1000000 + 1 - 100)).toString(),
@@ -114,6 +116,7 @@ export const FakeAPI = (() => {
                 description: params.description
             };
             _news.push(news);
+            ok(_news);
         }
     };
 
@@ -132,6 +135,21 @@ export const FakeAPI = (() => {
         }
     };
 
+    const getPostById = (url, opts, ok, unauthorised) => {
+        if (url.match(/\/news\/\d+$/) && opts.method === 'GET') {
+            console.log('getPostById');
+            if (!isLoggedIn) return unauthorised();
+            let urlParts = url.split('/');
+            let id = parseInt(urlParts[urlParts.length - 1]);
+            // get id from request url
+
+
+
+            const post = _news.find(post => post.id === id.toString());
+
+            return ok(post);
+        }
+    };
 
     const getUserById = (url, opts, ok, unauthorised) => {
         if (url.match(/\/users\/\d+$/) && opts.method === 'GET') {
