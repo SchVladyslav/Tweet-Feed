@@ -55,7 +55,7 @@ class ModalDashboard extends Component {
         return Boolean(title && description)
     }
 
-    isFieldInvalid(value) {
+    isTextareaInvalid(value) {
         if (value === null) {
             return false;
         }
@@ -80,9 +80,8 @@ class ModalDashboard extends Component {
                                       onBlur={(e) => this.validateField(e)}
                                       onChange={(e) => {
                                           handleModalInput(e);
-                                          this.validateField(e)
                                       }}
-                                      isInvalid={this.isFieldInvalid(this.state.isFormFieldsValid.title)}
+                                      isInvalid={this.isTextareaInvalid(this.state.isFormFieldsValid.title)}
                             />
                             <Textarea className='mb-20 news-modal__textarea'
                                       name="description" rows="5"
@@ -91,9 +90,8 @@ class ModalDashboard extends Component {
                                       onBlur={(e) => this.validateField(e)}
                                       onChange={(e) => {
                                           handleModalInput(e);
-                                          this.validateField(e)
                                       }}
-                                      isInvalid={this.isFieldInvalid(this.state.isFormFieldsValid.description)}
+                                      isInvalid={this.isTextareaInvalid(this.state.isFormFieldsValid.description)}
                             />
                             <Button type='submit' buttonColorScheme='blue' buttonSize='large'
                                     disabled={!this.isFormValid(formTitle, formDescription)}>{buttonText}</Button>
