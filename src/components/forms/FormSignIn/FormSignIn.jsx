@@ -25,7 +25,7 @@ class FormSignIn extends Component {
     const { value } = e.target;
 
     this.setState({ [name]: value }, () => {
-      validateFields(name, value, this.state);
+      validateFields(name, value, this.state, 'sign in');
       this.props.updateState(this.state);
     });
   };

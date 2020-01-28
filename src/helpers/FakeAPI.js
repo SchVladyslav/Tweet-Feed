@@ -6,7 +6,10 @@ export const FakeAPI = (() => {
     const USER_AUTHENTICATE = '/users/authenticate';
     const USER_AUTHORIZATION = '/users/authorization';
 
-    const _users = JSON.parse(localStorage.getItem('users'));
+    let _users = [
+        { id: 0, email: 'admin@gmail.com', password: 'admin', firstName: 'Admin', lastName: 'User', role: Role.Admin },
+        { id: 1, email: 'user@gmail.com', password: 'user', firstName: 'Normal', lastName: 'User', role: Role.User }
+    ];
 
     const _news = [
         {

@@ -17,10 +17,10 @@ class ProfileForm extends Component {
     console.log(this.state);
   };
 
-  handleFirstName = (event) => this.setState({firstName: event.target.value});
-  handleLastName = (event) => this.setState({lastName: event.target.value});
-  handleAge = (event) => this.setState({age: event.target.value});
-  handleGender = (event) => this.setState({gender: event.target.value});
+  handleFirstName = event => this.setState({ firstName: event.target.value });
+  handleLastName = event => this.setState({ lastName: event.target.value });
+  handleAge = event => this.setState({ age: event.target.value });
+  handleGender = event => this.setState({ gender: event.target.value });
 
   render() {
     return (

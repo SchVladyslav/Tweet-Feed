@@ -25,7 +25,7 @@ export default function Routes() {
                     </h1>}
                 />
             </Switch>
-            <Redirect to="/signin" />
+          {/*  <Redirect to="/signin" />*/}
         </Router>
     )
 }

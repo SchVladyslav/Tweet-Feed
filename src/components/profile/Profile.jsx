@@ -7,7 +7,14 @@ import ChangePassModal from "../modals/ChangePassModal/ChangePassModal";
 class Profile extends Component {
 
     state = {
-        isModalShowed: false
+        isModalShowed: false,
+        oldPassword: '',
+        password: '',
+        confirmPassword: ''
+    };
+
+    updateState = state => {
+        this.setState({ oldPassword: state.oldPassword, password: state.password, confirmPassword: state.confirmPassword });
     };
 
     onChangePassBtnHandler = () => this.setState({isModalShowed: !this.state.isModalShowed});
@@ -32,7 +39,7 @@ class Profile extends Component {
                         />
                         : null }
                 </div>
-                <ChangePassModal state={this.state} showModal={this.state.isModalShowed}/>
+                <ChangePassModal state={this.state} updateState={this.updateState} showModal={this.state.isModalShowed}/>
                 <h1>Enter your personal data:</h1>
                 <ProfileForm/>
             </div>

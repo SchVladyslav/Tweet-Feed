@@ -3,36 +3,38 @@ import {Button, Input} from '../../common/index';
 import './ChangePassModal.scss';
 import {validateFields} from "../../../helpers/ValidateFields";
 import {authService} from "../../../services/auth.service";
+import {userService} from "../../../services/user.service";
 
 class ChangePassModal extends Component {
 
-    state = {
-        oldPassword: '',
-        password: '',
-        confirmPassword: '',
-        formErrors: {
-            oldPassword: '',
-            password: '',
-            confirmPassword: ''
-        },
-        formValid: false
-    };
+    constructor(props) {
+        super(props);
 
-    changePassSubmitHandler = () => {
-        console.log(this.state.formValid);
-        console.log(authService.currentUser);
+        this.state = {
+            ...props.state,
+            formErrors: {
+                oldPassword: '',
+                password: '',
+                confirmPassword: ''
+            },
+            formValid: false
+        }
+    }
+
+
+    changePassSubmitHandler = event => {
+        event.preventDefault();
+        userService.updateUserPassword(authService.currentUser.id, this.state.password);
     };
 
     InputsChangeHandler = event => {
         const {name, value} = event.target;
-        const {confirmPassword, oldPassword, password} = this.state.formErrors;
 
         this.setState({[name]: value}, () => {
-            validateFields(name, value, this.state);
-            console.log(confirmPassword, oldPassword, password);
+            validateFields(name, value, this.state, 'change pass');
+            this.props.updateState(this.state);
+            console.log(this.state.formValid);
         });
-
-        this.setState({formValid: !confirmPassword && !oldPassword && !password});
     };
 
     render() {
@@ -69,10 +71,10 @@ class ChangePassModal extends Component {
                                 errorMessage={this.state.formErrors.confirmPassword}
                             />
                             <Button
-                                type="button"
+                                type="submit"
                                 buttonColorScheme="light"
                                 onClick={this.changePassSubmitHandler}
-                                //disabled={!this.state.formValid}
+                                disabled={!this.state.formValid}
                             >
                                 Change password
                             </Button>
