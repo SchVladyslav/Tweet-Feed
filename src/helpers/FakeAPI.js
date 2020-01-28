@@ -1,4 +1,4 @@
-import { Role } from './Role';
+import {Role} from './Role';
 import jwt from 'jsonwebtoken';
 
 export const FakeAPI = (() => {
@@ -53,8 +53,10 @@ export const FakeAPI = (() => {
                 getUserById(url, opts, ok, unauthorised);
                 getAllUsers(url, opts, ok, unauthorised);
                 getNewsList(url, opts, ok, unauthorised);
-                createNews(url, opts, ok);
+                createNews(url, opts, ok, unauthorised);
+                editPost(url, opts, ok, unauthorised);
                 removeNews(url, opts, ok, unauthorised);
+                getPostById(url, opts, ok, unauthorised);
 
                 //_fetch(url, opts).then(response => resolve(response));
 
@@ -78,6 +80,9 @@ export const FakeAPI = (() => {
     const signIn = (url, opts, ok, error) => {
         if (url.endsWith(USER_AUTHENTICATE) && opts.method === 'POST') {
             const params = JSON.parse(opts.body);
+            const user = _users.find(user => user.email === params.email && user.password === params.password);
+
+            let token = jwt.sign({user: user}, SECRET_KEY);
             const users = JSON.parse(localStorage.getItem('users'));
             const user = users.find(user => user.email === params.email && user.password === params.password);
 
@@ -108,8 +113,9 @@ export const FakeAPI = (() => {
         }
     };
 
-    const createNews = (url, opts) => {
+    const createNews = (url, opts, ok, unauthorised) => {
         if (url.endsWith('/news/add') && opts.method === 'POST') {
+            if (!isLoggedIn) return unauthorised();
             const params = JSON.parse(opts.body);
             const news = {
                 id: Math.floor(100 + Math.random() * (1000000 + 1 - 100)).toString(),
@@ -117,17 +123,41 @@ export const FakeAPI = (() => {
                 description: params.description
             };
             _news.push(news);
+            ok(_news);
+        }
+    };
+
+    const editPost = (url, opts, ok, unauthorised) => {
+        if (url.match(/\/news\/edit\/\d+$/) && opts.method === 'POST') {
+
+            // if (url.endsWith('/news/edit') && opts.method === 'POST') {
+            if (!isLoggedIn) return unauthorised();
+            const params = JSON.parse(opts.body);
+            const urlParts = url.split('/');
+            const id = parseInt(urlParts[urlParts.length - 1]);
+            let editedPost;
+            _news.forEach((item, i) => {
+                if (item.id === id.toString()) {
+                    _news[i] = {
+                        ...item,
+                        title: params.title,
+                        description: params.description
+                    };
+                    editedPost = item;
+
+                }
+            });
+            ok(editedPost);
         }
     };
 
     const removeNews = (url, opts, ok, unauthorised) => {
         if (url.match(/\/news\/\d+$/) && opts.method === 'DELETE') {
             if (!isLoggedIn) return unauthorised();
-            // get id from request url
             let urlParts = url.split('/');
             let id = parseInt(urlParts[urlParts.length - 1]);
             _news.forEach((item, i) => {
-                if (item.id === id.toString()) {
+                if(item.id === id.toString()){
                     _news.splice(i, 1);
                 }
             });
@@ -136,6 +166,19 @@ export const FakeAPI = (() => {
         }
     };
 
+    const getPostById = (url, opts, ok, unauthorised) => {
+        if (url.match(/\/news\/\d+$/) && opts.method === 'GET') {
+            if (!isLoggedIn) return unauthorised();
+            let urlParts = url.split('/');
+            let id = parseInt(urlParts[urlParts.length - 1]);
+            // get id from request url
+
+
+            const post = _news.find(post => post.id === id.toString());
+
+            return ok(post);
+        }
+    };
 
     const getUserById = (url, opts, ok, unauthorised) => {
         if (url.match(/\/users\/\d+$/) && opts.method === 'GET') {
