@@ -3,24 +3,44 @@ import './Layout.scss';
 import {NavLink} from "react-router-dom";
 import {Dropdown, Logout} from "../common/index";
 import PropTypes from "prop-types";
+import {authService} from "../../services/auth.service";
 
 class Layout extends Component {
 
     state = {
-        isBurgerShowed: window.innerWidth < 1200,
         isBurgerContentShowed: false
     };
 
     onBurderBtnHandler = () => this.setState({isBurgerContentShowed: !this.state.isBurgerContentShowed});
 
+    renderLinks = type => {
+        const links = [
+            {value: 'News', path: '/dashboard'},
+            {value: 'Events', path: '/events'},
+            {value: 'Profile', path: '/profile'}
+        ];
+        return links.map(link => {
+            console.log(link);
+            return (
+                <li className={`${type}__list__item`} key={Math.random()}>
+                    <NavLink
+                        to={link.path}
+                        className="link"
+                    >
+                        {link.value}
+                    </NavLink>
+                </li>
+            )
+        })
+    };
+
     render() {
         return (
             <>
                 <header className="header">
-                    {this.state.isBurgerShowed ?
-                        <i className="icon icon-menu icon-32 header__menu-icon" onClick={this.onBurderBtnHandler}/> :
-                        <i className="icon icon-mountains main-logo"/>}
-                    {window.location.pathname !== '/signin' && window.location.pathname !== '/signup' ?
+                    <i className="icon icon-menu icon-32 header__menu-icon" onClick={this.onBurderBtnHandler}/>
+                    <i className="icon icon-mountains main-logo header__logo"/>
+                    {authService.currentUser ?
                         <Dropdown>
                             <Logout/>
                         </Dropdown>
@@ -28,39 +48,20 @@ class Layout extends Component {
                     }
                 </header>
                 <main className="main">
-                    {window.location.pathname !== '/signin' && window.location.pathname !== '/signup' ?
+                    {authService.currentUser ?
                         <>
-                            {this.state.isBurgerContentShowed || !this.state.isBurgerShowed ?
+                            {this.state.isBurgerContentShowed ?
+                                <div className="burger">
+                                    <ul className="burger__list">
+                                        {this.renderLinks('burger')}
+                                    </ul>
+                                </div>
+                                : null }
                                 <aside className="sidebar">
                                     <ul className="sidebar__list">
-                                        <div>
-                                            <li className="sidebar__list__item">
-                                                <NavLink
-                                                    to={'/dashboard'}
-                                                    className="link"
-                                                >
-                                                    News
-                                                </NavLink>
-                                            </li>
-                                            <li className="sidebar__list__item">
-                                                <NavLink
-                                                    to={'/events'}
-                                                    className="link"
-                                                >
-                                                    Events
-                                                </NavLink>
-                                            </li>
-                                        </div>
-                                        <li className="sidebar__list__item">
-                                            <NavLink
-                                                to={'/profile'}
-                                                className="link"
-                                            >
-                                                Profile
-                                            </NavLink>
-                                        </li>
+                                        {this.renderLinks('sidebar')}
                                     </ul>
-                                </aside> : null}
+                                </aside>
                             <div className="main__content">
                                 {this.props.children}
                             </div>

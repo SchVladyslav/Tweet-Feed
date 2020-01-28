@@ -16,8 +16,8 @@ class ProfileForm extends Component {
     };
 
     componentDidMount() {
-       const user = userService.getUserData();
-      this.setState({user: user})
+        const user = userService.getUserData();
+        this.setState({user: user})
     }
 
 
