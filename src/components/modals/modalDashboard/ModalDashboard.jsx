@@ -9,7 +9,7 @@ class ModalDashboard extends Component {
     constructor(props) {
         super(props);
         this.state={
-            isFormInvalid: {title: false, description: false}
+            isFormFieldsValid: {title: null, description: null}
         }
     }
 
@@ -31,16 +31,16 @@ class ModalDashboard extends Component {
     };
 
     validateField = e =>{
-        console.log();
+        console.log('validateField');
         const name = e.target.name;
         console.log(name);
         const value = e.target.value;
         if (value.length < 1){
             this.setState({
                 ...this.state,
-                isFormInvalid:{
-                    ...this.state.isFormInvalid,
-                    [name]: true
+                isFormFieldsValid:{
+                    ...this.state.isFormFieldsValid,
+                    [name]: false
                     // e.target
                 }
             })
@@ -48,18 +48,32 @@ class ModalDashboard extends Component {
         else {
             this.setState({
                 ...this.state,
-                isFormInvalid:{
-                    ...this.state.isFormInvalid,
-                    [name]: false
+                isFormFieldsValid:{
+                    ...this.state.isFormFieldsValid,
+                    [name]: true
                     // e.target
                 }
             })
         }
     };
 
+    isFormValid(){
+        const {title, description} = this.state.isFormFieldsValid;
+        console.log(!Boolean( title && description))
+        return Boolean( title && description)
+    }
+
+    isFieldInvalid(value){
+        if(value === null){
+            return false;
+        }
+        return !Boolean(value);
+    }
+
     render() {
-        console.log(this.state.isFormInvalid);
+        console.log(this.state.isFormFieldsValid);
         const { title, buttonText, handleSubmit, handleModalInput, isModalOpen, toggleModalVisibility, formTitle, formDescription } = this.props;
+        console.log(this.isFormValid());
         return (
             <React.Fragment>
                 {isModalOpen ? (<div className="news-modal" >
@@ -72,19 +86,19 @@ class ModalDashboard extends Component {
                             <Textarea className='mb-20 news-modal__textarea' name="title"
                                       placeholder='Title'
                                       value={formTitle}
-                                      onBlur={(e) => this.validateField(e) }
-                                      onChange={(e) => handleModalInput(e)}
-                                      isInvalid ={this.state.isFormInvalid.title}
+                                      onBlur={(e) =>  this.validateField(e)}
+                                      onChange={(e) => {handleModalInput(e); this.validateField(e)}}
+                                      isInvalid ={this.isFieldInvalid(this.state.isFormFieldsValid.title)}
                             />
                             <Textarea className='mb-20 news-modal__textarea'
                                       name="description" rows="5"
                                       placeholder='Description'
                                       value={formDescription}
                                       onBlur={(e) => this.validateField(e) }
-                                      onChange={(e) => handleModalInput(e)}
-                                      isInvalid ={this.state.isFormInvalid.description}
+                                      onChange={(e) => {handleModalInput(e); this.validateField(e)}}
+                                      isInvalid ={this.isFieldInvalid(this.state.isFormFieldsValid.description)}
                             />
-                            <Button type='submit' buttonColorScheme='blue' buttonSize='large'>{buttonText}</Button>
+                            <Button type='submit' buttonColorScheme='blue' buttonSize='large' disabled={!this.isFormValid()}>{buttonText}</Button>
                         </form>
                     </div>
                 </div>) : null}
