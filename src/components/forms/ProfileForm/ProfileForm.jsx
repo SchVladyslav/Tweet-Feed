@@ -20,14 +20,12 @@ class ProfileForm extends Component {
         this.setState({user: user})
     }
 
-
-    handleFirstName = (event) => this.setState({firstName: event.target.value});
-    handleLastName = (event) => this.setState({lastName: event.target.value});
-    handleAge = (event) => this.setState({age: event.target.value});
-    handleGender = (event) => this.setState({gender: event.target.value});
+    handleFirstName = (event) => this.setState({user: {...this.state.user, firstName: event.target.value}});
+    handleLastName = (event) => this.setState({user: {...this.state.user, lastName: event.target.value}});
+    handleAge = (event) => this.setState({user: {...this.state.user, age: event.target.value}});
+    handleGender = (event) => this.setState({user: {...this.state.user, gender: event.target.value}});
 
     render() {
-        console.log(this.state.user);
         return (
             <div className="profile-form">
                 {this.state.user ?
@@ -35,22 +33,22 @@ class ProfileForm extends Component {
                         <div className="input-container">
                             <Input
                                 placeholder="Enter your first name"
-                                value={this.state.user.firstName}
+                                value={this.state.user.firstName || ''}
                                 onChange={this.handleFirstName}
                             />
                             <Input
                                 placeholder="Enter your last name"
-                                value={this.state.user.lastName}
+                                value={this.state.user.lastName || ''}
                                 onChange={this.handleLastName}
                             />
                             <Input
                                 placeholder="Enter your email"
-                                value={this.state.user.email}
+                                value={this.state.user.email || ''}
                                 onChange={event => console.log(event.target.value)}
                             />
                             <Input
                                 placeholder="Enter your age"
-                                value={this.state.user.age}
+                                value={this.state.user.age || ''}
                                 type="number"
                                 onChange={this.handleAge}
                             />

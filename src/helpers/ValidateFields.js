@@ -24,7 +24,6 @@ export const validateFields = (fieldName, value, state, formType) => {
             break;
         case "confirmPassword":
             confirmPasswordValid = value === stateObj.password;
-            console.log(confirmPasswordValid, stateObj.password);
             stateObj.formErrors.confirmPassword = confirmPasswordValid ? "" : "Passwords are not matching!";
             break;
         case "oldPassword":

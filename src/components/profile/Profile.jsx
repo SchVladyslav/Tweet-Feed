@@ -14,7 +14,11 @@ class Profile extends Component {
     };
 
     updateState = state => {
-        this.setState({ oldPassword: state.oldPassword, password: state.password, confirmPassword: state.confirmPassword });
+        this.setState({
+            oldPassword: state.oldPassword,
+            password: state.password,
+            confirmPassword: state.confirmPassword
+        });
     };
 
     onChangePassBtnHandler = () => this.setState({isModalShowed: !this.state.isModalShowed});

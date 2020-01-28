@@ -20,7 +20,6 @@ class Layout extends Component {
             {value: 'Profile', path: '/profile'}
         ];
         return links.map(link => {
-            console.log(link);
             return (
                 <li className={`${type}__list__item`} key={Math.random()}>
                     <NavLink

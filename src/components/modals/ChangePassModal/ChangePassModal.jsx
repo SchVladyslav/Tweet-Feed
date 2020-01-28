@@ -23,7 +23,7 @@ class ChangePassModal extends Component {
 
 
     changePassSubmitHandler = event => {
-        event.preventDefault();
+        window.alert('Password was successfully changed');
         userService.updateUserPassword(authService.currentUser.id, this.state.password);
     };
 
@@ -33,7 +33,6 @@ class ChangePassModal extends Component {
         this.setState({[name]: value}, () => {
             validateFields(name, value, this.state, 'change pass');
             this.props.updateState(this.state);
-            console.log(this.state.formValid);
         });
     };
 
