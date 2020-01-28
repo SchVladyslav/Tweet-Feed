@@ -14,8 +14,9 @@ export default function Routes() {
                 <Route path={'/post/:id'} component={PostPage} />
                 <Route path={'/events'} component={EventsPage} />
                 <Route path={'/event/:id'} component={EventPage} />
-                <Route path={'/profile'} component={ProfilePage} />
+                <Route exact path={'/profile'} component={ProfilePage} />
                 <PrivateRoute exact path="/dashboard" roles={[Role.User, Role.Admin]} component={DashboardPage} />
+                <Route exact path={'/'} component={DashboardPage}/>
                 <Route
                     exact path={'**'}
                     component={() =>
@@ -25,7 +26,6 @@ export default function Routes() {
                     </h1>}
                 />
             </Switch>
-            <Redirect to="/signin" />
         </Router>
     )
 }

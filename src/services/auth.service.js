@@ -5,6 +5,7 @@ export const authService = {
     signIn,
     signUp,
     logout,
+    getUserDataFromToken,
     get currentUser() { return getUserDataFromToken(JSON.parse(localStorage.getItem('currentUser'))) }
 };
 
@@ -31,8 +32,8 @@ function signUp(firstName, lastName, email, password, confirmPassword) {
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ firstName, lastName, email, password, confirmPassword }),
-    }
+        body: JSON.stringify({ firstName, lastName, email, password, confirmPassword, gender: null, age: null }),
+    };
 
     return fetch(`/users/authorization`, requestOptions)
         .then(HandleResponse);

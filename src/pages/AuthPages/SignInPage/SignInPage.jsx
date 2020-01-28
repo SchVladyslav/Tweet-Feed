@@ -6,6 +6,7 @@ import AuthSignIn from "../../../components/auth/AuthSignIn";
 import Layout from "../../../components/Layout/Layout";
 
 class SignInPage extends Component {
+
   render() {
     return (
       <Layout>

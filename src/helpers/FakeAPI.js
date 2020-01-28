@@ -54,7 +54,7 @@ export const FakeAPI = (() => {
                 getAllUsers(url, opts, ok, unauthorised);
                 getNewsList(url, opts, ok, unauthorised);
                 createNews(url, opts, ok);
-                removeNews(url, opts, ok, unauthorised)
+                removeNews(url, opts, ok, unauthorised);
 
                 //_fetch(url, opts).then(response => resolve(response));
 
@@ -78,14 +78,15 @@ export const FakeAPI = (() => {
     const signIn = (url, opts, ok, error) => {
         if (url.endsWith(USER_AUTHENTICATE) && opts.method === 'POST') {
             const params = JSON.parse(opts.body);
-            const user = _users.find(user => user.email === params.email && user.password === params.password);
+            const users = JSON.parse(localStorage.getItem('users'));
+            const user = users.find(user => user.email === params.email && user.password === params.password);
 
             if (!user) return error('Username or password is incorrect');
-            let token = jwt.sign({ user: user }, SECRET_KEY);
+            let token = jwt.sign({ user }, SECRET_KEY);
 
-            return ok({ token: token });
+            return ok({ token });
         }
-    }
+    };
 
     const signUp = (url, opts) => {
         if (url.endsWith(USER_AUTHORIZATION) && opts.method === 'POST') {
@@ -97,10 +98,13 @@ export const FakeAPI = (() => {
                 password: params.password,
                 firstName: params.firstName,
                 lastName: params.lastName,
+                gender: params.gender,
+                age: params.age,
                 role: Role.User
-            }
+            };
 
             _users.push(user);
+            localStorage.setItem('users', JSON.stringify(_users));
         }
     };
 

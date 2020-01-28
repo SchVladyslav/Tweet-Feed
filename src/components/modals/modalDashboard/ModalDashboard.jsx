@@ -6,12 +6,14 @@ import {authService} from "../../../services/auth.service";
 
 class ModalDashboard extends Component {
 
-    componentWillMount() {
+    componentDidMount() {
         document.addEventListener('click', this.toggleVisibility);
     }
+
     componentWillUnmount(){
         document.removeEventListener("click", this.toggleVisibility);
     }
+
     toggleVisibility = (e) =>{
         const modalContent = document.querySelector('.news-modal__content');
         const modalCover = document.querySelector('.news-modal__cover');

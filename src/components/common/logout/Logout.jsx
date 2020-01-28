@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Redirect } from "react-router";
 import { Button } from "../index";
 
-export class Logout extends Component {
+class Logout extends Component {
   state = {
     isLoggedOut: false
   };
@@ -32,3 +32,5 @@ export class Logout extends Component {
     );
   }
 }
+
+export default Logout;

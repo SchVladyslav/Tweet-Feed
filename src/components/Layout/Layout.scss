@@ -9,6 +9,21 @@
   justify-content: space-between;
   align-items: center;
   z-index: 2;
+
+  &__menu-icon {
+    display: none;
+    @media screen and (max-width: 1200px) {
+      display: block;
+    }
+  }
+
+  &__logo {
+    display: flex;
+    @media screen and (max-width: 1200px) {
+      display: none;
+    }
+  }
+
 }
 
 .sidebar {
@@ -16,11 +31,14 @@
   height: 100%;
   box-shadow: 4px 0 5px -5px rgba(0, 0, 0, 0.5);
   background-color: #fff;
+  display: block;
+  @media screen and (max-width: 1200px) {
+    display: none;
+  }
 
   &__list {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     list-style: none;
     padding: 0 40px;
     margin-top: 25px;
@@ -29,12 +47,40 @@
     &__item {
       padding: 20px 50px;
 
+      &:last-child {
+        margin-top: auto;
+      }
+
       &:hover {
         cursor: pointer;
-        background-color: #e3f2fd;
-        border-radius: 15px;
         a {
           color: #007bff;
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}
+
+.burger {
+  width: 100%;
+  z-index: 12;
+  top: 66px;
+  height: auto;
+  position: fixed;
+  box-shadow: 4px 0 5px -5px rgba(0, 0, 0, 0.5);
+  background-color: #fff;
+  &__list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    &__item {
+      padding: 20px 50px;
+      &:hover {
+        cursor: pointer;
+        a {
+          color: #007bff;
+          text-decoration: underline;
         }
       }
     }
@@ -46,10 +92,26 @@
   position: relative;
   top: 82px;
   z-index: 1;
+  background: no-repeat center/cover url("../../assets/img/bg-01.jpg");
+  height: 100vh;
+
+  @media screen and (max-width: 1200px) {
+    top: 66px;
+  }
+
+  @media only screen and (min-device-width: 320px) and (max-device-width: 375px) {
+    height: auto;
+  }
+
   &__content {
     position: relative;
     left: 254px;
     width: calc(100% - 254px);
+    @media screen and (max-width: 1200px) {
+      left: 0;
+      width: 100%;
+      padding-bottom: 30px;
+    }
   }
 }
 

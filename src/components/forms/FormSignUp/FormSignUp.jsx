@@ -24,7 +24,7 @@ export class FormSignUp extends Component {
     const { value } = e.target;
 
     this.setState({ [name]: value }, () => {
-      validateFields(name, value, this.state);
+      validateFields(name, value, this.state, 'sign up');
       this.props.updateState(this.state);
     });
   };
@@ -86,7 +86,7 @@ export class FormSignUp extends Component {
           type="submit"
           buttonColorScheme="pearl"
           buttonSize="large"
-          disabled={this.state.formValid ? false : true}
+          disabled={!this.state.formValid}
         />
       </form>
     );

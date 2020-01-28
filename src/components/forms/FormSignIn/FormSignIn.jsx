@@ -25,7 +25,7 @@ class FormSignIn extends Component {
     const { value } = e.target;
 
     this.setState({ [name]: value }, () => {
-      validateFields(name, value, this.state);
+      validateFields(name, value, this.state, 'sign in');
       this.props.updateState(this.state);
     });
   };
@@ -57,7 +57,7 @@ class FormSignIn extends Component {
           />
         </ul>
         <Button
-          disabled={this.state.formValid ? false : true}
+          disabled={!this.state.formValid}
           children="Sign In"
           className="button"
           type="submit"
