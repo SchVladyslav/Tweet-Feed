@@ -6,8 +6,9 @@ import Layout from "../../components/Layout/Layout";
 class DashboardPage extends Component {
   render() {
     return (
-
-        <Layout><Dashboard /></Layout>
+      <Layout>
+        <Dashboard />
+      </Layout>
     );
   }
 }
