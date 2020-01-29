@@ -197,6 +197,20 @@ export const FakeAPI = (() => {
         }
     };
 
+    // const getUserById = (url, opts, ok, unauthorised) => {
+    //     if (url.match(/\/users\/\d+$/) && opts.method === 'GET') {
+    //         if (!isLoggedIn) return unauthorised();
+    //         let urlParts = url.split('/');
+    //         let id = parseInt(urlParts[urlParts.length - 1]);
+
+    //         // only allow normal users access to their own record
+    //         if (role === Role.Admin) return unauthorised();
+
+    //         const user = _users.find(user => user.id === id);
+    //         return ok(user);
+    //     }
+    // };
+
     const getAllUsers = (url, opts, ok, unauthorised) => {
         if (url.endsWith('/users') && opts.method === 'GET') {
             //if (role !== Role.Admin) return unauthorised();
