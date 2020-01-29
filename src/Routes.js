@@ -16,7 +16,7 @@ export default function Routes() {
                 <Route path={'/event/:id'} component={EventPage} />
                 <Route exact path={'/profile'} component={ProfilePage} />
                 <PrivateRoute exact path="/dashboard" roles={[Role.User, Role.Admin]} component={DashboardPage} />
-                <Route exact path={'/'} component={DashboardPage}/>
+                {/* <Route exact path={'/'} component={DashboardPage}/> */}
                 <Route
                     exact path={'**'}
                     component={() =>
