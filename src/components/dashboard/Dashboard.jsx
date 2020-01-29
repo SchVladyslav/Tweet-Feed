@@ -4,7 +4,7 @@ import {newsService} from "../../services/news.service";
 import Button from "../common/button/Button"
 import {Preloader, Logout} from "../common/index";
 import './Dashboard.scss'
-import Post from "./Post";
+import PostItem from "./PostItem";
 import ModalDashboard from "../modals/modalDashboard/ModalDashboard";
 
 export default class Dashboard extends Component {
@@ -59,11 +59,11 @@ export default class Dashboard extends Component {
     renderPosts() {
         return this.state.newsList ? (<div>
             {this.state.newsList.map((item) => {
-                return <Post post={item}
-                             currentUserRole={this.state.currentUser.role}
-                             key={item.id}
-                             deleteHandler={this.removeNews}
-                             isDetails={true}
+                return <PostItem post={item}
+                                 currentUserRole={this.state.currentUser.role}
+                                 key={item.id}
+                                 deleteHandler={this.removeNews}
+                                 isDetails={true}
                 />
             })}
         </div>) : <Preloader/>;
