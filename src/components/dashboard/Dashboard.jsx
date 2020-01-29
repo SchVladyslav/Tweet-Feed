@@ -2,11 +2,10 @@ import React, {Component} from "react";
 import {authService} from "../../services/auth.service";
 import {newsService} from "../../services/news.service";
 import Button from "../common/button/Button"
-import Preloader from "../common/preloader/Preloader";
-import {Logout} from "../common/logout/Logout";
+import {Preloader, Logout} from "../common/index";
 import './Dashboard.scss'
 import Post from "./Post";
-import ModalDashboard from "../modal/modalDashboard/ModalDashboard";
+import ModalDashboard from "../modals/modalDashboard/ModalDashboard";
 
 export default class Dashboard extends Component {
     state = {
@@ -90,9 +89,6 @@ export default class Dashboard extends Component {
 
                     <div className="posts">
                         {this.renderPosts()}
-                    </div>
-                    <div className="logOut">
-                        <Logout/>
                     </div>
                 </div>
             </React.Fragment>)
