@@ -1,10 +1,13 @@
+.main {
+  height: calc(100vh - 82px);
+}
+
 .container {
   display: flex;
   justify-content: center;
   align-items: center;
 
   width: 100%;
-  margin-top: 50px;
 
   color: #9a9a9a;
 }
