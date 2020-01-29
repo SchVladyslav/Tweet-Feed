@@ -50,7 +50,6 @@ export const FakeAPI = (() => {
 
                 signIn(url, opts, ok, error);
                 signUp(url, opts, ok);
-                // getUserById(url, opts, ok, unauthorised);
                 getAllUsers(url, opts, ok, unauthorised);
                 getNewsList(url, opts, ok, unauthorised);
                 createNews(url, opts, ok, unauthorised);
@@ -80,6 +79,8 @@ export const FakeAPI = (() => {
     const signIn = (url, opts, ok, error) => {
         if (url.endsWith(USER_AUTHENTICATE) && opts.method === 'POST') {
             const params = JSON.parse(opts.body);
+            //const user = _users.find(user => user.email === params.email && user.password === params.password);
+
             const users = JSON.parse(localStorage.getItem('users'));
             const user = users.find(user => user.email === params.email && user.password === params.password);
 
@@ -96,7 +97,7 @@ export const FakeAPI = (() => {
             const params = JSON.parse(opts.body);
 
             const user = {
-                id: this.genUniqueID(),
+                id: genUniqueID(),
                 email: params.email,
                 password: params.password,
                 firstName: params.firstName,
@@ -106,8 +107,10 @@ export const FakeAPI = (() => {
                 role: Role.User
             };
 
-            _users.push(user);
-            localStorage.setItem('users', JSON.stringify(_users));
+            if (!_users.find(user => user.email === params.email)) {
+                _users.push(user);
+                localStorage.setItem('users', JSON.stringify(_users));
+            }
         }
     };
 
@@ -177,20 +180,6 @@ export const FakeAPI = (() => {
             return ok(post);
         }
     };
-
-    // const getUserById = (url, opts, ok, unauthorised) => {
-    //     if (url.match(/\/users\/\d+$/) && opts.method === 'GET') {
-    //         if (!isLoggedIn) return unauthorised();
-    //         let urlParts = url.split('/');
-    //         let id = parseInt(urlParts[urlParts.length - 1]);
-
-    //         // only allow normal users access to their own record
-    //         if (role === Role.Admin) return unauthorised();
-
-    //         const user = _users.find(user => user.id === id);
-    //         return ok(user);
-    //     }
-    // };
 
     const getAllUsers = (url, opts, ok, unauthorised) => {
         if (url.endsWith('/users') && opts.method === 'GET') {
