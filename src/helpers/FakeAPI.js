@@ -50,7 +50,7 @@ export const FakeAPI = (() => {
 
                 signIn(url, opts, ok, error);
                 signUp(url, opts, ok);
-                getUserById(url, opts, ok, unauthorised);
+                // getUserById(url, opts, ok, unauthorised);
                 getAllUsers(url, opts, ok, unauthorised);
                 getNewsList(url, opts, ok, unauthorised);
                 createNews(url, opts, ok, unauthorised);
@@ -96,7 +96,7 @@ export const FakeAPI = (() => {
             const params = JSON.parse(opts.body);
 
             const user = {
-                id: Math.floor(Math.random() * 100),
+                id: this.genUniqueID(),
                 email: params.email,
                 password: params.password,
                 firstName: params.firstName,
@@ -178,19 +178,19 @@ export const FakeAPI = (() => {
         }
     };
 
-    const getUserById = (url, opts, ok, unauthorised) => {
-        if (url.match(/\/users\/\d+$/) && opts.method === 'GET') {
-            if (!isLoggedIn) return unauthorised();
-            let urlParts = url.split('/');
-            let id = parseInt(urlParts[urlParts.length - 1]);
+    // const getUserById = (url, opts, ok, unauthorised) => {
+    //     if (url.match(/\/users\/\d+$/) && opts.method === 'GET') {
+    //         if (!isLoggedIn) return unauthorised();
+    //         let urlParts = url.split('/');
+    //         let id = parseInt(urlParts[urlParts.length - 1]);
 
-            // only allow normal users access to their own record
-            if (role === Role.Admin) return unauthorised();
+    //         // only allow normal users access to their own record
+    //         if (role === Role.Admin) return unauthorised();
 
-            const user = _users.find(user => user.id === id);
-            return ok(user);
-        }
-    };
+    //         const user = _users.find(user => user.id === id);
+    //         return ok(user);
+    //     }
+    // };
 
     const getAllUsers = (url, opts, ok, unauthorised) => {
         if (url.endsWith('/users') && opts.method === 'GET') {
@@ -204,5 +204,9 @@ export const FakeAPI = (() => {
             if (!isLoggedIn) return unauthorised();
             return ok(_news);
         }
+    }
+
+    const genUniqueID = () => {
+        return `f${(~~(Math.random() * 1e8)).toString(32)}`;
     }
 })();
