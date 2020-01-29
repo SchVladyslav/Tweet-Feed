@@ -1,8 +1,10 @@
+@import "../../../assets/scss/variables";
+
 .profile-form {
   width: 55%;
   display: inline-block;
   color: rgba(74,74,74,0.95);
-  @media only screen and (min-device-width: 320px) and (max-device-width: 800px) {
+  @media only screen and (min-device-width: $small-screen) and (max-device-width: 800px) {
     width: 90%;
   }
 }

@@ -26,7 +26,7 @@ function signIn(email, password) {
             localStorage.setItem('currentUser', JSON.stringify(token));
             return token;
         })
-        .then(error => { //catch don't work
+        .then(error => { //catch doesn't work
             return error;
         });
 }

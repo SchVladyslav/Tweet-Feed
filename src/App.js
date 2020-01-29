@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import './App.scss';
 import Routes from "./Routes";
 
 export default class App extends Component {

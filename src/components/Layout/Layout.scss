@@ -1,3 +1,5 @@
+@import "../../assets/scss/variables";
+
 .header {
   width: 100%;
   background-color: #343a40;
@@ -12,14 +14,14 @@
 
   &__menu-icon {
     display: none;
-    @media screen and (max-width: 1200px) {
+    @media screen and (max-width: $large-screen) {
       display: block;
     }
   }
 
   &__logo {
     display: flex;
-    @media screen and (max-width: 1200px) {
+    @media screen and (max-width: $large-screen) {
       display: none;
     }
   }
@@ -31,7 +33,7 @@
   box-shadow: 4px 0 5px -5px rgba(0, 0, 0, 0.5);
   background-color: #fff;
   display: block;
-  @media screen and (max-width: 1200px) {
+  @media screen and (max-width: $large-screen) {
     display: none;
   }
 
@@ -91,25 +93,18 @@
   position: relative;
   top: 82px;
   z-index: 1;
-  //background: no-repeat center/cover url("../../assets/img/bg-01.jpg");
-  height: 100vh;
 
-  @media screen and (max-width: 1200px) {
+  @media screen and (max-width: $large-screen) {
     top: 66px;
-  }
-
-  @media only screen and (min-device-width: 320px) and (max-device-width: 375px) {
-    height: auto;
   }
 
   &__content {
     position: relative;
     left: 254px;
     width: calc(100% - 254px);
-    @media screen and (max-width: 1200px) {
+    @media screen and (max-width: $large-screen) {
       left: 0;
       width: 100%;
-      padding-bottom: 30px;
     }
   }
 }

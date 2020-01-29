@@ -18,7 +18,6 @@ class SignInPage extends Component {
             <AuthSignIn />
 
             <div className="form__controls">
-              <p className="main__social-text">Or sign up using</p>
               <Link className="hint" to="/signup">
                 Don't have an account?
               </Link>
