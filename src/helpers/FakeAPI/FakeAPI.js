@@ -81,6 +81,8 @@ export const FakeAPI = (() => {
         if (url.endsWith(USER_AUTHENTICATE) && opts.method === 'POST') {
             let user;
             const params = JSON.parse(opts.body);
+            //const user = _users.find(user => user.email === params.email && user.password === params.password);
+
             const users = JSON.parse(localStorage.getItem('users'));
 
             if (users)
@@ -196,20 +198,6 @@ export const FakeAPI = (() => {
             return ok(post);
         }
     };
-
-    // const getUserById = (url, opts, ok, unauthorised) => {
-    //     if (url.match(/\/users\/\d+$/) && opts.method === 'GET') {
-    //         if (!isLoggedIn) return unauthorised();
-    //         let urlParts = url.split('/');
-    //         let id = parseInt(urlParts[urlParts.length - 1]);
-
-    //         // only allow normal users access to their own record
-    //         if (role === Role.Admin) return unauthorised();
-
-    //         const user = _users.find(user => user.id === id);
-    //         return ok(user);
-    //     }
-    // };
 
     const getAllUsers = (url, opts, ok, unauthorised) => {
         if (url.endsWith('/users') && opts.method === 'GET') {
