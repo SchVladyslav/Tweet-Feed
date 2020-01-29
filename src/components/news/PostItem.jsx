@@ -7,12 +7,12 @@ class PostItem extends Component {
     renderControlButtons() {
         const {currentUserRole, deleteHandler, post, editHandler} = this.props;
         return (
-            <div>
+            <>
                 {currentUserRole === 'Admin' && deleteHandler ? (
-                <div className="post__control-buttons">
-                    <Button type='submit' buttonColorScheme='transparent'
-                            buttonSize='small' onClick={() => deleteHandler(post.id)}>Delete</Button>
-                </div>
+                    <div className="post__control-buttons">
+                        <Button type='submit' buttonColorScheme='transparent'
+                                buttonSize='small' onClick={() => deleteHandler(post.id)}>Delete</Button>
+                    </div>
                 ) : null}
                 {currentUserRole === 'Admin' && editHandler ? (
                     <div className="post__control-buttons">
@@ -20,18 +20,19 @@ class PostItem extends Component {
                                 buttonSize='small' onClick={() => editHandler(post.id)}>Edit</Button>
                     </div>
                 ) : null}
-            </div>
+            </>
 
         )
     }
 
-    renderDetailsButton(){
+    renderDetailsButton() {
         const {isDetails, post} = this.props;
-        return isDetails ? ( <Route>
-            <Link to={`/post/${post.id}`}><Button type='submit' buttonColorScheme='transparent'
-                                                  buttonSize='small'
-                                                  className='post__link'>details</Button></Link>
-        </Route>): null;
+        return isDetails ? (<div className='post__details'><Route>
+            <Link to={`/post/${post.id}`} className='post__details'><Button type='submit'
+                                                                            buttonColorScheme='transparent'
+                                                                            buttonSize='small'
+                                                                            className='post__link'>details</Button></Link>
+        </Route></div>) : null;
     }
 
     render() {

@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {authService} from "../../services/auth.service";
 import {newsService} from "../../services/news.service";
-// import ModalDashboard from "../modals/modalDashboard/ModalDashboard";
 import PostItem from "./PostItem";
 import Preloader from "../common/preloader/Preloader";
 import Modal from "../common/modal/Modal";
@@ -9,7 +8,8 @@ import DashboardForm from "../forms/DashboardForm/DashboardForm";
 
 class Post extends Component {
     state = {
-        currentUser: authService.currentUser,
+        currentUserRole: authService.currentUser.role,
+        id: null,
         post: null,
         title: '',
         description: '',
@@ -17,7 +17,11 @@ class Post extends Component {
     };
 
     componentDidMount() {
-        this.getPost(this.getPostId());
+        this.setState({
+            ...this.state,
+            id: this.getPostId(),
+        }, this.getPost);
+
     }
 
     getPostId() {
@@ -26,7 +30,8 @@ class Post extends Component {
         return parseInt(urlParts[urlParts.length - 1]);
     }
 
-    getPost(id) {
+    getPost = () => {
+        const id = this.state.id;
         newsService.getPostById(id)
             .then(postItem => {
                 this.setState({
@@ -36,7 +41,7 @@ class Post extends Component {
                     description: postItem.description
                 })
             });
-    }
+    };
 
     toggleModalVisibility = () => {
         this.setState({
@@ -44,7 +49,7 @@ class Post extends Component {
         });
     };
 
-    handleModalInput = e => {
+    handleUserInput = e => {
         const {name} = e.target;
         const {value} = e.target;
         this.setState({[name]: value});
@@ -53,55 +58,48 @@ class Post extends Component {
 
     editPost = e => {
         e.preventDefault();
-        const {title, description} = this.state;
-        const id = this.getPostId();
+        const {id, title, description} = this.state;
         this.toggleModalVisibility();
         newsService.editPost(id, title, description).then(editedPost => this.setState(
             {
                 ...this.state,
                 post: editedPost,
             }));
-        this.getPost(this.getPostId());
+        this.getPost();
     };
 
-    render() {
-        const {post, currentUser} = this.state;
-        return (<React.Fragment>
-                {/*<Modal modalTitle="Edit post" buttonText="Save" handleSubmit={this.editPost}*/}
-                {/*                isModalOpen={this.state.isModalOpen}*/}
-                {/*                handleModalInput={this.handleModalInput}*/}
-                {/*                toggleModalVisibility={this.toggleModalVisibility}*/}
-                {/*                formTitle={this.state.title}*/}
-                {/*                formDescription={this.state.description}*/}
-                {/*/>*/}
+    renderPost() {
+        const {post, currentUserRole} = this.state;
+        return (
+            post ? (<PostItem post={post}
+                              currentUserRole={currentUserRole}
+                              key={post.id}
+                              editHandler={this.toggleModalVisibility}
+            />) : <Preloader/>
+        );
+    }
 
+    render() {
+        const {isModalOpen, title, description} = this.state;
+        return (<React.Fragment>
 
             <Modal modalTitle="Edit post"
-                   isModalOpen={this.state.isModalOpen}
+                   isModalOpen={isModalOpen}
                    toggleModalVisibility={this.toggleModalVisibility}
 
             >
                 <DashboardForm
                     buttonText="Save"
-                    handleModalInput={this.handleModalInput}
-                    formTitle={this.state.title}
-                    formDescription={this.state.description}
+                    handleUserInput={this.handleUserInput}
+                    formTitle={title}
+                    formDescription={description}
                     handleSubmit={this.editPost}
                 />
             </Modal>
-
-
-
-
-
-                <div className='dashboard-container'>
-                    {post ? (<PostItem post={post}
-                                       currentUserRole={currentUser.role}
-                                       key={post.id}
-                                       editHandler={this.toggleModalVisibility}
-                    />) : <Preloader/>}
-                </div>
-            </React.Fragment>);
+            <div className='news-container'>
+                {this.renderPost()}
+            </div>
+        </React.Fragment>);
     }
 }
 
