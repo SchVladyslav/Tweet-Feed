@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import Post from "../../components/dashboard/Post";
+import PostItem from "../../components/dashboard/PostItem";
 import {authService} from "../../services/auth.service";
 import {newsService} from "../../services/news.service";
 import Layout from "../../components/Layout/Layout";
@@ -75,10 +75,10 @@ export default class PostPage extends Component {
                                 formDescription={this.state.description}
                 />
                 <div className='dashboard-container'>
-                    {post ? (<Post post={post}
-                                   currentUserRole={currentUser.role}
-                                   key={post.id}
-                                   editHandler={this.toggleModalVisibility}
+                    {post ? (<PostItem post={post}
+                                       currentUserRole={currentUser.role}
+                                       key={post.id}
+                                       editHandler={this.toggleModalVisibility}
                     />) : <Preloader/>}
                 </div>
             </React.Fragment>

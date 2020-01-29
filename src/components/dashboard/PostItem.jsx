@@ -2,7 +2,7 @@ import Button from "../common/button/Button";
 import {Link, Route} from "react-router-dom";
 import React, {Component} from 'react';
 
-class Post extends Component {
+class PostItem extends Component {
 
     renderControlButtons() {
         const {currentUserRole, deleteHandler, post, editHandler} = this.props;
@@ -47,4 +47,4 @@ class Post extends Component {
     }
 }
 
-export default Post;
+export default PostItem;
