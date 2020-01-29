@@ -1,0 +1,14 @@
+.dashboard{
+  &__form {
+    max-width: 420px;
+    width: 65vw;
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__textarea {
+    margin-bottom: 20px;
+    overflow: auto;
+  }
+}

@@ -1,4 +1,5 @@
-.news-modal {
+.common-modal {
+
   &__cover {
     position: fixed;
     top: 0;
@@ -21,20 +22,8 @@
     padding: 40px;
     background-color: #fff;
     max-width: 500px;
-    width: 90%;
     box-sizing: border-box;
     z-index: 2;
-  }
-
-  &__form {
-    margin-top: 40px;
-    display: flex;
-    flex-direction: column;
-  }
-
-  &__textarea {
-    margin-bottom: 20px;
-    overflow: auto;
   }
 
   &__button-close {
@@ -59,4 +48,7 @@
       background-color: #e8f5fe;
     }
   }
+
 }
+
+
