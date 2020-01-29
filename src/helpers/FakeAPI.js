@@ -7,8 +7,8 @@ export const FakeAPI = (() => {
     const USER_AUTHORIZATION = '/users/authorization';
 
     let _users = [
-        { id: 0, email: 'admin@gmail.com', password: 'admin', firstName: 'Admin', lastName: 'User', role: Role.Admin },
-        { id: 1, email: 'user@gmail.com', password: 'user', firstName: 'Normal', lastName: 'User', role: Role.User }
+        {id: 0, email: 'admin@gmail.com', password: 'admin', firstName: 'Admin', lastName: 'User', role: Role.Admin},
+        {id: 1, email: 'user@gmail.com', password: 'user', firstName: 'Normal', lastName: 'User', role: Role.User}
     ];
 
     const _news = [
@@ -64,15 +64,15 @@ export const FakeAPI = (() => {
             }, 1000);
 
             function ok(body) {
-                resolve({ ok: true, text: () => Promise.resolve(JSON.stringify(body)) })
+                resolve({ok: true, text: () => Promise.resolve(JSON.stringify(body))})
             }
 
             function unauthorised() {
-                resolve({ status: 401, text: () => Promise.resolve(JSON.stringify({ message: 'Unauthorised' })) })
+                resolve({status: 401, text: () => Promise.resolve(JSON.stringify({message: 'Unauthorised'}))})
             }
 
             function error(message) {
-                resolve({ status: 400, text: () => Promise.resolve(JSON.stringify({ message })) })
+                resolve({status: 400, text: () => Promise.resolve(JSON.stringify({message}))})
             }
         });
     };
@@ -80,9 +80,6 @@ export const FakeAPI = (() => {
     const signIn = (url, opts, ok, error) => {
         if (url.endsWith(USER_AUTHENTICATE) && opts.method === 'POST') {
             const params = JSON.parse(opts.body);
-            const user = _users.find(user => user.email === params.email && user.password === params.password);
-
-            let token = jwt.sign({user: user}, SECRET_KEY);
             const users = JSON.parse(localStorage.getItem('users'));
             const user = users.find(user => user.email === params.email && user.password === params.password);
 
@@ -157,7 +154,7 @@ export const FakeAPI = (() => {
             let urlParts = url.split('/');
             let id = parseInt(urlParts[urlParts.length - 1]);
             _news.forEach((item, i) => {
-                if(item.id === id.toString()){
+                if (item.id === id.toString()) {
                     _news.splice(i, 1);
                 }
             });

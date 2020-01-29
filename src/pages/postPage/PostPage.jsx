@@ -4,7 +4,7 @@ import {authService} from "../../services/auth.service";
 import {newsService} from "../../services/news.service";
 import Layout from "../../components/Layout/Layout";
 import Preloader from "../../components/common/preloader/Preloader";
-import ModalDashboard from "../../components/modal/modalDashboard/ModalDashboard";
+import ModalDashboard from "../../components/modals/modalDashboard/ModalDashboard";
 
 export default class PostPage extends Component {
     state = {
@@ -66,20 +66,22 @@ export default class PostPage extends Component {
     render() {
         const {post, currentUser} = this.state;
         return <Layout>
-            <ModalDashboard title="Edit post" buttonText="Save" handleSubmit={this.editPost}
-                            isModalOpen={this.state.isModalOpen}
-                            handleModalInput={this.handleModalInput}
-                            toggleModalVisibility={this.toggleModalVisibility}
-                            formTitle={this.state.title}
-                            formDescription={this.state.description}
-            />
-            <div className='dashboard-container'>
-                {post ? (<Post post={post}
-                               currentUserRole={currentUser.role}
-                               key={post.id}
-                               editHandler={this.toggleModalVisibility}
-                />) : <Preloader/>}
-            </div>
+            <React.Fragment>
+                <ModalDashboard title="Edit post" buttonText="Save" handleSubmit={this.editPost}
+                                isModalOpen={this.state.isModalOpen}
+                                handleModalInput={this.handleModalInput}
+                                toggleModalVisibility={this.toggleModalVisibility}
+                                formTitle={this.state.title}
+                                formDescription={this.state.description}
+                />
+                <div className='dashboard-container'>
+                    {post ? (<Post post={post}
+                                   currentUserRole={currentUser.role}
+                                   key={post.id}
+                                   editHandler={this.toggleModalVisibility}
+                    />) : <Preloader/>}
+                </div>
+            </React.Fragment>
         </Layout>;
     }
 }
