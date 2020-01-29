@@ -1,7 +1,6 @@
 import React from 'react';
-import './textarea.scss'
+import './Textarea.scss'
 import PropTypes from "prop-types";
-import Preloader from "../preloader/Preloader";
 
 function Textarea({key, className, name, cols, rows, placeholder, children, isInvalid, onChange, value, onBlur, onFocus}) {
     return (

@@ -5,7 +5,9 @@ import Button from "../common/button/Button"
 import {Preloader, Logout} from "../common/index";
 import './Dashboard.scss'
 import PostItem from "./PostItem";
-import ModalDashboard from "../modals/modalDashboard/ModalDashboard";
+// import ModalDashboard from "../modals/modalDashboard/ModalDashboard";
+import Modal from "../common/modal/Modal";
+import DashboardForm from "../forms/DashboardForm/DashboardForm";
 
 export default class Dashboard extends Component {
     state = {
@@ -73,13 +75,19 @@ export default class Dashboard extends Component {
 
         return (
             <React.Fragment>
-                <ModalDashboard title="Create news" buttonText="Add" handleSubmit={this.createPost}
-                                isModalOpen={this.state.isModalOpen}
-                                handleModalInput={this.handleModalInput}
-                                toggleModalVisibility={this.toggleModalVisibility}
-                                formTitle={this.state.title}
-                                formDescription={this.state.description}
-                />
+                <Modal modalTitle="Create news"
+                       isModalOpen={this.state.isModalOpen}
+                       toggleModalVisibility={this.toggleModalVisibility}
+
+                >
+                    <DashboardForm
+                        buttonText="Add"
+                        handleModalInput={this.handleModalInput}
+                        formTitle={this.state.title}
+                        formDescription={this.state.description}
+                        handleSubmit={this.createPost}
+                    />
+                </Modal>
                 <div className='dashboard-container'>
                     {this.state.currentUser.role === 'Admin' ? (<div className="add-news-button-wrap">
                         <Button type='submit' buttonColorScheme='primary' buttonSize='medium'
