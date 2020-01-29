@@ -1,10 +1,8 @@
 import { authService } from '../../services/auth.service';
 
 export function HandleResponse(response) {
-    console.log(response.url);
     return response.text().then(text => {
         const data = text && JSON.parse(text);
-        console.log(text, data);
 
         if (!response.ok) {
             if ([401, 403].indexOf(response.status) !== -1) {

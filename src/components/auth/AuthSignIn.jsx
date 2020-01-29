@@ -15,9 +15,9 @@ class AuthSignIn extends Component {
       isFetching: false
     };
 
-    if (authService.currentUser) {
+  /*  if (authService.currentUser) {
       this.props.history.push("/dashboard");
-    }
+    }*/
   }
 
   updateState = state => {
