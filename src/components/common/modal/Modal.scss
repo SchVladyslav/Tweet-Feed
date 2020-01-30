@@ -8,6 +8,10 @@
   overflow: auto;
   outline: 0;
 
+  &__title {
+    color: rgba(99,98,98,0.91);
+  }
+
   &__cover {
     position: fixed;
     top: 0;

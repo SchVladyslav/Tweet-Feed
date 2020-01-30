@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import ProfileForm from "../forms/ProfileForm/ProfileForm";
 import {Button} from '../common/index';
 import './Profile.scss';
-import ChangePassModal from "../modals/ChangePassModal/ChangePassModal";
+import ChangePassForm from "../forms/ChangePassForm/ChangePassForm";
 
 class Profile extends Component {
 
@@ -36,14 +36,13 @@ class Profile extends Component {
                     >
                         Change password
                     </Button>
-                    { this.state.isModalShowed ?
-                        <i
-                            className="icon icon-close modal-close"
-                            onClick={this.closeModalHandler}
-                        />
-                        : null }
                 </div>
-                <ChangePassModal state={this.state} updateState={this.updateState} showModal={this.state.isModalShowed}/>
+                <ChangePassForm
+                    state={this.state}
+                    updateState={this.updateState}
+                    showModal={this.state.isModalShowed}
+                    toggleModalVisibility={this.closeModalHandler}
+                />
                 <h1>Enter your personal data:</h1>
                 <ProfileForm/>
             </div>
