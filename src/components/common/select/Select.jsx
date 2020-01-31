@@ -2,7 +2,7 @@ import React from 'react';
 import './Select.scss';
 import PropTypes from 'prop-types';
 
-export default function Select({label, onChangeHandler}) {
+export default function Select({name, label, selectValue, onChangeHandler}) {
 
     Select.propTypes = {
         label: PropTypes.string.isRequired,
@@ -13,8 +13,9 @@ export default function Select({label, onChangeHandler}) {
         <label className="label">{label}
             <select
                 className="select select__text"
-                defaultValue="default"
                 onChange={onChangeHandler}
+                defaultValue={selectValue || "default"}
+                name={name}
             >
                 <option className="select__text" disabled value="default">-</option>
                 <option className="select__text" value="female">Female</option>

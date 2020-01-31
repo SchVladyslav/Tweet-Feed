@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {authService} from "../../services/auth.service";
 import {newsService} from "../../services/news.service";
 import PostItem from "./PostItem";
-import {Preloader, Modal} from "../common/index";
+import {Preloader, Modal} from "../common";
 import DashboardForm from "../forms/DashboardForm/DashboardForm";
 
 class Post extends Component {

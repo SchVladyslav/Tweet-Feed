@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import Textarea from "../../common/textarea/Textarea";
-import Button from "../../common/button/Button";
+import {Textarea, Button} from "../../common";
 import './DashboadForm.scss'
 
 class DashboardForm extends Component {

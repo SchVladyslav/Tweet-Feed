@@ -4,9 +4,11 @@ import { SECRET_KEY } from './secretKey';
 import { Headers } from './Headers';
 
 export const FakeAPI = (() => {
-    let _users = [
-        { id: 0, email: 'admin@gmail.com', password: 'admin', firstName: 'Admin', lastName: 'User', role: Role.Admin, gender: null, age: null },
-        { id: 1, email: 'user@gmail.com', password: 'user', firstName: 'Normal', lastName: 'User', role: Role.User, gender: 'Male', age: 20 }
+
+    const ADMIN_EMAIL = 'admin@gmail.com';
+
+    const _users = [
+        {id: 83, email: ADMIN_EMAIL, password:"admin", firstName: "Admin", lastName: "Admin", gender: null, age: null, role: "Admin"}
     ];
 
     const _news = [
@@ -53,9 +55,10 @@ export const FakeAPI = (() => {
                 editPost(url, opts, ok, unauthorised);
                 removeNews(url, opts, ok, unauthorised);
                 getPostById(url, opts, ok, unauthorised);
+                getUserById(url, opts, ok, unauthorised);
+                updateProfile(url, opts, ok, unauthorised);
 
                 return ok(_users);
-
             }, 1000);
 
             function ok(body) {
@@ -71,6 +74,8 @@ export const FakeAPI = (() => {
             }
         });
     };
+
+    /******AUTH PART OF FAKE API*******/
 
     const signIn = (url, opts, ok, error) => {
         if (url.endsWith(Headers.USER_AUTHENTICATE) && opts.method === 'POST') {
@@ -121,6 +126,7 @@ export const FakeAPI = (() => {
 
             if (!_users.find(user => user.email === params.email)) {
                 _users.push(user);
+                localStorage.setItem('users', JSON.stringify(_users));
             } else {
                 return error(`User with the same E-mail already exist!`);
             }
@@ -128,6 +134,9 @@ export const FakeAPI = (() => {
             return ok(_users);
         }
     };
+
+
+    /******NEWS PART OF FAKE API*******/
 
     const createNews = (url, opts, ok, unauthorised) => {
         if (url.endsWith('/news/add') && opts.method === 'POST') {
@@ -192,19 +201,48 @@ export const FakeAPI = (() => {
         }
     };
 
-    const getAllUsers = (url, opts, ok, unauthorised) => {
-        if (url.endsWith('/users') && opts.method === 'GET') {
-            //if (role !== Role.Admin) return unauthorised();
-            return ok(_users);
-        }
-    };
-
     const getNewsList = (url, opts, ok, unauthorised) => {
         if (url.endsWith('/news') && opts.method === 'GET') {
             if (!isLoggedIn) return unauthorised();
             return ok(_news);
         }
-    }
+    };
+
+    /******USER PART OF FAKE API*******/
+
+    const getUserById = (url, opts, ok, unauthorised) => {
+        if (url.match(/\/users\/\d+$/) && opts.method === 'GET') {
+            if (localStorage.getItem('currentUser')) {
+                const users = JSON.parse(localStorage.getItem('users'));
+                const user = users.find(user => user.id === JSON.parse(opts.body));
+
+                return ok(user);
+            } else return unauthorised();
+        }
+    };
+
+    const updateProfile = (url, opts, ok, unauthorised) => {
+        if (url.endsWith('put/profile') && opts.method === 'PUT') {
+            if (localStorage.getItem('currentUser')) {
+                const updatedUser = JSON.parse(opts.body);
+                updateUserData(updatedUser);
+            } else return unauthorised();
+        }
+    };
+
+    const updateUserData = (updatedUser) => {
+            const users = JSON.parse(localStorage.getItem('users'));
+            const user = users.find(user => user.id === updatedUser.id);
+            const userIndex = users.indexOf(user);
+            users.splice(userIndex, 1, updatedUser);
+            localStorage.setItem('users', JSON.stringify(users));
+    };
+
+    const getAllUsers = (url, opts, ok) => {
+        if (url.endsWith('/users') && opts.method === 'GET') {
+            return ok(_users);
+        }
+    };
 
     const genUniqueID = () => {
         return `f${(~~(Math.random() * 1e8)).toString(32)}`;

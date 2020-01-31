@@ -1,8 +1,8 @@
 import React, {Component} from "react";
-import {Button, Input, Select} from "../../common/index";
+import {Button, Input, Select, Preloader} from "../../common";
 import './ProfileForm.scss';
 import {userService} from "../../../services/user.service";
-import Preloader from "../../common/preloader/Preloader";
+import {authService} from "../../../services/auth.service";
 
 class ProfileForm extends Component {
 
@@ -12,49 +12,63 @@ class ProfileForm extends Component {
 
     onSubmitHandler = event => {
         event.preventDefault();
-        console.log(this.state);
+
+        userService.updateUserData(
+            authService.currentUser.id,
+            this.state.user
+        );
+
+        this.props.toggleLoading();
     };
 
     componentDidMount() {
         const user = userService.getUserData();
-        this.setState({user: user})
+        this.setState({user})
     }
 
-    handleFirstName = (event) => this.setState({user: {...this.state.user, firstName: event.target.value}});
-    handleLastName = (event) => this.setState({user: {...this.state.user, lastName: event.target.value}});
-    handleAge = (event) => this.setState({user: {...this.state.user, age: event.target.value}});
-    handleGender = (event) => this.setState({user: {...this.state.user, gender: event.target.value}});
+    handleInputChange = event => {
+      const {name, value} = event.target;
+      const {user} = this.state;
+
+        this.setState({user: {...user, [name]: value}});
+    };
 
     render() {
+        const {user} = this.state;
         return (
             <div className="profile-form">
-                {this.state.user ?
+                { user ?
                     <form onSubmit={this.onSubmitHandler} className="form">
                         <div className="input-container">
                             <Input
                                 placeholder="Enter your first name"
-                                value={this.state.user.firstName || ''}
-                                onChange={this.handleFirstName}
+                                name="firstName"
+                                value={user.firstName || ''}
+                                onChange={this.handleInputChange}
                             />
                             <Input
                                 placeholder="Enter your last name"
-                                value={this.state.user.lastName || ''}
-                                onChange={this.handleLastName}
+                                name="lastName"
+                                value={user.lastName || ''}
+                                onChange={this.handleInputChange}
                             />
                             <Input
                                 placeholder="Enter your email"
-                                value={this.state.user.email || ''}
-                                onChange={event => console.log(event.target.value)}
+                                value={user.email || ''}
+                                onChange={() => window.alert("You can't change email!")}
                             />
                             <Input
                                 placeholder="Enter your age"
-                                value={this.state.user.age || ''}
+                                name="age"
+                                value={user.age || ''}
                                 type="number"
-                                onChange={this.handleAge}
+                                onChange={this.handleInputChange}
                             />
                             <Select
                                 label={'Choose your gender:'}
-                                onChangeHandler={this.handleGender}
+                                name="gender"
+                                onChangeHandler={this.handleInputChange}
+                                selectValue={user.gender}
                             />
                         </div>
                         <Button

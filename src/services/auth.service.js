@@ -87,3 +87,11 @@ function isExpired(exp) {
 function logout() {
     localStorage.removeItem('currentUser');
 }
+
+export const authService = {
+    signIn,
+    signUp,
+    logout,
+    getUserDataFromToken,
+    get currentUser() { return getUserDataFromToken(JSON.parse(localStorage.getItem('currentUser'))) }
+};

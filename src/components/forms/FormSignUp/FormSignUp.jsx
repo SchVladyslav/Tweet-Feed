@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Input } from "../../common/index";
+import { Button, Input } from "../../common";
 import { validateFields } from "../../../helpers/ValidateFields";
 
 export class FormSignUp extends Component {

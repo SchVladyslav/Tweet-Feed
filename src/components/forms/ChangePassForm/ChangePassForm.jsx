@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Button, Input, Modal} from '../../common/index';
+import {Button, Input, Modal} from '../../common';
 import './ChangePassForm.scss';
 import {validateFields} from "../../../helpers/ValidateFields";
 import {authService} from "../../../services/auth.service";
@@ -23,11 +23,16 @@ class ChangePassModal extends Component {
 
 
     changePassSubmitHandler = event => {
-        window.alert('Password was successfully changed');
-        userService.updateUserPassword(authService.currentUser.id, this.state.password);
+        event.preventDefault();
+
+        userService.changeUserPassword(authService.currentUser.id, this.state.password);
+        this.props.toggleModalVisibility();
+        this.props.toggleLoading();
+
+        // window.alert('Password was successfully changed');
     };
 
-    InputsChangeHandler = event => {
+    inputsChangeHandler = event => {
         const {name, value} = event.target;
 
         this.setState({[name]: value}, () => {
@@ -38,6 +43,7 @@ class ChangePassModal extends Component {
 
     render() {
         const {showModal, toggleModalVisibility} = this.props;
+        const {formErrors, formValid} = this.state;
 
         return (
             <>
@@ -48,7 +54,7 @@ class ChangePassModal extends Component {
                 >
                     <form
                         className="change-pass-form"
-                        onChange={this.InputsChangeHandler}
+                        onChange={this.inputsChangeHandler}
                         onSubmit={this.changePassSubmitHandler}
                     >
                         <Input
@@ -56,27 +62,27 @@ class ChangePassModal extends Component {
                             placeholder="Enter old password"
                             name="oldPassword"
                             iconName="password"
-                            errorMessage={this.state.formErrors.oldPassword}
+                            errorMessage={formErrors.oldPassword}
                         />
                         <Input
                             type="password"
                             placeholder="Enter new password"
                             name="password"
                             iconName="password"
-                            errorMessage={this.state.formErrors.password}
+                            errorMessage={formErrors.password}
                         />
                         <Input
                             type="password"
                             placeholder="Repeat your new password"
                             name="confirmPassword"
                             iconName="password"
-                            errorMessage={this.state.formErrors.confirmPassword}
+                            errorMessage={formErrors.confirmPassword}
                         />
                         <Button
                             type="submit"
                             buttonColorScheme="light"
                             onClick={this.changePassSubmitHandler}
-                            disabled={!this.state.formValid}
+                            disabled={!formValid}
                         >
                             Change password
                         </Button>

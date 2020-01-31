@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button} from "../common/index";
+import {Button} from "../common";
 import {Link, Route} from "react-router-dom";
 
 class PostItem extends Component {

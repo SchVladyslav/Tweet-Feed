@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {authService} from "../../services/auth.service";
 import {newsService} from "../../services/news.service";
-import {Button, Preloader, Modal} from "../common/index";
+import {Button, Preloader, Modal} from "../common";
 import './Dashboard.scss'
 import PostItem from "./PostItem";
 import DashboardForm from "../forms/DashboardForm/DashboardForm";
