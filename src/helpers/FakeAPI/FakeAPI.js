@@ -37,6 +37,11 @@ export const FakeAPI = (() => {
 
     let isLoggedIn;
 
+    const _events = [
+        { id: 0, name: "Event 1", data: "12.01.2020", startTime: "14:00", endTime: "19:00", isFullDayEvent: false },
+        { id: 1, name: "Event 2", data: "22.01.2020", startTime: "", endTime: "", isFullDayEvent: true },
+    ];
+
     window.fetch = function (url, opts) {
         // for getting user info
         const authHeader = opts.headers['Authorization'];
@@ -55,6 +60,9 @@ export const FakeAPI = (() => {
                 removePost(url, opts, ok, unauthorised);
                 getPostById(url, opts, ok, unauthorised);
                 updateUserProfile(url, opts, ok, unauthorised);
+                getEventId(url, opts, ok, unauthorised);
+
+                //_fetch(url, opts).then(response => resolve(response));
 
                 return ok(_users);
             }, 1000);
@@ -233,4 +241,19 @@ export const FakeAPI = (() => {
         const {accessToken, refreshToken} = createToken(updatedUser);
         localStorage.setItem('currentUser', JSON.stringify({accessToken, refreshToken}));
     };
+    const getNewsList = (url, opts, ok, unauthorised) => {
+        if (url.endsWith('/news') && opts.method === 'GET') {
+            if (!isLoggedIn) return unauthorised();
+            return ok(_news);
+        }
+    }
+
+    const getEventId = (url, opts, ok, unauthorised) => {
+        if (url.match(/\/events\/\d+$/) && opts.method === 'GET') {
+            const id = JSON.parse(opts.body);
+            const event = _events.find(event => event.id === id);
+            return ok(event);
+        }
+    }
+
 })();
