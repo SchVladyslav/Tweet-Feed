@@ -97,14 +97,13 @@ export default class Dashboard extends Component {
                         formTitle={title}
                         formDescription={description}
                         handleSubmit={this.createPost}
+                        isUploadImg={true}
                     />
                 </Modal>
-                {/*<div className='dashboard-container'>*/}
                     {this.renderAddButton()}
                     <div className="posts">
                         {this.renderPosts()}
                     </div>
-                {/*</div>*/}
             </section>)
     }
 }

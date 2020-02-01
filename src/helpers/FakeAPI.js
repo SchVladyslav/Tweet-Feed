@@ -84,9 +84,9 @@ export const FakeAPI = (() => {
             const user = users.find(user => user.email === params.email && user.password === params.password);
 
             if (!user) return error('Username or password is incorrect');
-            let token = jwt.sign({ user }, SECRET_KEY);
+            let token = jwt.sign({user}, SECRET_KEY);
 
-            return ok({ token });
+            return ok({token});
         }
     };
 
@@ -126,8 +126,6 @@ export const FakeAPI = (() => {
 
     const editPost = (url, opts, ok, unauthorised) => {
         if (url.match(/\/news\/edit\/\d+$/) && opts.method === 'POST') {
-
-            // if (url.endsWith('/news/edit') && opts.method === 'POST') {
             if (!isLoggedIn) return unauthorised();
             const params = JSON.parse(opts.body);
             const urlParts = url.split('/');
