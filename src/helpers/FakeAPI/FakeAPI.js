@@ -38,8 +38,8 @@ export const FakeAPI = (() => {
     let isLoggedIn;
 
     const _events = [
-        { id: 0, name: "Event 1", data: "12.01.2020", startTime: "14:00", endTime: "19:00", isFullDayEvent: false },
-        { id: 1, name: "Event 2", data: "22.01.2020", startTime: "", endTime: "", isFullDayEvent: true },
+        { id: '0', name: "Event 1", data: "12.01.2020", startTime: "14:00", endTime: "19:00", isFullDayEvent: false },
+        { id: '1', name: "Event 2", data: "22.01.2020", startTime: "", endTime: "", isFullDayEvent: true },
     ];
 
     window.fetch = function (url, opts) {
@@ -61,8 +61,8 @@ export const FakeAPI = (() => {
                 getPostById(url, opts, ok, unauthorised);
                 updateUserProfile(url, opts, ok, unauthorised);
                 getEventId(url, opts, ok, unauthorised);
-
-                //_fetch(url, opts).then(response => resolve(response));
+                addEvent(url, opts, ok, unauthorised);
+                deleteEvent(url, opts, ok, unauthorised);
 
                 return ok(_users);
             }, 1000);
@@ -248,11 +248,57 @@ export const FakeAPI = (() => {
         }
     }
 
+    /*******EVENTS PART OF FAKE API********/
+
     const getEventId = (url, opts, ok, unauthorised) => {
         if (url.match(/\/events\/\d+$/) && opts.method === 'GET') {
-            const id = JSON.parse(opts.body);
-            const event = _events.find(event => event.id === id);
+            if (authService.currentUser) {
+                const id = JSON.parse(opts.body);
+                const event = _events.find(event => event.id === id);
+                return ok(event);
+            } else return unauthorised();
+        }
+    }
+
+    const addEvent = (url, opts, ok, unauthorised) => {
+        if (url.endsWith("events/add") && opts.method === 'POST') {
+            if (authService.currentUser) {
+            const event = JSON.parse(opts.body);
+            const id = Math.round(Math.random() * 100) * 2.5;
+            let events = _events;
+            if (localStorage.getItem('events')) {
+                events = JSON.parse(localStorage.getItem('events'));
+            }
+
+            const newEvent = {
+                id,
+                ...event,
+                startTime: event.startTime || '',
+                endTime: event.endTime || '',
+                isFullDayEvent: !!event.isFullDayEvent
+            };
+
+            events.push(newEvent);
+            localStorage.setItem('events', JSON.stringify(events));
+
             return ok(event);
+        } else return unauthorised();
+        }
+    }
+
+    const deleteEvent= (url, opts, ok, unauthorised) => {
+        if (url.match(/\/events\/\d+$/) && opts.method === 'DELETE') {
+            if (authService.currentUser) {
+            const id = JSON.parse(opts.body);
+            const events = JSON.parse(localStorage.getItem("events"));
+            
+            const eventIndex = events.findIndex(event => event.id === id);
+            const newEvents = events.splice(eventIndex, 1);
+
+            localStorage.setItem('events', JSON.stringify(newEvents));
+            return ok(newEvents);
+            
+            } else return unauthorised();
         }
     }
 

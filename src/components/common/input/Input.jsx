@@ -20,8 +20,7 @@ export default function Input({
   errorMessage,
   onChange,
   iconName,
-  readOnly,
-  ref
+  required
 }) {
   const iconNames = {
     user: "icon-user",
@@ -41,8 +40,7 @@ export default function Input({
           type={type}
           onChange={onChange}
           value={value}
-          readOnly={readOnly}
-          ref={ref}
+          required={required}
         />
       </div>
       {iconClass ? <i className={`icon ${iconClass} input__icon`} /> : null}
