@@ -1,4 +1,12 @@
 .common-modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1050;
+  overflow: auto;
+  outline: 0;
 
   &__cover {
     position: fixed;
@@ -8,22 +16,26 @@
     height: 100%;
     background: #000;
     opacity: 0.6;
-    z-index: 1;
+    z-index: -1;
+  }
+
+  &__dialog {
+    transform: translate(0, 0);
+    max-width: 550px;
+    margin: 1.75rem auto;
   }
 
   &__content {
-    position: fixed;
-    top: 50%;
-    left: 50%;
+    position: relative;
+    margin: 0 5vw;
+    top: 55px;
     border-radius: 10px;
-    margin-right: -50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
     padding: 40px;
     background-color: #fff;
     max-width: 500px;
     box-sizing: border-box;
     z-index: 2;
+    text-align: center;
   }
 
   &__button-close {
@@ -48,7 +60,8 @@
       background-color: #e8f5fe;
     }
   }
-
 }
 
-
+.modal-open {
+  overflow: hidden;
+}
