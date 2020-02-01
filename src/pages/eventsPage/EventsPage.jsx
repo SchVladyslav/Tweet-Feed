@@ -4,6 +4,7 @@ import Modal from "../../components/events/modal/EventsModal";
 import Button from "../../components/common/button/Button";
 import ReactDOM from "react-dom";
 import "./EventsPage.scss"
+import EventPost from "../../components/events/eventPost/EventPost";
 
 
 function EventsPage() {
@@ -32,6 +33,7 @@ function EventsPage() {
             <Modal modalDivEvents={modal} />
           </div>
         </div>
+        <EventPost/>
       </div>
     </Layout>
   );
