@@ -2,10 +2,11 @@ import React, { Component } from "react";
 import { authService } from "../../services/auth.service";
 import { newsService } from "../../services/news.service";
 import Button from "../common/button/Button";
-import { Preloader, Logout } from "../common/index";
+import { Preloader } from "../common/index";
 import "./Dashboard.scss";
 import PostItem from "./PostItem";
-import ModalDashboard from "../modals/modalDashboard/ModalDashboard";
+import Modal from "../common/modal/Modal";
+import DashboardForm from "../forms/DashboardForm/DashboardForm";
 
 export default class Dashboard extends Component {
   state = {
@@ -30,7 +31,7 @@ export default class Dashboard extends Component {
     });
   };
 
-  handleModalInput = e => {
+  handleUserInput = e => {
     const { name } = e.target;
     const { value } = e.target;
     this.setState({ [name]: value });
@@ -52,26 +53,6 @@ export default class Dashboard extends Component {
   removeNews = id => {
     newsService.removeNews(id).then(this.getNewsList);
   };
-
-  renderPosts() {
-    return this.state.newsList ? (
-      <div>
-        {this.state.newsList.map(item => {
-          return (
-            <Post
-              post={item}
-              currentUserRole={this.state.currentUser.role}
-              key={item.id}
-              deleteHandler={this.removeNews}
-              isDetails={true}
-            />
-          );
-        })}
-      </div>
-    ) : (
-      <Preloader />
-    );
-  }
 
   renderPosts() {
     const { newsList, currentUserRole } = this.state;

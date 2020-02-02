@@ -1,6 +1,7 @@
 import { HandleResponse } from '../helpers/FakeAPI/HandleResponse';
 import jwt from 'jsonwebtoken';
 import { SECRET_KEY } from '../helpers/FakeAPI/secretKey';
+import { Headers } from '../helpers/FakeAPI/Headers';
 
 export const authService = {
     signIn,
@@ -18,7 +19,7 @@ function signIn(email, password) {
         body: JSON.stringify({ email, password })
     };
 
-    return fetch(`/users/authenticate`, requestOptions)
+    return fetch(Headers.USER_AUTHENTICATE, requestOptions)
         .then(HandleResponse)
         .then(token => {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
@@ -37,7 +38,7 @@ function signUp(firstName, lastName, email, password, confirmPassword) {
         body: JSON.stringify({ firstName, lastName, email, password, confirmPassword, gender: null, age: null }),
     };
 
-    return fetch(`/users/authorization`, requestOptions)
+    return fetch(Headers.USER_AUTHORIZATION, requestOptions)
         .then(HandleResponse)
         .then(users => { localStorage.setItem('users', JSON.stringify(users)); })
         .then(error => {
@@ -52,7 +53,7 @@ function refreshToken(token) {
         body: JSON.stringify({ token }),
     };
 
-    return fetch(`/users/authenticate/refreshToken`, requestOptions)
+    return fetch(Headers.USER_REFRESH_TOKEN, requestOptions)
         .then(HandleResponse)
         .then(token => {
             localStorage.setItem('currentUser', JSON.stringify(token));
@@ -73,7 +74,6 @@ function checkTokenExpiration(userToken) {
         let decoded = jwt.decode(userToken.accessToken, SECRET_KEY);
         if (isExpired(decoded.exp)) {
             refreshToken(userToken);
-            console.log(userToken);
             const decoded = JSON.parse(localStorage.getItem('currentUser'))
             return jwt.decode(decoded.accessToken, SECRET_KEY);
         }
