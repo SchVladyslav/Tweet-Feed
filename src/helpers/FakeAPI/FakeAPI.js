@@ -81,8 +81,6 @@ export const FakeAPI = (() => {
         if (url.endsWith(USER_AUTHENTICATE) && opts.method === 'POST') {
             let user;
             const params = JSON.parse(opts.body);
-            //const user = _users.find(user => user.email === params.email && user.password === params.password);
-
             const users = JSON.parse(localStorage.getItem('users'));
 
             if (users)
@@ -95,6 +93,20 @@ export const FakeAPI = (() => {
 
             return ok(createToken(user));
         }
+    };
+
+    const refreshToken = (url, opts, ok) => {
+        if (url.endsWith(USER_REFRESH_TOKEN) && opts.method === 'POST') {
+            const params = JSON.parse(opts.body);
+            const decoded = jwt.verify(params.token.refreshToken, SECRET_KEY);
+            return ok(createToken(decoded.user));
+        }
+    }
+
+    const createToken = (user) => {
+        const accessToken = jwt.sign({ user: user }, SECRET_KEY, { expiresIn: 10 });
+        const refreshToken = jwt.sign({ user: user }, SECRET_KEY, { expiresIn: '1d' });
+        return { accessToken, refreshToken };
     };
 
     const refreshToken = (url, opts, ok) => {
