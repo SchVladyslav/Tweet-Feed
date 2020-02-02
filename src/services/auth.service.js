@@ -1,10 +1,12 @@
-import { HandleResponse } from '../helpers/HandleResponse';
+import { HandleResponse } from '../helpers/FakeAPI/HandleResponse';
 import jwt from 'jsonwebtoken';
+import { SECRET_KEY } from '../helpers/FakeAPI/secretKey';
 
 export const authService = {
     signIn,
     signUp,
     logout,
+    refreshToken,
     getUserDataFromToken,
     get currentUser() { return getUserDataFromToken(JSON.parse(localStorage.getItem('currentUser'))) }
 };
@@ -23,7 +25,7 @@ function signIn(email, password) {
             localStorage.setItem('currentUser', JSON.stringify(token));
             return token;
         })
-        .catch(error => {
+        .then(error => { //catch don't work
             return error;
         });
 }
@@ -36,13 +38,51 @@ function signUp(firstName, lastName, email, password, confirmPassword) {
     };
 
     return fetch(`/users/authorization`, requestOptions)
-        .then(HandleResponse);
+        .then(HandleResponse)
+        .then(users => { localStorage.setItem('users', JSON.stringify(users)); })
+        .then(error => {
+            return error;
+        });
 }
 
-function getUserDataFromToken(user) {
-    if (user)
-        return jwt.decode(user.token).user;
+function refreshToken(token) {
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token }),
+    };
+
+    return fetch(`/users/authenticate/refreshToken`, requestOptions)
+        .then(HandleResponse)
+        .then(token => {
+            localStorage.setItem('currentUser', JSON.stringify(token));
+        });
 }
+
+function getUserDataFromToken(userToken) {
+    if (userToken) {
+        const decoded = checkTokenExpiration(userToken);
+        return decoded.user;
+    }
+}
+
+function checkTokenExpiration(userToken) {
+    try {
+        return jwt.verify(userToken.accessToken, SECRET_KEY);
+    } catch {
+        let decoded = jwt.decode(userToken.accessToken, SECRET_KEY);
+        if (isExpired(decoded.exp)) {
+            refreshToken(userToken);
+            console.log(userToken);
+            const decoded = JSON.parse(localStorage.getItem('currentUser'))
+            return jwt.decode(decoded.accessToken, SECRET_KEY);
+        }
+    }
+}
+
+function isExpired(exp) {
+    return Date.now() > exp * 1000;
+};
 
 function logout() {
     localStorage.removeItem('currentUser');

@@ -24,7 +24,7 @@ export class FormSignUp extends Component {
     const { value } = e.target;
 
     this.setState({ [name]: value }, () => {
-      validateFields(name, value, this.state, 'sign up');
+      validateFields(name, value, this.state, "sign up");
       this.props.updateState(this.state);
     });
   };
@@ -82,7 +82,7 @@ export class FormSignUp extends Component {
         </ul>
         <Button
           children="Sign Up"
-          className="button"
+          className="button button-auth"
           type="submit"
           buttonColorScheme="pearl"
           buttonSize="large"

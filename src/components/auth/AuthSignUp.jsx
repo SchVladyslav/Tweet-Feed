@@ -14,6 +14,7 @@ class AuthSignUp extends Component {
       email: "",
       password: "",
       confirmPassword: "",
+      error: "",
       isFetching: false
     };
   }
@@ -40,24 +41,23 @@ class AuthSignUp extends Component {
     this.setState({ isFetching: true });
     authService
       .signUp(firstName, lastName, email, password, confirmPassword)
-      .then(
-        () => {
-          const { from } = this.props.location.state || {
-            from: { pathname: "/signin" }
-          };
-          this.props.history.push(from);
-        },
-        error => {
-          console.error(error);
-        }
-      );
+      .then(() => {
+        const { from } = this.props.location.state || {
+          from: { pathname: "/signin" }
+        };
+        this.props.history.push(from);
+      })
+      .catch(error => {
+        this.setState({ error: error, isFetching: false });
+      });
   };
 
   render() {
-    const { isFetching } = this.state;
+    const { isFetching, error } = this.state;
     return (
       <>
         {isFetching ? <Preloader /> : ""}
+        {<p className="main-form__error">{error}</p>}
         <FormSignUp
           state={this.state}
           updateState={this.updateState}
