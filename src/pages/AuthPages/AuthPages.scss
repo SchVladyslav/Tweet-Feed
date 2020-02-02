@@ -4,7 +4,7 @@
   align-items: center;
 
   width: 100%;
-  margin-top: 50px;
+  background: no-repeat center/cover url("../../assets/img/bg-01.jpg");
 
   color: #9a9a9a;
 }
@@ -124,4 +124,12 @@
 
 .main-back {
   align-self: flex-start;
+}
+
+.button-auth {
+  margin-top: 10px;
+}
+
+.main-form__error {
+  color: red;
 }

@@ -2,15 +2,14 @@ import React, { Component } from "react";
 import { authService } from "../../services/auth.service";
 import { newsService } from "../../services/news.service";
 import Button from "../common/button/Button";
-import { Preloader } from "../common/index";
+import { Preloader, Logout } from "../common/index";
 import "./Dashboard.scss";
 import PostItem from "./PostItem";
-import Modal from "../common/modal/Modal";
-import DashboardForm from "../forms/DashboardForm/DashboardForm";
+import ModalDashboard from "../modals/modalDashboard/ModalDashboard";
 
 export default class Dashboard extends Component {
   state = {
-    currentUserRole: authService.currentUser.role,
+    currentUser: authService.currentUser,
     newsList: null,
     title: "",
     description: "",
@@ -31,7 +30,7 @@ export default class Dashboard extends Component {
     });
   };
 
-  handleUserInput = e => {
+  handleModalInput = e => {
     const { name } = e.target;
     const { value } = e.target;
     this.setState({ [name]: value });
@@ -55,65 +54,58 @@ export default class Dashboard extends Component {
   };
 
   renderPosts() {
-    const { newsList, currentUserRole } = this.state;
-    return newsList ? (
-      <>
-        {newsList.map(item => {
+    return this.state.newsList ? (
+      <div>
+        {this.state.newsList.map(item => {
           return (
             <PostItem
               post={item}
-              currentUserRole={currentUserRole}
+              currentUserRole={this.state.currentUser.role}
               key={item.id}
               deleteHandler={this.removeNews}
               isDetails={true}
             />
           );
         })}
-      </>
+      </div>
     ) : (
       <Preloader />
     );
   }
 
-  renderAddButton() {
-    const { currentUserRole } = this.state;
-    return currentUserRole === "Admin" ? (
-      <div className="dashboard__add-news-button">
-        <Button
-          type="submit"
-          buttonColorScheme="primary"
-          buttonSize="medium"
-          onClick={this.toggleModalVisibility}
-        >
-          Add news
-        </Button>
-      </div>
-    ) : (
-      <div style={{ height: "10px" }} />
-    );
-  }
-
   render() {
-    const { isModalOpen, title, description } = this.state;
     return (
-      <section className="dashboard news-container">
-        <Modal
-          modalTitle="Create news"
-          isModalOpen={isModalOpen}
+      <React.Fragment>
+        <ModalDashboard
+          title="Create news"
+          buttonText="Add"
+          handleSubmit={this.createPost}
+          isModalOpen={this.state.isModalOpen}
+          handleModalInput={this.handleModalInput}
           toggleModalVisibility={this.toggleModalVisibility}
-        >
-          <DashboardForm
-            buttonText="Add"
-            handleUserInput={this.handleUserInput}
-            formTitle={title}
-            formDescription={description}
-            handleSubmit={this.createPost}
-            isUploadImg={true}
-          />
-        </Modal>
-        {this.renderAddButton()}
-        <div className="posts">{this.renderPosts()}</div>
-      </section>
+          formTitle={this.state.title}
+          formDescription={this.state.description}
+        />
+        <div className="dashboard-container">
+          {this.state.currentUser.role === "Admin" ? (
+            <div className="add-news-button-wrap">
+              <Button
+                type="submit"
+                buttonColorScheme="primary"
+                buttonSize="medium"
+                className="add-news-button"
+                onClick={this.toggleModalVisibility}
+              >
+                Add news
+              </Button>
+            </div>
+          ) : (
+            <div style={{ height: "10px" }} />
+          )}
+
+          <div className="posts">{this.renderPosts()}</div>
+        </div>
+      </React.Fragment>
     );
   }
 }
