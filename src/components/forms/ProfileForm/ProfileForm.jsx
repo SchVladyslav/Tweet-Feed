@@ -13,22 +13,25 @@ class ProfileForm extends Component {
     onSubmitHandler = event => {
         event.preventDefault();
 
+        this.props.toggleLoading();
         userService.updateUserData(
             authService.currentUser.id,
             this.state.user
         );
-
-        this.props.toggleLoading();
     };
 
     componentDidMount() {
-        const user = userService.getUserData();
-        this.setState({user})
+        setTimeout(this.fetchUserData, 1000);
     }
 
+    fetchUserData = () => {
+        const user = userService.getUserData();
+        this.setState({user});
+    };
+
     handleInputChange = event => {
-      const {name, value} = event.target;
-      const {user} = this.state;
+        const {name, value} = event.target;
+        const {user} = this.state;
 
         this.setState({user: {...user, [name]: value}});
     };
@@ -37,7 +40,7 @@ class ProfileForm extends Component {
         const {user} = this.state;
         return (
             <div className="profile-form">
-                { user ?
+                {user ?
                     <form onSubmit={this.onSubmitHandler} className="form">
                         <div className="input-container">
                             <Input

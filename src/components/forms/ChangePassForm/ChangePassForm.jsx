@@ -21,15 +21,12 @@ class ChangePassModal extends Component {
         }
     }
 
-
     changePassSubmitHandler = event => {
         event.preventDefault();
 
         userService.changeUserPassword(authService.currentUser.id, this.state.password);
         this.props.toggleModalVisibility();
         this.props.toggleLoading();
-
-        // window.alert('Password was successfully changed');
     };
 
     inputsChangeHandler = event => {

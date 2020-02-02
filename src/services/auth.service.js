@@ -3,20 +3,11 @@ import jwt from 'jsonwebtoken';
 import { SECRET_KEY } from '../helpers/FakeAPI/secretKey';
 import { Headers } from '../helpers/FakeAPI/Headers';
 
-export const authService = {
-    signIn,
-    signUp,
-    logout,
-    refreshToken,
-    getUserDataFromToken,
-    get currentUser() { return getUserDataFromToken(JSON.parse(localStorage.getItem('currentUser'))) }
-};
-
 function signIn(email, password) {
     const requestOptions = {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password })
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({email, password})
     };
 
     return fetch(Headers.USER_AUTHENTICATE, requestOptions)
@@ -34,8 +25,8 @@ function signIn(email, password) {
 function signUp(firstName, lastName, email, password, confirmPassword) {
     const requestOptions = {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ firstName, lastName, email, password, confirmPassword, gender: null, age: null }),
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({firstName, lastName, email, password, confirmPassword, gender: null, age: null}),
     };
 
     return fetch(Headers.USER_AUTHORIZATION, requestOptions)
@@ -92,6 +83,7 @@ export const authService = {
     signIn,
     signUp,
     logout,
+    refreshToken,
     getUserDataFromToken,
     get currentUser() { return getUserDataFromToken(JSON.parse(localStorage.getItem('currentUser'))) }
 };

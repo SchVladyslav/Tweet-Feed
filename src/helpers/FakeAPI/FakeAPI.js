@@ -42,7 +42,7 @@ export const FakeAPI = (() => {
         const authHeader = opts.headers['Authorization'];
         isLoggedIn = authHeader && authHeader.startsWith('Bearer ');
 
-        return new Promise((resolve, reject) => {
+        return new Promise(resolve => {
             // wrap in timeout to simulate server api call
             setTimeout(() => {
 
@@ -225,17 +225,25 @@ export const FakeAPI = (() => {
         if (url.endsWith('put/profile') && opts.method === 'PUT') {
             if (localStorage.getItem('currentUser')) {
                 const updatedUser = JSON.parse(opts.body);
+
                 updateUserData(updatedUser);
+                updateToken(updatedUser);
+
             } else return unauthorised();
         }
     };
 
-    const updateUserData = (updatedUser) => {
+    const updateUserData = updatedUser => {
             const users = JSON.parse(localStorage.getItem('users'));
             const user = users.find(user => user.id === updatedUser.id);
             const userIndex = users.indexOf(user);
             users.splice(userIndex, 1, updatedUser);
             localStorage.setItem('users', JSON.stringify(users));
+    };
+
+    const updateToken = updatedUser => {
+        const token = jwt.sign({user: updatedUser}, SECRET_KEY);
+        localStorage.setItem('currentUser', JSON.stringify({token}));
     };
 
     const getAllUsers = (url, opts, ok) => {

@@ -61,7 +61,6 @@ function fetchUpdateUserProfile(updatedUser) {
 }
 
 export const userService = {
-    getAllUsers,
     getUserData,
     updateUserData,
     changeUserPassword

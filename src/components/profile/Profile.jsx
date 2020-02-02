@@ -46,7 +46,7 @@ class Profile extends Component {
                                 Change password
                             </Button>
                         </div>
-                        < ChangePassForm
+                        <ChangePassForm
                             state={this.state}
                             updateState={this.updateState}
                             showModal={this.state.isModalShowed}
