@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Post from "../../components/dashboard/Post";
+import PostItem from "../../components/dashboard/PostItem";
 import { authService } from "../../services/auth.service";
 import { newsService } from "../../services/news.service";
 import Layout from "../../components/Layout/Layout";

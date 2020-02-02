@@ -12,6 +12,7 @@ class AuthSignIn extends Component {
     this.state = {
       email: "",
       password: "",
+      error: "",
       isFetching: false
     };
 
@@ -28,24 +29,25 @@ class AuthSignIn extends Component {
     e.preventDefault();
     const { email, password } = this.state;
     this.setState({ isFetching: true });
-    authService.signIn(email, password).then(
-      () => {
+    authService
+      .signIn(email, password)
+      .then(() => {
         const { from } = this.props.location.state || {
           from: { pathname: "/dashboard" }
         };
         this.props.history.push(from);
-      },
-      error => {
-        console.error(error);
-      }
-    );
+      })
+      .catch(error => {
+        this.setState({ error: error, isFetching: false });
+      });
   };
 
   render() {
-    const { isFetching } = this.state;
+    const { isFetching, error } = this.state;
     return (
       <>
         {isFetching ? <Preloader /> : ""}
+        {<p className="main-form__error">{error}</p>}
         <FormSignIn
           state={this.state}
           updateState={this.updateState}

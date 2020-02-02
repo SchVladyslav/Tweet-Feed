@@ -1,6 +1,6 @@
-import { AuthHeader } from "../helpers/AuthHeader";
-import { HandleResponse } from "../helpers/HandleResponse";
-import {authService} from "./auth.service";
+import { AuthHeader } from "../helpers/FakeAPI/AuthHeader";
+import { HandleResponse } from "../helpers/FakeAPI/HandleResponse";
+import { authService } from "./auth.service";
 
 function getAllUsers() {
     const requestOptions = { method: 'GET', headers: AuthHeader() };
