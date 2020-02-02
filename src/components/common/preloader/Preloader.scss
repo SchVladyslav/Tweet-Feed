@@ -24,6 +24,16 @@ $spinkit-spinner-color: #26a5f3 !default;
   transform: translate(-50%, -50%);
 }
 
+.preloader_background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.7);
+  z-index: 10;
+}
+
 @keyframes preloader {
   0% {
     transform: perspective(120px) rotateX(0deg) rotateY(0deg);

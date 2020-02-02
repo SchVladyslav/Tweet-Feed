@@ -1,11 +1,11 @@
 import React from "react";
 import "./Preloader.scss";
 
-const Preloader = (props) => {
+const Preloader = props => {
   return (
-    <React.Fragment>
-      <div className="preloader preloader_position-center"/>
-    </React.Fragment>
+    <div className="preloader_background">
+      <div className="preloader preloader_position-center" />
+    </div>
   );
 };
 

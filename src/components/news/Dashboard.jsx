@@ -2,11 +2,10 @@ import React, { Component } from "react";
 import { authService } from "../../services/auth.service";
 import { newsService } from "../../services/news.service";
 import Button from "../common/button/Button";
-import { Preloader } from "../common/index";
+import { Preloader, Logout } from "../common/index";
 import "./Dashboard.scss";
 import PostItem from "./PostItem";
-import Modal from "../common/modal/Modal";
-import DashboardForm from "../forms/DashboardForm/DashboardForm";
+import ModalDashboard from "../modals/modalDashboard/ModalDashboard";
 
 export default class Dashboard extends Component {
   state = {
@@ -53,26 +52,6 @@ export default class Dashboard extends Component {
   removeNews = id => {
     newsService.removeNews(id).then(this.getNewsList);
   };
-
-  renderPosts() {
-    return this.state.newsList ? (
-      <div>
-        {this.state.newsList.map(item => {
-          return (
-            <Post
-              post={item}
-              currentUserRole={this.state.currentUser.role}
-              key={item.id}
-              deleteHandler={this.removeNews}
-              isDetails={true}
-            />
-          );
-        })}
-      </div>
-    ) : (
-      <Preloader />
-    );
-  }
 
   renderPosts() {
     return this.state.newsList ? (
