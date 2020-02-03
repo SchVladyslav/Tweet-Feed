@@ -1,12 +1,10 @@
 import { AuthHeader } from "../helpers/FakeAPI/AuthHeader";
 import { HandleResponse } from "../helpers/FakeAPI/HandleResponse";
-import { Headers } from '../helpers/FakeAPI/Headers';
-
 
 export const newsService = {
     getNewsList,
     createNews,
-    removePost,
+    removeNews,
     getPostById,
     editPost
 };
@@ -14,12 +12,12 @@ export const newsService = {
 
 function getNewsList(){
     const requestOptions = { method: 'GET', headers: AuthHeader() };
-    return fetch(Headers.NEWS_GET_LIST, requestOptions).then(HandleResponse);
+    return fetch(`/news`, requestOptions).then(HandleResponse);
 }
 
 function getPostById(id) {
     const requestOptions = { method: 'GET', headers: AuthHeader() };
-    return fetch(`${Headers.NEWS_GET_POST}${id}`, requestOptions).then(HandleResponse);
+    return fetch(`/news/${id}`, requestOptions).then(HandleResponse);
 }
 
 function createNews(title, description) {
@@ -29,13 +27,13 @@ function createNews(title, description) {
         body: JSON.stringify({ title, description }),
     };
 
-    return fetch(Headers.NEWS_CREATE_POST, requestOptions)
+    return fetch(`/news/add`, requestOptions)
         .then(HandleResponse)
 }
 
-function removePost(id) {
+function removeNews(id) {
     const requestOptions = { method: 'DELETE', headers: AuthHeader() };
-    return fetch(`${Headers.NEWS_REMOVE_POST}${id}`, requestOptions).then(HandleResponse);
+    return fetch(`/news/${id}`, requestOptions).then(HandleResponse);
 }
 
 function editPost(id, title, description) {
@@ -45,6 +43,6 @@ function editPost(id, title, description) {
         body: JSON.stringify({ title, description }),
     };
 
-    return fetch(`${Headers.NEWS_EDIT_POST}${id}`, requestOptions)
+    return fetch(`/news/edit/${id}`, requestOptions)
         .then(HandleResponse)
 }

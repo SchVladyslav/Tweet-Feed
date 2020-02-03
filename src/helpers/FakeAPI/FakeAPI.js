@@ -50,7 +50,7 @@ export const FakeAPI = (() => {
                 getNewsList(url, opts, ok, unauthorised);
                 createNews(url, opts, ok, unauthorised);
                 editPost(url, opts, ok, unauthorised);
-                removePost(url, opts, ok, unauthorised);
+                removeNews(url, opts, ok, unauthorised);
                 getPostById(url, opts, ok, unauthorised);
                 updateUserProfile(url, opts, ok, unauthorised);
 
@@ -137,7 +137,7 @@ export const FakeAPI = (() => {
     /******NEWS PART OF FAKE API*******/
 
     const createNews = (url, opts, ok, unauthorised) => {
-        if (url.endsWith(Headers.NEWS_CREATE_POST) && opts.method === 'POST') {
+        if (url.endsWith('/news/add') && opts.method === 'POST') {
             if (!isLoggedIn) return unauthorised();
             const params = JSON.parse(opts.body);
             const news = {
@@ -151,7 +151,7 @@ export const FakeAPI = (() => {
     };
 
     const editPost = (url, opts, ok, unauthorised) => {
-        if (url.includes(Headers.NEWS_EDIT_POST) && opts.method === 'POST') {
+        if (url.match(/\/news\/edit\/\d+$/) && opts.method === 'POST') {
             if (!isLoggedIn) return unauthorised();
             const params = JSON.parse(opts.body);
             const urlParts = url.split('/');
@@ -172,8 +172,8 @@ export const FakeAPI = (() => {
         }
     };
 
-    const removePost = (url, opts, ok, unauthorised) => {
-        if (url.includes(Headers.NEWS_REMOVE_POST) && opts.method === 'DELETE') {
+    const removeNews = (url, opts, ok, unauthorised) => {
+        if (url.match(/\/news\/\d+$/) && opts.method === 'DELETE') {
             if (!isLoggedIn) return unauthorised();
             let urlParts = url.split('/');
             let id = parseInt(urlParts[urlParts.length - 1]);
@@ -186,8 +186,9 @@ export const FakeAPI = (() => {
             return ok(_news);
         }
     };
+
     const getPostById = (url, opts, ok, unauthorised) => {
-        if (url.includes(Headers.NEWS_GET_POST) && opts.method === 'GET') {
+        if (url.match(/\/news\/\d+$/) && opts.method === 'GET') {
             if (!isLoggedIn) return unauthorised();
             let urlParts = url.split('/');
             let id = parseInt(urlParts[urlParts.length - 1]);
@@ -199,7 +200,7 @@ export const FakeAPI = (() => {
     };
 
     const getNewsList = (url, opts, ok, unauthorised) => {
-        if (url.endsWith(Headers.NEWS_GET_LIST) && opts.method === 'GET') {
+        if (url.endsWith('/news') && opts.method === 'GET') {
             if (!isLoggedIn) return unauthorised();
             return ok(_news);
         }
