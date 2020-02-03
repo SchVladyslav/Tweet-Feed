@@ -13,8 +13,6 @@ class DashboardForm extends Component {
         }
     }
 
-    // validateField
-
     setTextareaValidateStatus = e => {
         const name = e.target.name;
         const value = e.target.value;
@@ -49,7 +47,6 @@ class DashboardForm extends Component {
     }
 
     loadFile = (e) => {
-        // const output = document.getElementById('output');
         this.setState({
             ...this.state,
             imgSrc: URL.createObjectURL(e.target.files[0]),
@@ -78,7 +75,6 @@ class DashboardForm extends Component {
 
     render() {
         const {buttonText, handleSubmit, handleUserInput, formTitle, formDescription} = this.props;
-        // const {imgSrc} = this.state;
         const {titleStatus, descriptionStatus} = this.state.isFormFieldsValid;
         return (
             <form className="dashboard__form" onSubmit={handleSubmit}
