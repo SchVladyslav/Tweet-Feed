@@ -1,7 +1,22 @@
+@import "../../assets/scss/variables";
+
 .profile {
-  padding-top: 40px;
+  padding: 40px 0 40px 0;
   text-align: center;
-  background-size: cover;
+  height: calc(100vh - 82px);
+  background: no-repeat center/cover url("../../assets/img/bg-01.jpg");
+
+  @media only screen and (min-device-width: $big-screen) and (max-width: $large-screen) {
+    height: calc(100vh - 66px);
+  }
+
+  @media only screen and (min-device-width: $small-screen) and (max-device-width: $medium-screen) {
+    height: 100%;
+  }
+
+  @media only screen and (min-device-width: $medium-screen) and (max-device-width: $big-screen) {
+    height: calc(100% + 55px);
+  }
 
   h1 {
     color: #ffffff;

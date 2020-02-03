@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './Layout.scss';
 import {NavLink} from "react-router-dom";
-import {Dropdown, Logout} from "../common/index";
+import {Dropdown, Logout} from "../common";
 import PropTypes from "prop-types";
 import {authService} from "../../services/auth.service";
 
@@ -55,17 +55,17 @@ class Layout extends Component {
                                         {this.renderLinks('burger')}
                                     </ul>
                                 </div>
-                                : null }
-                                <aside className="sidebar">
-                                    <ul className="sidebar__list">
-                                        {this.renderLinks('sidebar')}
-                                    </ul>
-                                </aside>
+                                : null}
+                            <aside className="sidebar">
+                                <ul className="sidebar__list">
+                                    {this.renderLinks('sidebar')}
+                                </ul>
+                            </aside>
                             <div className="main__content">
                                 {this.props.children}
                             </div>
                         </>
-                        : this.props.children}
+                        : this.props.children }
                 </main>
             </>
         )
