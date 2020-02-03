@@ -1,16 +1,13 @@
-import { Role } from './Role';
+import {Role} from './Role';
 import jwt from 'jsonwebtoken';
-import { SECRET_KEY } from './secretKey';
-import { Headers } from './Headers';
-import {authService} from "../../services/auth.service";
+import {SECRET_KEY} from './secretKey';
+import {Headers} from './Headers';
 
 export const FakeAPI = (() => {
 
     const ADMIN_EMAIL = 'admin@gmail.com';
 
-    const _users = [
-        {id: '83', email: ADMIN_EMAIL, password:"admin", firstName: "Admin", lastName: "Admin", gender: null, age: null, role: "Admin"}
-    ];
+    const _users = [];
 
     const _news = [
         {
@@ -61,15 +58,15 @@ export const FakeAPI = (() => {
             }, 1000);
 
             function ok(body) {
-                resolve({ ok: true, text: () => Promise.resolve(JSON.stringify(body)) })
+                resolve({ok: true, text: () => Promise.resolve(JSON.stringify(body))})
             }
 
             function unauthorised() {
-                resolve({ status: 401, text: () => Promise.resolve(JSON.stringify({ message: 'Unauthorised' })) })
+                resolve({status: 401, text: () => Promise.resolve(JSON.stringify({message: 'Unauthorised'}))})
             }
 
             function error(message) {
-                resolve({ status: 400, text: () => Promise.resolve(JSON.stringify({ message })) })
+                resolve({status: 400, text: () => Promise.resolve(JSON.stringify({message}))})
             }
         });
     };
@@ -88,8 +85,7 @@ export const FakeAPI = (() => {
 
             if (users)
                 user = users.find(user => user.email === params.email && user.password === params.password);
-            else
-                return error(`You're not registered! Sign Up to continue.`);
+            else return error(`You're not registered! Sign Up to continue.`);
 
             if (!user) return error('Username or password is incorrect!');
             delete user.password;
@@ -99,9 +95,9 @@ export const FakeAPI = (() => {
     };
 
     const createToken = user => {
-        const accessToken = jwt.sign({ user }, SECRET_KEY, { expiresIn: '2m' });
-        const refreshToken = jwt.sign({ user }, SECRET_KEY, { expiresIn: '1d' });
-        return { accessToken, refreshToken };
+        const accessToken = jwt.sign({user}, SECRET_KEY, {expiresIn: '2m'});
+        const refreshToken = jwt.sign({user}, SECRET_KEY, {expiresIn: '1d'});
+        return {accessToken, refreshToken};
     };
 
     const refreshToken = (url, opts, ok) => {
@@ -124,7 +120,7 @@ export const FakeAPI = (() => {
                 lastName: params.lastName,
                 gender: params.gender,
                 age: params.age,
-                role: Role.User
+                role: params.email === ADMIN_EMAIL ? Role.Admin : Role.User
             };
 
             if (!_users.find(user => user.email === params.email)) {
@@ -217,19 +213,19 @@ export const FakeAPI = (() => {
             if (localStorage.getItem('currentUser')) {
                 const updatedUser = JSON.parse(opts.body);
 
-                    updateUserData(updatedUser);
-                    updateToken(updatedUser);
+                updateUserData(updatedUser);
+                updateToken(updatedUser);
 
             } else return unauthorised();
         }
     };
 
     const updateUserData = updatedUser => {
-            const users = JSON.parse(localStorage.getItem('users'));
-            const user = users.find(user => user.id === updatedUser.id);
-            const userIndex = users.indexOf(user);
-            users.splice(userIndex, 1, updatedUser);
-            localStorage.setItem('users', JSON.stringify(users));
+        const users = JSON.parse(localStorage.getItem('users'));
+        const user = users.find(user => user.id === updatedUser.id);
+        const userIndex = users.indexOf(user);
+        users.splice(userIndex, 1, updatedUser);
+        localStorage.setItem('users', JSON.stringify(users));
     };
 
     const updateToken = updatedUser => {
