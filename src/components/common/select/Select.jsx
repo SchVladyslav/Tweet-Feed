@@ -5,7 +5,9 @@ import PropTypes from 'prop-types';
 export default function Select({name, label, selectValue, onChangeHandler}) {
 
     Select.propTypes = {
+        name: PropTypes.string,
         label: PropTypes.string.isRequired,
+        selectValue: PropTypes.string,
         onChangeHandler: PropTypes.func.isRequired
     };
 

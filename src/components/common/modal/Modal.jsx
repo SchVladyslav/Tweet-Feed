@@ -10,7 +10,6 @@ function bodyOverflow(isModalOpen) {
 }
 
 const Modal = ({modalTitle, isModalOpen, toggleModalVisibility, children}) => {
-
     bodyOverflow(isModalOpen);
     return (
         <>
