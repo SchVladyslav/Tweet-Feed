@@ -1,15 +1,6 @@
 import { AuthHeader } from "../helpers/FakeAPI/AuthHeader";
 import { HandleResponse } from "../helpers/FakeAPI/HandleResponse";
 
-export const newsService = {
-    getNewsList,
-    createNews,
-    removeNews,
-    getPostById,
-    editPost
-};
-
-
 function getNewsList(){
     const requestOptions = { method: 'GET', headers: AuthHeader() };
     return fetch(`/news`, requestOptions).then(HandleResponse);
@@ -46,3 +37,11 @@ function editPost(id, title, description) {
     return fetch(`/news/edit/${id}`, requestOptions)
         .then(HandleResponse)
 }
+
+export const newsService = {
+    getNewsList,
+    createNews,
+    removeNews,
+    getPostById,
+    editPost
+};
