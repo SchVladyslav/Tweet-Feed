@@ -65,7 +65,7 @@ function checkTokenExpiration(userToken) {
         let decoded = jwt.decode(userToken.accessToken, SECRET_KEY);
         if (isExpired(decoded.exp)) {
             refreshToken(userToken);
-            const decoded = JSON.parse(localStorage.getItem('currentUser'))
+            const decoded = JSON.parse(localStorage.getItem('currentUser'));
             return jwt.decode(decoded.accessToken, SECRET_KEY);
         }
     }
@@ -73,7 +73,7 @@ function checkTokenExpiration(userToken) {
 
 function isExpired(exp) {
     return Date.now() > exp * 1000;
-};
+}
 
 function logout() {
     localStorage.removeItem('currentUser');

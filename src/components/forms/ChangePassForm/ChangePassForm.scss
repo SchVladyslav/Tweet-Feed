@@ -1,7 +1,9 @@
 .change-pass-form {
   display: flex;
   flex-direction: column;
-  align-items: center;
   margin-top: 20px;
-  width: 250px;
+  width: auto;
+  button {
+    margin-left: 50px;
+  }
 }

@@ -3,6 +3,7 @@ import {Button, Input, Select, Preloader} from "../../common";
 import './ProfileForm.scss';
 import {userService} from "../../../services/user.service";
 import {authService} from "../../../services/auth.service";
+import {Role} from "../../../helpers/FakeAPI/Role";
 
 class ProfileForm extends Component {
 
@@ -13,11 +14,14 @@ class ProfileForm extends Component {
     onSubmitHandler = event => {
         event.preventDefault();
 
+        if (authService.currentUser.role !== Role.Admin) {
+            userService.updateUserData(
+                authService.currentUser.id,
+                this.state.user
+            );
+        } else window.alert('Only readers can change profile!');
+
         this.props.toggleLoading();
-        userService.updateUserData(
-            authService.currentUser.id,
-            this.state.user
-        );
     };
 
     componentDidMount() {
@@ -25,7 +29,7 @@ class ProfileForm extends Component {
     }
 
     fetchUserData = () => {
-        const user = userService.getUserData();
+        const user = userService.getUserDataById(authService.currentUser.id);
         this.setState({user});
     };
 
@@ -34,6 +38,7 @@ class ProfileForm extends Component {
         const {user} = this.state;
 
         this.setState({user: {...user, [name]: value}});
+
     };
 
     render() {

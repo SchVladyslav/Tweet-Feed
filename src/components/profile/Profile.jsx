@@ -9,7 +9,7 @@ class Profile extends Component {
     state = {
         isModalShowed: false,
         oldPassword: '',
-        password: '',
+        newPassword: '',
         confirmPassword: '',
         isLoading: false
     };
@@ -17,7 +17,7 @@ class Profile extends Component {
     updateState = state => {
         this.setState({
             oldPassword: state.oldPassword,
-            password: state.password,
+            newPassword: state.newPassword,
             confirmPassword: state.confirmPassword,
         });
     };

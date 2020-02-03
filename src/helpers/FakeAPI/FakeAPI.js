@@ -2,13 +2,14 @@ import { Role } from './Role';
 import jwt from 'jsonwebtoken';
 import { SECRET_KEY } from './secretKey';
 import { Headers } from './Headers';
+import {authService} from "../../services/auth.service";
 
 export const FakeAPI = (() => {
 
     const ADMIN_EMAIL = 'admin@gmail.com';
 
     const _users = [
-        {id: 83, email: ADMIN_EMAIL, password:"admin", firstName: "Admin", lastName: "Admin", gender: null, age: null, role: "Admin"}
+        {id: '83', email: ADMIN_EMAIL, password:"admin", firstName: "Admin", lastName: "Admin", gender: null, age: null, role: "Admin"}
     ];
 
     const _news = [
@@ -49,14 +50,12 @@ export const FakeAPI = (() => {
                 signIn(url, opts, ok, error);
                 signUp(url, opts, ok, error);
                 refreshToken(url, opts, ok);
-                getAllUsers(url, opts, ok, unauthorised);
                 getNewsList(url, opts, ok, unauthorised);
                 createNews(url, opts, ok, unauthorised);
                 editPost(url, opts, ok, unauthorised);
                 removeNews(url, opts, ok, unauthorised);
                 getPostById(url, opts, ok, unauthorised);
-                getUserById(url, opts, ok, unauthorised);
-                updateProfile(url, opts, ok, unauthorised);
+                updateUserProfile(url, opts, ok, unauthorised);
 
                 return ok(_users);
             }, 1000);
@@ -73,6 +72,10 @@ export const FakeAPI = (() => {
                 resolve({ status: 400, text: () => Promise.resolve(JSON.stringify({ message })) })
             }
         });
+    };
+
+    const genUniqueID = () => {
+        return `f${(~~(Math.random() * 1e8)).toString(32)}`;
     };
 
     /******AUTH PART OF FAKE API*******/
@@ -95,9 +98,9 @@ export const FakeAPI = (() => {
         }
     };
 
-    const createToken = (user) => {
-        const accessToken = jwt.sign({ user: user }, SECRET_KEY, { expiresIn: '2m' });
-        const refreshToken = jwt.sign({ user: user }, SECRET_KEY, { expiresIn: '1d' });
+    const createToken = user => {
+        const accessToken = jwt.sign({ user }, SECRET_KEY, { expiresIn: '2m' });
+        const refreshToken = jwt.sign({ user }, SECRET_KEY, { expiresIn: '1d' });
         return { accessToken, refreshToken };
     };
 
@@ -107,7 +110,7 @@ export const FakeAPI = (() => {
             const decoded = jwt.verify(params.token.refreshToken, SECRET_KEY);
             return ok(createToken(decoded.user));
         }
-    }
+    };
 
     const signUp = (url, opts, ok, error) => {
         if (url.endsWith(Headers.USER_AUTHORIZATION) && opts.method === 'POST') {
@@ -128,13 +131,12 @@ export const FakeAPI = (() => {
                 _users.push(user);
                 localStorage.setItem('users', JSON.stringify(_users));
             } else {
-                return error(`User with the same E-mail already exist!`);
+                return error('User with the same E-mail already exist!');
             }
 
             return ok(_users);
         }
     };
-
 
     /******NEWS PART OF FAKE API*******/
 
@@ -210,24 +212,13 @@ export const FakeAPI = (() => {
 
     /******USER PART OF FAKE API*******/
 
-    const getUserById = (url, opts, ok, unauthorised) => {
-        if (url.match(/\/users\/\d+$/) && opts.method === 'GET') {
-            if (localStorage.getItem('currentUser')) {
-                const users = JSON.parse(localStorage.getItem('users'));
-                const user = users.find(user => user.id === JSON.parse(opts.body));
-
-                return ok(user);
-            } else return unauthorised();
-        }
-    };
-
-    const updateProfile = (url, opts, ok, unauthorised) => {
-        if (url.endsWith('put/profile') && opts.method === 'PUT') {
+    const updateUserProfile = (url, opts, ok, unauthorised) => {
+        if (url.endsWith(Headers.USER_UPDATE_PROFILE) && opts.method === 'PUT') {
             if (localStorage.getItem('currentUser')) {
                 const updatedUser = JSON.parse(opts.body);
 
-                updateUserData(updatedUser);
-                updateToken(updatedUser);
+                    updateUserData(updatedUser);
+                    updateToken(updatedUser);
 
             } else return unauthorised();
         }
@@ -242,17 +233,7 @@ export const FakeAPI = (() => {
     };
 
     const updateToken = updatedUser => {
-        const token = jwt.sign({user: updatedUser}, SECRET_KEY);
-        localStorage.setItem('currentUser', JSON.stringify({token}));
+        const {accessToken, refreshToken} = createToken(updatedUser);
+        localStorage.setItem('currentUser', JSON.stringify({accessToken, refreshToken}));
     };
-
-    const getAllUsers = (url, opts, ok) => {
-        if (url.endsWith('/users') && opts.method === 'GET') {
-            return ok(_users);
-        }
-    };
-
-    const genUniqueID = () => {
-        return `f${(~~(Math.random() * 1e8)).toString(32)}`;
-    }
 })();

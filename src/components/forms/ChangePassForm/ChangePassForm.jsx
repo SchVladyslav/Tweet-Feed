@@ -14,7 +14,7 @@ class ChangePassModal extends Component {
             ...props.state,
             formErrors: {
                 oldPassword: '',
-                password: '',
+                newPassword: '',
                 confirmPassword: ''
             },
             formValid: false
@@ -24,7 +24,7 @@ class ChangePassModal extends Component {
     changePassSubmitHandler = event => {
         event.preventDefault();
 
-        userService.changeUserPassword(authService.currentUser.id, this.state.password);
+        userService.changeUserPassword(authService.currentUser.id, this.state.newPassword);
         this.props.toggleModalVisibility();
         this.props.toggleLoading();
     };
@@ -64,9 +64,9 @@ class ChangePassModal extends Component {
                         <Input
                             type="password"
                             placeholder="Enter new password"
-                            name="password"
+                            name="newPassword"
                             iconName="password"
-                            errorMessage={formErrors.password}
+                            errorMessage={formErrors.newPassword}
                         />
                         <Input
                             type="password"

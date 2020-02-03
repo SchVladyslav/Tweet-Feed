@@ -7,6 +7,7 @@
   background: no-repeat center/cover url("../../assets/img/bg-01.jpg");
 
   color: #9a9a9a;
+  height: 100vh;
 }
 
 .main-content {
@@ -50,11 +51,11 @@
   transition: all 0.4s;
 
   cursor: pointer;
+  &:hover {
+    background-position: 50% 0;
+  }
 }
 
-.main-logo-page:hover {
-  background-position: 50% 0;
-}
 
 .main__title {
   font-size: 38px;
@@ -120,7 +121,7 @@
 }
 
 .form__item + .form__item {
-  margin-top: 0px;
+  margin-top: 0;
 }
 
 .main-back {
