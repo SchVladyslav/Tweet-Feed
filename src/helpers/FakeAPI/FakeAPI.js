@@ -1,13 +1,13 @@
-import { Role } from './Role';
+import {Role} from './Role';
 import jwt from 'jsonwebtoken';
-import { SECRET_KEY } from './secretKey';
-import { Headers } from './Headers';
+import {SECRET_KEY} from './secretKey';
+import {Headers} from './Headers';
 
 export const FakeAPI = (() => {
-    let _users = [
-        { id: 0, email: 'admin@gmail.com', password: 'admin', firstName: 'Admin', lastName: 'User', role: Role.Admin, gender: null, age: null },
-        { id: 1, email: 'user@gmail.com', password: 'user', firstName: 'Normal', lastName: 'User', role: Role.User, gender: 'Male', age: 20 }
-    ];
+
+    const ADMIN_EMAIL = 'admin@gmail.com';
+
+    const _users = [];
 
     const _news = [
         {
@@ -40,37 +40,42 @@ export const FakeAPI = (() => {
         const authHeader = opts.headers['Authorization'];
         isLoggedIn = authHeader && authHeader.startsWith('Bearer ');
 
-        return new Promise((resolve, reject) => {
+        return new Promise(resolve => {
             // wrap in timeout to simulate server api call
             setTimeout(() => {
 
                 signIn(url, opts, ok, error);
                 signUp(url, opts, ok, error);
                 refreshToken(url, opts, ok);
-                getAllUsers(url, opts, ok, unauthorised);
                 getNewsList(url, opts, ok, unauthorised);
                 createNews(url, opts, ok, unauthorised);
                 editPost(url, opts, ok, unauthorised);
                 removePost(url, opts, ok, unauthorised);
                 getPostById(url, opts, ok, unauthorised);
+                updateUserProfile(url, opts, ok, unauthorised);
 
                 return ok(_users);
-
             }, 1000);
 
             function ok(body) {
-                resolve({ ok: true, text: () => Promise.resolve(JSON.stringify(body)) })
+                resolve({ok: true, text: () => Promise.resolve(JSON.stringify(body))})
             }
 
             function unauthorised() {
-                resolve({ status: 401, text: () => Promise.resolve(JSON.stringify({ message: 'Unauthorised' })) })
+                resolve({status: 401, text: () => Promise.resolve(JSON.stringify({message: 'Unauthorised'}))})
             }
 
             function error(message) {
-                resolve({ status: 400, text: () => Promise.resolve(JSON.stringify({ message })) })
+                resolve({status: 400, text: () => Promise.resolve(JSON.stringify({message}))})
             }
         });
     };
+
+    const genUniqueID = () => {
+        return `f${(~~(Math.random() * 1e8)).toString(32)}`;
+    };
+
+    /******AUTH PART OF FAKE API*******/
 
     const signIn = (url, opts, ok, error) => {
         if (url.endsWith(Headers.USER_AUTHENTICATE) && opts.method === 'POST') {
@@ -80,8 +85,7 @@ export const FakeAPI = (() => {
 
             if (users)
                 user = users.find(user => user.email === params.email && user.password === params.password);
-            else
-                return error(`You're not registered! Sign Up to continue.`);
+            else return error(`You're not registered! Sign Up to continue.`);
 
             if (!user) return error('Username or password is incorrect!');
             delete user.password;
@@ -90,10 +94,10 @@ export const FakeAPI = (() => {
         }
     };
 
-    const createToken = (user) => {
-        const accessToken = jwt.sign({ user: user }, SECRET_KEY, { expiresIn: '2m' });
-        const refreshToken = jwt.sign({ user: user }, SECRET_KEY, { expiresIn: '1d' });
-        return { accessToken, refreshToken };
+    const createToken = user => {
+        const accessToken = jwt.sign({user}, SECRET_KEY, {expiresIn: '2m'});
+        const refreshToken = jwt.sign({user}, SECRET_KEY, {expiresIn: '1d'});
+        return {accessToken, refreshToken};
     };
 
     const refreshToken = (url, opts, ok) => {
@@ -102,7 +106,7 @@ export const FakeAPI = (() => {
             const decoded = jwt.verify(params.token.refreshToken, SECRET_KEY);
             return ok(createToken(decoded.user));
         }
-    }
+    };
 
     const signUp = (url, opts, ok, error) => {
         if (url.endsWith(Headers.USER_AUTHORIZATION) && opts.method === 'POST') {
@@ -116,18 +120,21 @@ export const FakeAPI = (() => {
                 lastName: params.lastName,
                 gender: params.gender,
                 age: params.age,
-                role: Role.User
+                role: params.email === ADMIN_EMAIL ? Role.Admin : Role.User
             };
 
             if (!_users.find(user => user.email === params.email)) {
                 _users.push(user);
+                localStorage.setItem('users', JSON.stringify(_users));
             } else {
-                return error(`User with the same E-mail already exist!`);
+                return error('User with the same E-mail already exist!');
             }
 
             return ok(_users);
         }
     };
+
+    /******NEWS PART OF FAKE API*******/
 
     const createNews = (url, opts, ok, unauthorised) => {
         if (url.endsWith(Headers.NEWS_CREATE_POST) && opts.method === 'POST') {
@@ -191,21 +198,37 @@ export const FakeAPI = (() => {
         }
     };
 
-    const getAllUsers = (url, opts, ok, unauthorised) => {
-        if (url.endsWith('/users') && opts.method === 'GET') {
-            //if (role !== Role.Admin) return unauthorised();
-            return ok(_users);
-        }
-    };
-
     const getNewsList = (url, opts, ok, unauthorised) => {
         if (url.endsWith(Headers.NEWS_GET_LIST) && opts.method === 'GET') {
             if (!isLoggedIn) return unauthorised();
             return ok(_news);
         }
-    }
+    };
 
-    const genUniqueID = () => {
-        return `f${(~~(Math.random() * 1e8)).toString(32)}`;
-    }
+    /******USER PART OF FAKE API*******/
+
+    const updateUserProfile = (url, opts, ok, unauthorised) => {
+        if (url.endsWith(Headers.USER_UPDATE_PROFILE) && opts.method === 'PUT') {
+            if (localStorage.getItem('currentUser')) {
+                const updatedUser = JSON.parse(opts.body);
+
+                updateUserData(updatedUser);
+                updateToken(updatedUser);
+
+            } else return unauthorised();
+        }
+    };
+
+    const updateUserData = updatedUser => {
+        const users = JSON.parse(localStorage.getItem('users'));
+        const user = users.find(user => user.id === updatedUser.id);
+        const userIndex = users.indexOf(user);
+        users.splice(userIndex, 1, updatedUser);
+        localStorage.setItem('users', JSON.stringify(users));
+    };
+
+    const updateToken = updatedUser => {
+        const {accessToken, refreshToken} = createToken(updatedUser);
+        localStorage.setItem('currentUser', JSON.stringify({accessToken, refreshToken}));
+    };
 })();

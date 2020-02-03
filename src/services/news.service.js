@@ -12,7 +12,7 @@ export const newsService = {
 };
 
 
-function getNewsList() {
+function getNewsList(){
     const requestOptions = { method: 'GET', headers: AuthHeader() };
     return fetch(Headers.NEWS_GET_LIST, requestOptions).then(HandleResponse);
 }

@@ -7,4 +7,5 @@ export const Headers = {
     NEWS_GET_POST: '/news/post/',
     NEWS_REMOVE_POST: '/news/remove/',
     NEWS_EDIT_POST: '/news/edit/',
+    USER_UPDATE_PROFILE: '/put/profile'
 };

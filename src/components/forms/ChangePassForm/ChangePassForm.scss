@@ -1,0 +1,15 @@
+@import "./src/assets/scss/variables";
+
+.change-pass-form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  width: auto;
+  button {
+    margin-left: 50px;
+    @media only screen and (device-width: $small-screen) {
+      margin-left: 20px;
+    }
+
+  }
+}

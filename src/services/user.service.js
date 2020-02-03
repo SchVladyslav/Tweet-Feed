@@ -1,30 +1,51 @@
-import { AuthHeader } from "../helpers/FakeAPI/AuthHeader";
-import { HandleResponse } from "../helpers/FakeAPI/HandleResponse";
-import { authService } from "./auth.service";
+import {HandleResponse} from "../helpers/FakeAPI/HandleResponse";
+import {Headers} from '../helpers/FakeAPI/Headers';
 
-function getAllUsers() {
-    const requestOptions = { method: 'GET', headers: AuthHeader() };
-    return fetch('/users', requestOptions).then(HandleResponse);
-}
-
-function getUserData() {
-    const userLocal = JSON.parse(localStorage.getItem('currentUser'));
-    return authService.getUserDataFromToken(userLocal);
-}
-
-function updateUserPassword(id, newPassword) {
+function getUserDataById(id) {
     const users = JSON.parse(localStorage.getItem('users'));
-    const user = users.find(user => user.id === id);
-    const userIndex = users.findIndex(user => user.id === id);
-    user.password = newPassword;
-    users.splice(userIndex, 1, user);
-    console.log(users);
-    localStorage.setItem('users', JSON.stringify(users));
+    return users.find(user => user.id === id);
+}
+
+function changeUserPassword(id, newPassword) {
+    const user = getUserDataById(id);
+    const updatedUser = {
+        ...user,
+        password: newPassword
+    };
+
+    fetchUpdateUserProfile(updatedUser).then(HandleResponse);
+}
+
+function updateUserData(id, {firstName, lastName, age, gender}) {
+    const user = getUserDataById(id);
+
+    const updatedUser = {
+        id: user.id,
+        firstName,
+        lastName,
+        email: user.email,
+        password: user.password,
+        age,
+        gender,
+        role: user.role
+    };
+
+    fetchUpdateUserProfile(updatedUser).then(HandleResponse);
+}
+
+function fetchUpdateUserProfile(updatedUser) {
+    const requestOptions = {
+        method: 'PUT',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(updatedUser)
+    };
+
+    return fetch(Headers.USER_UPDATE_PROFILE, requestOptions);
 }
 
 export const userService = {
-    getAllUsers,
-    getUserData,
-    updateUserPassword
+    getUserDataById,
+    updateUserData,
+    changeUserPassword
 };
 

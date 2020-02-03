@@ -3,20 +3,11 @@ import jwt from 'jsonwebtoken';
 import { SECRET_KEY } from '../helpers/FakeAPI/secretKey';
 import { Headers } from '../helpers/FakeAPI/Headers';
 
-export const authService = {
-    signIn,
-    signUp,
-    logout,
-    refreshToken,
-    getUserDataFromToken,
-    get currentUser() { return getUserDataFromToken(JSON.parse(localStorage.getItem('currentUser'))) }
-};
-
 function signIn(email, password) {
     const requestOptions = {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password })
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({email, password})
     };
 
     return fetch(Headers.USER_AUTHENTICATE, requestOptions)
@@ -26,7 +17,7 @@ function signIn(email, password) {
             localStorage.setItem('currentUser', JSON.stringify(token));
             return token;
         })
-        .then(error => { //catch don't work
+        .then(error => { //catch doesn't work
             return error;
         });
 }
@@ -34,8 +25,8 @@ function signIn(email, password) {
 function signUp(firstName, lastName, email, password, confirmPassword) {
     const requestOptions = {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ firstName, lastName, email, password, confirmPassword, gender: null, age: null }),
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({firstName, lastName, email, password, confirmPassword, gender: null, age: null}),
     };
 
     return fetch(Headers.USER_AUTHORIZATION, requestOptions)
@@ -74,7 +65,7 @@ function checkTokenExpiration(userToken) {
         let decoded = jwt.decode(userToken.accessToken, SECRET_KEY);
         if (isExpired(decoded.exp)) {
             refreshToken(userToken);
-            const decoded = JSON.parse(localStorage.getItem('currentUser'))
+            const decoded = JSON.parse(localStorage.getItem('currentUser'));
             return jwt.decode(decoded.accessToken, SECRET_KEY);
         }
     }
@@ -82,8 +73,17 @@ function checkTokenExpiration(userToken) {
 
 function isExpired(exp) {
     return Date.now() > exp * 1000;
-};
+}
 
 function logout() {
     localStorage.removeItem('currentUser');
 }
+
+export const authService = {
+    signIn,
+    signUp,
+    logout,
+    refreshToken,
+    getUserDataFromToken,
+    get currentUser() { return getUserDataFromToken(JSON.parse(localStorage.getItem('currentUser'))) }
+};

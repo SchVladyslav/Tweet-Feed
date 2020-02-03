@@ -1,11 +1,12 @@
 import {authService} from "../services/auth.service";
+import {userService} from "../services/user.service";
 
 export const validateFields = (fieldName, value, state, formType) => {
     const stateObj = state;
 
     const MIN_PASS_LENGTH = 4;
 
-    let emailValid, passValid, confirmPasswordValid, oldPasswordValid;
+    let emailValid, passValid, confirmPasswordValid, oldPasswordValid, newPassValid;
 
     switch (fieldName) {
         case "firstName":
@@ -23,12 +24,16 @@ export const validateFields = (fieldName, value, state, formType) => {
             stateObj.formErrors.password = passValid ? "" : "Password is too short! Expected at least 4 symbols!";
             break;
         case "confirmPassword":
-            confirmPasswordValid = value === stateObj.password;
+            confirmPasswordValid = formType === 'change pass' ? value === stateObj.newPassword : value === stateObj.password;
             stateObj.formErrors.confirmPassword = confirmPasswordValid ? "" : "Passwords are not matching!";
             break;
         case "oldPassword":
-            oldPasswordValid = value === authService.currentUser.password;
+            oldPasswordValid = value === userService.getUserDataById(authService.currentUser.id).password;
             stateObj.formErrors.oldPassword = oldPasswordValid ? "" : 'Wrong old password!';
+            break;
+        case "newPassword":
+            newPassValid = value.length >= MIN_PASS_LENGTH && value !== stateObj.oldPassword;
+            stateObj.formErrors.newPassword = newPassValid ? "" : "Password should be > 4 symbols and different from old password!";
             break;
         default:
             break;
@@ -42,7 +47,7 @@ export const validateFields = (fieldName, value, state, formType) => {
             validSignUpForm(stateObj.firstName.length, stateObj.lastName.length, emailValid, confirmPasswordValid, stateObj);
             break;
         case 'change pass':
-            validChangePassForm(stateObj.oldPassword, stateObj.password, confirmPasswordValid, stateObj);
+            validChangePassForm(stateObj.oldPassword, stateObj.newPassword, confirmPasswordValid, stateObj);
             break;
         default:
             break;
@@ -57,6 +62,6 @@ const validSignUpForm = (firstName, lastName, emailValid, confirmPasswordValid, 
     stateObj.formValid = !!(emailValid !== null && firstName && lastName && confirmPasswordValid);
 };
 
-const validChangePassForm = (oldPasswordValid, passValid, confirmPasswordValid, stateObj) => {
-    stateObj.formValid = !!(oldPasswordValid && passValid && confirmPasswordValid);
+const validChangePassForm = (oldPasswordValid, newPassValid, confirmPasswordValid, stateObj) => {
+    stateObj.formValid = !!(oldPasswordValid && newPassValid && confirmPasswordValid);
 };

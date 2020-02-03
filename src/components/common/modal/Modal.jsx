@@ -10,11 +10,11 @@ function bodyOverflow(isModalOpen) {
 }
 
 const Modal = ({modalTitle, isModalOpen, toggleModalVisibility, children}) => {
-
     bodyOverflow(isModalOpen);
     return (
         <>
-            {isModalOpen ? (<div className="common-modal">
+            {isModalOpen ?
+                <div className="common-modal">
                 <div className="common-modal__cover"/>
                 <div className="common-modal__dialog">
                     <div className="common-modal__content">
@@ -24,7 +24,8 @@ const Modal = ({modalTitle, isModalOpen, toggleModalVisibility, children}) => {
                         {children}
                     </div>
                 </div>
-            </div>) : null}
+            </div>
+                : null}
         </>
     );
 };
