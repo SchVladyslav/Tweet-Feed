@@ -24,15 +24,22 @@
   }
 
   &__dialog {
-    transform: translate(0, 0);
+    //transform: translate(0, 0);
+    //max-width: 550px;
+    //margin: 1.75rem auto;
+    position: absolute;
+    transform: translate(-50%, 0);
+    left: 50%;
     max-width: 550px;
+    width: auto;
     margin: 1.75rem auto;
+    display: inline-block;
   }
 
   &__content {
     position: relative;
-    margin: 35% 5vw 0 5vw;
-    top: 55px;
+    margin: 0 5vw;
+    top: 75px;
     border-radius: 10px;
     padding: 40px;
     background-color: #fff;

@@ -7,7 +7,9 @@ export const FakeAPI = (() => {
 
     const ADMIN_EMAIL = 'admin@gmail.com';
 
-    const _users = [];
+    const _users = [{
+        email: 'admin@gmail.com', password: 'admin', firstName: 'Dima', lastName: 'Admin', gender: 'null', age: 24, role: Role.Admin
+    }];
 
     const _news = [
         {
