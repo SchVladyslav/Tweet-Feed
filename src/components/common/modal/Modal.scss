@@ -12,7 +12,7 @@
     color: rgba(99,98,98,0.91);
   }
 
-  &__cover {
+  &__fade {
     position: fixed;
     top: 0;
     left: 0;
@@ -27,13 +27,13 @@
     //transform: translate(0, 0);
     //max-width: 550px;
     //margin: 1.75rem auto;
-    position: absolute;
-    transform: translate(-50%, 0);
-    left: 50%;
-    max-width: 550px;
+    //position: absolute;
+    //transform: translate(-50%, 0);
+    //left: 50%;
+    //max-width: 550px;
     width: auto;
     margin: 1.75rem auto;
-    display: inline-block;
+    //display: inline-block;
   }
 
   &__content {
@@ -43,7 +43,7 @@
     border-radius: 10px;
     padding: 40px;
     background-color: #fff;
-    max-width: 500px;
+    //max-width: 500px;
     box-sizing: border-box;
     z-index: 2;
     text-align: center;
