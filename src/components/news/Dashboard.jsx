@@ -38,7 +38,7 @@ export default class Dashboard extends Component {
   createPost = e => {
     e.preventDefault();
     const { title, description } = this.state;
-    newsService.createNews(title, description);
+    newsService.createPost(title, description);
     this.setState({
       ...this.state,
       title: "",
@@ -48,8 +48,8 @@ export default class Dashboard extends Component {
     this.getNewsList();
   };
 
-  removeNews = id => {
-    newsService.removeNews(id).then(this.getNewsList);
+  removePost = id => {
+    newsService.removePost(id).then(this.getNewsList);
   };
 
   renderPosts() {
@@ -62,7 +62,7 @@ export default class Dashboard extends Component {
               post={item}
               currentUserRole={currentUserRole}
               key={item.id}
-              deleteHandler={this.removeNews}
+              deleteHandler={this.removePost}
               isDetails={true}
             />
           );
