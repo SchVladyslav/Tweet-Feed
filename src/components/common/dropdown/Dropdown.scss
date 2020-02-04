@@ -1,3 +1,6 @@
+@import "../../../assets/scss/variables";
+
+
 .dropdown {
   position: relative;
   display: inline-block;
@@ -13,8 +16,8 @@
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
   padding: 11px 16px 12px 16px;
   z-index: 1;
-  @media (min-width: 768px) {
-
+  @media screen and (min-width: $large-screen) {
+    top: 60px;
   }
 }
 
