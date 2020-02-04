@@ -97,5 +97,5 @@ export class FormSignUp extends Component {
 
 FormSignUp.propTypes = {
   formErrors: PropTypes.objectOf(PropTypes.string),
-  formValid: PropTypes.bool.isRequired
+  formValid: PropTypes.bool
 };

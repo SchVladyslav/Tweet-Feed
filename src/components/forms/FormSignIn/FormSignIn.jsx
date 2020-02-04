@@ -75,5 +75,5 @@ export default FormSignIn;
 
 FormSignIn.propTypes = {
   formErrors: PropTypes.objectOf(PropTypes.string),
-  formValid: PropTypes.bool.isRequired
+  formValid: PropTypes.bool
 };
