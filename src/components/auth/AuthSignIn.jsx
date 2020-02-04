@@ -62,8 +62,8 @@ class AuthSignIn extends Component {
 export default withRouter(AuthSignIn);
 
 AuthSignIn.propTypes = {
-  email: PropTypes.string.isRequired,
-  password: PropTypes.string.isRequired,
-  isFetching: PropTypes.bool.isRequired,
+  email: PropTypes.string,
+  password: PropTypes.string,
+  isFetching: PropTypes.bool,
   error: PropTypes.string
 };

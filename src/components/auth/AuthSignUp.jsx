@@ -73,11 +73,11 @@ class AuthSignUp extends Component {
 export default withRouter(AuthSignUp);
 
 AuthSignUp.propTypes = {
-  firstName: PropTypes.string.isRequired,
-  lastName: PropTypes.string.isRequired,
-  email: PropTypes.string.isRequired,
-  password: PropTypes.string.isRequired,
-  confirmPassword: PropTypes.string.isRequired,
-  isFetching: PropTypes.bool.isRequired,
+  firstName: PropTypes.string,
+  lastName: PropTypes.string,
+  email: PropTypes.string,
+  password: PropTypes.string,
+  confirmPassword: PropTypes.string,
+  isFetching: PropTypes.bool,
   error: PropTypes.string
 };
