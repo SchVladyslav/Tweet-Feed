@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Button} from "../common";
 import {Link, Route} from "react-router-dom";
+import PropTypes from "prop-types"
 
 class PostItem extends Component {
 
@@ -47,5 +48,13 @@ class PostItem extends Component {
         );
     }
 }
+
+PostItem.propTypes = {
+    post: PropTypes.string,
+    currentUserRole: PropTypes.string,
+    key: PropTypes.number,
+    deleteHandler: PropTypes.func,
+    isDetails: PropTypes.bool,
+};
 
 export default PostItem;
