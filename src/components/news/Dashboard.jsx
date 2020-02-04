@@ -99,6 +99,7 @@ export default class Dashboard extends Component {
           modalTitle="Create news"
           isModalOpen={isModalOpen}
           toggleModalVisibility={this.toggleModalVisibility}
+          maxWidth='550px'
         >
           <DashboardForm
             buttonText="Add"

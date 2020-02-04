@@ -10,14 +10,15 @@ function bodyOverflow(isModalOpen) {
     }
 }
 
-const Modal = ({modalTitle, isModalOpen, toggleModalVisibility, children}) => {
+const Modal = ({modalTitle, isModalOpen, toggleModalVisibility, maxWidth, children}) => {
     bodyOverflow(isModalOpen);
+    console.log(maxWidth);
     return (
         <>
             {isModalOpen ?
                 <div className="common-modal">
-                    <div className="common-modal__cover"/>
-                    <div className="common-modal__dialog">
+                    <div className="common-modal__fade"/>
+                    <div className="common-modal__dialog" style={{maxWidth: maxWidth}}>
                         <div className="common-modal__content">
                             <button className="common-modal__button-close" type="button"
                                     onClick={toggleModalVisibility}>X
@@ -35,6 +36,7 @@ Modal.propTypes = {
     modalTitle: PropTypes.string,
     isModalOpen: PropTypes.bool,
     toggleModalVisibility: PropTypes.func,
+    maxWidth: PropTypes.string,
     children: PropTypes.element,
 };
 
