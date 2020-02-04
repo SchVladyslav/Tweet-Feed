@@ -50,9 +50,8 @@ class PostItem extends Component {
 }
 
 PostItem.propTypes = {
-    post: PropTypes.string,
+    post: PropTypes.object,
     currentUserRole: PropTypes.string,
-    key: PropTypes.number,
     deleteHandler: PropTypes.func,
     isDetails: PropTypes.bool,
 };
