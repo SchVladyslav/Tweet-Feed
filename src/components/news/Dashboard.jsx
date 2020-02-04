@@ -63,7 +63,7 @@ export default class Dashboard extends Component {
               currentUserRole={currentUserRole}
               key={item.id}
               deleteHandler={this.removePost}
-              isDetails={true}
+              isDetails
             />
           );
         })}
@@ -106,7 +106,7 @@ export default class Dashboard extends Component {
             formTitle={title}
             formDescription={description}
             handleSubmit={this.createPost}
-            isUploadImg={true}
+            isUploadImg
           />
         </Modal>
         {this.renderAddButton()}

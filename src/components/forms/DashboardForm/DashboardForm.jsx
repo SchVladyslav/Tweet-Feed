@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Textarea, Button} from "../../common";
 import './DashboadForm.scss'
+import PropTypes from "prop-types";
 
 class DashboardForm extends Component {
 
@@ -11,8 +12,6 @@ class DashboardForm extends Component {
             imgSrc: ''
         }
     }
-
-    // validateField
 
     setTextareaValidateStatus = e => {
         const name = e.target.name;
@@ -66,7 +65,7 @@ class DashboardForm extends Component {
 
     }
 
-    renderUploadImg(){
+    renderUploadImg() {
         const {isUploadImg} = this.props;
         return isUploadImg ? (<div className="upload-image dashboard__upload-image">
             <input type="file" accept="image/*" onChange={this.loadFile}
@@ -110,5 +109,14 @@ class DashboardForm extends Component {
         );
     }
 }
+
+DashboardForm.propTypes = {
+    buttonText: PropTypes.string,
+    handleUserInput: PropTypes.func,
+    formTitle: PropTypes.string,
+    formDescription: PropTypes.string,
+    handleSubmit: PropTypes.func,
+    isUploadImg: PropTypes.bool,
+};
 
 export default DashboardForm;
