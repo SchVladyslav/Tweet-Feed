@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
+import { PropTypes } from "prop-types";
+
 import { authService } from "../../services/auth.service";
 import FormSignIn from "../forms/FormSignIn/FormSignIn";
 import { Preloader } from "../common/index";
@@ -15,7 +17,7 @@ class AuthSignIn extends Component {
       isFetching: false
     };
 
-  /*  if (authService.currentUser) {
+    /*  if (authService.currentUser) {
       this.props.history.push("/dashboard");
     }*/
   }
@@ -58,3 +60,10 @@ class AuthSignIn extends Component {
 }
 
 export default withRouter(AuthSignIn);
+
+AuthSignIn.propTypes = {
+  email: PropTypes.string.isRequired,
+  password: PropTypes.string.isRequired,
+  isFetching: PropTypes.bool.isRequired,
+  error: PropTypes.string
+};
