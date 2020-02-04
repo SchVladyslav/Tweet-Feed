@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
+import { PropTypes } from "prop-types";
 
 import { authService } from "../../services/auth.service";
 import FormSignIn from "../forms/FormSignIn/FormSignIn";
@@ -59,3 +60,10 @@ class AuthSignIn extends Component {
 }
 
 export default withRouter(AuthSignIn);
+
+AuthSignIn.propTypes = {
+  email: PropTypes.string.isRequired,
+  password: PropTypes.string.isRequired,
+  isFetching: PropTypes.bool.isRequired,
+  error: PropTypes.string
+};
