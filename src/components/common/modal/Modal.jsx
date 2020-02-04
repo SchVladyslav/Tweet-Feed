@@ -35,7 +35,7 @@ Modal.propTypes = {
     modalTitle: PropTypes.string,
     isModalOpen: PropTypes.bool,
     toggleModalVisibility: PropTypes.func,
-    children: PropTypes.string,
+    children: PropTypes.element,
 };
 
 export default Modal;
