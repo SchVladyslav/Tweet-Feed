@@ -83,7 +83,7 @@ class Post extends Component {
             <Modal modalTitle="Edit post"
                    isModalOpen={isModalOpen}
                    toggleModalVisibility={this.toggleModalVisibility}
-                   maxWidth='550px'
+                   maxWidth='650px'
             >
                 <DashboardForm
                     buttonText="Save"
