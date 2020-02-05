@@ -6,8 +6,8 @@ import { Headers } from '../helpers/FakeAPI/Headers';
 function signIn(email, password) {
     const requestOptions = {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({email, password})
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
     };
 
     return fetch(Headers.USER_AUTHENTICATE, requestOptions)
@@ -25,8 +25,8 @@ function signIn(email, password) {
 function signUp(firstName, lastName, email, password, confirmPassword) {
     const requestOptions = {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({firstName, lastName, email, password, confirmPassword, gender: null, age: null}),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ firstName, lastName, email, password, confirmPassword, gender: null, age: null }),
     };
 
     return fetch(Headers.USER_AUTHORIZATION, requestOptions)
@@ -62,11 +62,11 @@ function checkTokenExpiration(userToken) {
     try {
         return jwt.verify(userToken.accessToken, SECRET_KEY);
     } catch {
-        let decoded = jwt.decode(userToken.accessToken, SECRET_KEY);
+        let decoded = jwt.decode(userToken.accessToken);
         if (isExpired(decoded.exp)) {
             refreshToken(userToken);
             const decoded = JSON.parse(localStorage.getItem('currentUser'));
-            return jwt.decode(decoded.accessToken, SECRET_KEY);
+            return jwt.decode(decoded.accessToken);
         }
     }
 }
