@@ -1,6 +1,21 @@
 import {HandleResponse} from "../helpers/FakeAPI/HandleResponse";
 import {Headers} from '../helpers/FakeAPI/Headers';
 
+function isObjEqual(obj1, obj2) {
+    const obj1Props = Object.getOwnPropertyNames(obj1);
+    const obj2Props = Object.getOwnPropertyNames(obj2);
+
+    if (obj1Props.length !== obj2Props.length) return false;
+
+    for (let i = 0; i < obj1Props.length; i++) {
+        const propName = obj1Props[i];
+
+        if (obj1[propName] !== obj2[propName]) return false;
+    }
+
+    return true;
+}
+
 function getUserDataById(id) {
     const users = JSON.parse(localStorage.getItem('users'));
     return users.find(user => user.id === id);
@@ -30,7 +45,14 @@ function updateUserData(id, {firstName, lastName, age, gender}) {
         role: user.role
     };
 
-    fetchUpdateUserProfile(updatedUser).then(HandleResponse);
+    const isUsersEqual = isObjEqual(user, updatedUser);
+
+    if (!isUsersEqual) {
+        return fetchUpdateUserProfile(updatedUser).then(HandleResponse);
+    } else {
+        window.alert("You didn't change nothing in your profile!");
+        return false;
+    }
 }
 
 function fetchUpdateUserProfile(updatedUser) {

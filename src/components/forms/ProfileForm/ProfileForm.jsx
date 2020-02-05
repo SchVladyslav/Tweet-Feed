@@ -15,13 +15,14 @@ class ProfileForm extends Component {
         event.preventDefault();
 
         if (authService.currentUser.role !== Role.Admin) {
-            userService.updateUserData(
+            const isUpdatedProfile = userService.updateUserData(
                 authService.currentUser.id,
                 this.state.user
             );
-        } else window.alert('Only readers can change profile!');
 
-        this.props.toggleLoading();
+            if (isUpdatedProfile) return this.props.toggleLoading();
+
+        } else window.alert('Only readers can change profile!');
     };
 
     componentDidMount() {
