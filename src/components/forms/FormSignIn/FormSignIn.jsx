@@ -1,5 +1,7 @@
 import React, { Component } from "react";
-import { Button, Input } from "../../common";
+import { PropTypes } from "prop-types";
+
+import { Button, Input } from "../../common/index";
 import { validateFields } from "../../../helpers/ValidateFields";
 
 class FormSignIn extends Component {
@@ -70,3 +72,8 @@ class FormSignIn extends Component {
 }
 
 export default FormSignIn;
+
+FormSignIn.propTypes = {
+  formErrors: PropTypes.objectOf(PropTypes.string),
+  formValid: PropTypes.bool
+};

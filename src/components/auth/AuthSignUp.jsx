@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router";
+import { PropTypes } from "prop-types";
+
 import { FormSignUp } from "../forms/FormSignUp/FormSignUp";
 import { authService } from "../../services/auth.service";
 import { Preloader } from "../common/index";
@@ -69,3 +71,13 @@ class AuthSignUp extends Component {
 }
 
 export default withRouter(AuthSignUp);
+
+AuthSignUp.propTypes = {
+  firstName: PropTypes.string,
+  lastName: PropTypes.string,
+  email: PropTypes.string,
+  password: PropTypes.string,
+  confirmPassword: PropTypes.string,
+  isFetching: PropTypes.bool,
+  error: PropTypes.string
+};
