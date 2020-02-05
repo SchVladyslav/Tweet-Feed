@@ -32,10 +32,11 @@ class Profile extends Component {
     modalVisibilityHandler = () => this.setState({isModalShowed: !this.state.isModalShowed});
 
     render() {
+        const {isLoading} = this.state;
         return (
-            <div className="profile">
-                {!this.state.isLoading ?
-                    <>
+            <>
+                {!isLoading ?
+                    <div className="profile">
                         <div className="profile_btn_container">
                             <Button
                                 type="button"
@@ -57,9 +58,9 @@ class Profile extends Component {
                         <ProfileForm
                             toggleLoading={this.toggleLoading}
                         />
-                    </>
+                    </div>
                     : <Preloader/>}
-            </div>
+            </>
         )
     }
 }
