@@ -8,7 +8,7 @@ export const FakeAPI = (() => {
     const ADMIN_EMAIL = 'admin@gmail.com';
 
     const _users = [{
-        email: 'admin@gmail.com', password: 'admin', firstName: 'Dima', lastName: 'Admin', gender: 'null', age: 24, role: Role.Admin
+        email: 'admin@gmail.com', password: 'admin', firstName: 'Admin', lastName: 'Admin', gender: 'male', age: 24, role: Role.Admin
     }];
 
     const _news = [
@@ -143,7 +143,7 @@ export const FakeAPI = (() => {
             if (!isLoggedIn) return unauthorised();
             const params = JSON.parse(opts.body);
             const news = {
-                id: Math.floor(100 + Math.random() * (1000000 + 1 - 100)).toString(),
+                id: genUniqueID(),
                 title: params.title,
                 description: params.description
             };
@@ -157,7 +157,7 @@ export const FakeAPI = (() => {
             if (!isLoggedIn) return unauthorised();
             const params = JSON.parse(opts.body);
             const urlParts = url.split('/');
-            const id = parseInt(urlParts[urlParts.length - 1]);
+            const id = urlParts[urlParts.length - 1];
             let editedPost;
             _news.forEach((item, i) => {
                 if (item.id === id.toString()) {
@@ -178,7 +178,7 @@ export const FakeAPI = (() => {
         if (url.includes(Headers.NEWS_REMOVE_POST) && opts.method === 'DELETE') {
             if (!isLoggedIn) return unauthorised();
             let urlParts = url.split('/');
-            let id = parseInt(urlParts[urlParts.length - 1]);
+            let id = urlParts[urlParts.length - 1];
             _news.forEach((item, i) => {
                 if (item.id === id.toString()) {
                     _news.splice(i, 1);
@@ -193,8 +193,7 @@ export const FakeAPI = (() => {
         if (url.includes(Headers.NEWS_GET_POST) && opts.method === 'GET') {
             if (!isLoggedIn) return unauthorised();
             let urlParts = url.split('/');
-            let id = parseInt(urlParts[urlParts.length - 1]);
-            // get id from request url
+            let id = urlParts[urlParts.length - 1];
             const post = _news.find(post => post.id === id.toString());
 
             return ok(post);

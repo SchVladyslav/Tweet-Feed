@@ -20,13 +20,12 @@ class Post extends Component {
             ...this.state,
             id: this.getPostId(),
         }, this.getPost);
-
     }
 
     getPostId() {
         const url = document.location.href;
         const urlParts = url.split('/');
-        return parseInt(urlParts[urlParts.length - 1]);
+        return urlParts[urlParts.length - 1];
     }
 
     getPost = () => {
@@ -53,7 +52,6 @@ class Post extends Component {
         const {value} = e.target;
         this.setState({[name]: value});
     };
-
 
     editPost = e => {
         e.preventDefault();
@@ -85,7 +83,7 @@ class Post extends Component {
             <Modal modalTitle="Edit post"
                    isModalOpen={isModalOpen}
                    toggleModalVisibility={this.toggleModalVisibility}
-
+                   maxWidth='550px'
             >
                 <DashboardForm
                     buttonText="Save"
