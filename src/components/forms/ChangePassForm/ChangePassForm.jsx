@@ -5,7 +5,7 @@ import {validateFields} from "../../../helpers/ValidateFields";
 import {authService} from "../../../services/auth.service";
 import {userService} from "../../../services/user.service";
 
-class ChangePassModal extends Component {
+class ChangePassForm extends Component {
 
     constructor(props) {
         super(props);
@@ -48,6 +48,7 @@ class ChangePassModal extends Component {
                     modalTitle="Changing password"
                     isModalOpen={showModal}
                     toggleModalVisibility={toggleModalVisibility}
+                    maxWidth="550px"
                 >
                     <form
                         className="change-pass-form"
@@ -90,4 +91,4 @@ class ChangePassModal extends Component {
     }
 }
 
-export default ChangePassModal;
+export default ChangePassForm;

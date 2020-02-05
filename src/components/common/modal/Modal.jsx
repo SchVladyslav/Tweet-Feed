@@ -12,7 +12,7 @@ function bodyOverflow(isModalOpen) {
 
 const Modal = ({modalTitle, isModalOpen, toggleModalVisibility, maxWidth, children}) => {
     bodyOverflow(isModalOpen);
-    console.log(maxWidth);
+
     return (
         <>
             {isModalOpen ?
