@@ -2,7 +2,7 @@ import {Role} from './Role';
 import jwt from 'jsonwebtoken';
 import {SECRET_KEY} from './secretKey';
 import {Headers} from './Headers';
-import { authService } from '../services/auth.service';
+import { authService } from '../../services/auth.service';
 
 export const FakeAPI = (() => {
 
@@ -39,8 +39,8 @@ export const FakeAPI = (() => {
     let isLoggedIn;
 
     const _events = [
-        { id: '0', name: "Event 1", data: "12.01.2020", startTime: "14:00", endTime: "19:00", isFullDayEvent: false },
-        { id: '1', name: "Event 2", data: "22.01.2020", startTime: "", endTime: "", isFullDayEvent: true },
+        { id: '0', name: "Javascript lesson", date: "12.01.2020", startTime: "14:00", endTime: "19:00", isFullDayEvent: false },
+        { id: '1', name: "React Native Lecture", date: "22.01.2020", startTime: "", endTime: "", isFullDayEvent: true },
     ];
 
     window.fetch = function (url, opts) {
@@ -55,15 +55,21 @@ export const FakeAPI = (() => {
                 signIn(url, opts, ok, error);
                 signUp(url, opts, ok, error);
                 refreshToken(url, opts, ok);
+
                 getNewsList(url, opts, ok, unauthorised);
                 createPost(url, opts, ok, unauthorised);
                 editPost(url, opts, ok, unauthorised);
                 removePost(url, opts, ok, unauthorised);
                 getPostById(url, opts, ok, unauthorised);
+
                 updateUserProfile(url, opts, ok, unauthorised);
-                getEventId(url, opts, ok, unauthorised);
+
+                getAllEvents(url, opts, ok, unauthorised);
+                getEventById(url, opts, ok, unauthorised);
                 addEvent(url, opts, ok, unauthorised);
                 deleteEvent(url, opts, ok, unauthorised);
+                editEvent(url, opts, ok, unauthorised);
+
 
                 return ok(_users);
             }, 1000);
@@ -242,37 +248,41 @@ export const FakeAPI = (() => {
         const {accessToken, refreshToken} = createToken(updatedUser);
         localStorage.setItem('currentUser', JSON.stringify({accessToken, refreshToken}));
     };
-    const getNewsList = (url, opts, ok, unauthorised) => {
-        if (url.endsWith('/news') && opts.method === 'GET') {
-            if (!isLoggedIn) return unauthorised();
-            return ok(_news);
-        }
-    }
 
     /*******EVENTS PART OF FAKE API********/
 
-    const getEventId = (url, opts, ok, unauthorised) => {
-        if (url.match(/\/events\/\d+$/) && opts.method === 'GET') {
+    const getAllEvents = (url, opts, ok, unauthorised) => {
+        if (url.endsWith(Headers.EVENTS_GET_ALL) && opts.method === 'GET') {
+            if (authService.currentUser) {
+                const events = JSON.parse(localStorage.getItem('events'));
+                return ok(events);
+            } else return unauthorised();
+        }
+    }
+
+    const getEventById = (url, opts, ok, unauthorised) => {
+        if (url.endsWith(Headers.EVENT_GET_BY_ID) && opts.method === 'GET') {
             if (authService.currentUser) {
                 const id = JSON.parse(opts.body);
-                const event = _events.find(event => event.id === id);
+                const events = JSON.parse(localStorage.getItem('events'));
+                const event = events.find(event => event.id === id);
+    
                 return ok(event);
             } else return unauthorised();
         }
     }
 
     const addEvent = (url, opts, ok, unauthorised) => {
-        if (url.endsWith("events/add") && opts.method === 'POST') {
+        if (url.endsWith(Headers.EVENT_ADD) && opts.method === 'POST') {
             if (authService.currentUser) {
             const event = JSON.parse(opts.body);
-            const id = Math.round(Math.random() * 100) * 2.5;
             let events = _events;
             if (localStorage.getItem('events')) {
                 events = JSON.parse(localStorage.getItem('events'));
             }
 
             const newEvent = {
-                id,
+                id: genUniqueID(),
                 ...event,
                 startTime: event.startTime || '',
                 endTime: event.endTime || '',
@@ -288,19 +298,32 @@ export const FakeAPI = (() => {
     }
 
     const deleteEvent= (url, opts, ok, unauthorised) => {
-        if (url.match(/\/events\/\d+$/) && opts.method === 'DELETE') {
+        if (url.match(Headers.EVENT_DELETE) && opts.method === 'DELETE') {
             if (authService.currentUser) {
             const id = JSON.parse(opts.body);
             const events = JSON.parse(localStorage.getItem("events"));
             
-            const eventIndex = events.findIndex(event => event.id === id);
-            const newEvents = events.splice(eventIndex, 1);
+            const newEvents = events.filter(event => event.id !== id);
 
             localStorage.setItem('events', JSON.stringify(newEvents));
-            return ok(newEvents);
-            
+        
             } else return unauthorised();
         }
     }
+
+    const editEvent = (url, opts, ok, unauthorised) => {
+        if (url.match(Headers.EVENT_EDIT) && opts.method === 'PUT') {
+            if (authService.currentUser) {
+                const updatedEvent = JSON.parse(opts.body);
+                const events = JSON.parse(localStorage.getItem('events'));
+
+                const oldEventIndex = events.findIndex(event => event.id === updatedEvent.id);
+                const newEvents = events.splice(oldEventIndex, 1, updatedEvent);
+
+                localStorage.setItem('events', JSON.stringify(newEvents));
+
+            } else return unauthorised();
+        }
+    };
 
 })();
