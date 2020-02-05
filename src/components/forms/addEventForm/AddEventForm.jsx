@@ -1,17 +1,24 @@
 import React, {Component} from "react";
 import {Button, Input, Checkbox, Modal} from "../../common"
-import "./AddEventForm.scss"
 import {eventService} from "../../../services/event.service";
+import {withRouter} from 'react-router';
+import "./AddEventForm.scss";
 
 class AddEventForm extends Component {
 
     state = {
-        event: null
+        event: null,
+        isLoading: false
     }
 
-    addEventSubmitHandler = event => {
+    formSubmitHandler = (event, type) => {
         event.preventDefault();
-        eventService.addEvent(this.state.event);
+
+        if (type === 'edit') {
+            console.log(this.props.match.params.id);
+            eventService.updateEvent(this.props.match.params.id);
+        } else eventService.addEvent(this.state.event);
+        this.props.toggleModalVisibility();
     }
 
     onInputsChangeHandler = event => {
@@ -27,17 +34,18 @@ class AddEventForm extends Component {
     }
 
     render() {
-        const {isModalOpen, toggleModalVisibility} = this.props; 
+        const {isModalOpen, toggleModalVisibility, type} = this.props; 
         
         return(
             <Modal
             modalTitle="Add Event"
             toggleModalVisibility={toggleModalVisibility}
             isModalOpen={isModalOpen}
+            maxWidth="550px"
             >
                 <form
                 onChange={this.onInputsChangeHandler}
-                onSubmit={this.addEventSubmitHandler}
+                onSubmit={event => this.formSubmitHandler(event, type)}
                 >
                 <Input
                     type="text"
@@ -71,4 +79,4 @@ class AddEventForm extends Component {
     }
 }
 
-export default AddEventForm;
+export default withRouter(AddEventForm);

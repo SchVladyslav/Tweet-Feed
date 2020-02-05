@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import './Events.scss';
 import { Button } from '../../common';
 import AddEventForm from '../../forms/addEventForm/AddEventForm';
+import EventsList from '../eventsList/eventsList';
 
 class Events extends Component {
 
@@ -9,7 +10,7 @@ class Events extends Component {
         isModalShowed: false
     }
 
-    showModalHandler =() => this.setState({isModalShowed: !this.state.isModalShowed});
+    showModalHandler = () => this.setState({isModalShowed: !this.state.isModalShowed});
 
     render() {
         const {isModalShowed} = this.state;
@@ -27,6 +28,7 @@ class Events extends Component {
                 isModalOpen={isModalShowed}
                 toggleModalVisibility={this.showModalHandler}
                 />
+                <EventsList/>
             </div>
         )
     }

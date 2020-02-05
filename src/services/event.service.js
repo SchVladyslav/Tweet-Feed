@@ -1,14 +1,21 @@
-import { HandleResponse } from "../helpers/HandleResponse";
+import { HandleResponse } from "../helpers/FakeAPI/HandleResponse";
 
-function getEventId(id) {
+function getEventById(id) {
     const requestOptions = {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(id)
     }
-    return fetch(`/events/${id}`, requestOptions).then(HandleResponse);
+    return fetch('/event/get', requestOptions).then(HandleResponse);
 };
 
+function getAllEvents() {
+    const requestOptions = {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+    }
+    return fetch('/events', requestOptions).then(HandleResponse);
+}
 
 function addEvent(event) {
     const requestOptions = {
@@ -16,7 +23,7 @@ function addEvent(event) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(event)
     }
-    return fetch('/events/add', requestOptions).then(HandleResponse);
+    return fetch('/event/add', requestOptions).then(HandleResponse);
 };
 
 function deleteEvent(id){
@@ -25,7 +32,7 @@ function deleteEvent(id){
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(id)
     }
-    return fetch(`/events/${id}`, requestOptions).then(HandleResponse);
+    return fetch('/event/delete', requestOptions).then(HandleResponse);
 }
 
 function updateEvent(event){
@@ -34,11 +41,12 @@ function updateEvent(event){
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(event)
     }
-    return fetch('/events/update/', requestOptions).then(HandleResponse);
+    return fetch('/event/edit', requestOptions).then(HandleResponse);
 }
 
 export const eventService = {
-    getEventId,
+    getAllEvents,
+    getEventById,
     addEvent,
     deleteEvent,
     updateEvent
