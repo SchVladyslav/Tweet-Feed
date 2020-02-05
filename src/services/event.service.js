@@ -28,8 +28,18 @@ function deleteEvent(id){
     return fetch(`/events/${id}`, requestOptions).then(HandleResponse);
 }
 
+function updateEvent(event){
+    const requestOptions = {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(event)
+    }
+    return fetch('/events/update/', requestOptions).then(HandleResponse);
+}
+
 export const eventService = {
     getEventId,
     addEvent,
-    deleteEvent
+    deleteEvent,
+    updateEvent
 };

@@ -1,4 +1,4 @@
-import {Role} from './Role';
+import { Role } from './Role';
 import jwt from 'jsonwebtoken';
 <<<<<<< HEAD:src/helpers/FakeAPI/FakeAPI.js
 import {SECRET_KEY} from './secretKey';
@@ -9,11 +9,18 @@ import { authService } from '../services/auth.service';
 
 export const FakeAPI = (() => {
 
+<<<<<<< HEAD:src/helpers/FakeAPI/FakeAPI.js
     const ADMIN_EMAIL = 'admin@gmail.com';
 
     const _users = [{
         email: 'admin@gmail.com', password: 'admin', firstName: 'Admin', lastName: 'Admin', gender: 'male', age: 24, role: Role.Admin
     }];
+=======
+    let _users = [
+        { id: 0, email: 'admin@gmail.com', password: 'admin', firstName: 'Admin', lastName: 'User', role: Role.Admin },
+        { id: 1, email: 'user@gmail.com', password: 'user', firstName: 'Normal', lastName: 'User', role: Role.User }
+    ];
+>>>>>>> add methods:src/helpers/FakeAPI.js
 
     const _news = [
         {
@@ -67,20 +74,21 @@ export const FakeAPI = (() => {
                 getEventId(url, opts, ok, unauthorised);
                 addEvent(url, opts, ok, unauthorised);
                 deleteEvent(url, opts, ok, unauthorised);
+                updateEvent(url, opts, ok, unauthorised);
 
                 return ok(_users);
             }, 1000);
 
             function ok(body) {
-                resolve({ok: true, text: () => Promise.resolve(JSON.stringify(body))})
+                resolve({ ok: true, text: () => Promise.resolve(JSON.stringify(body)) })
             }
 
             function unauthorised() {
-                resolve({status: 401, text: () => Promise.resolve(JSON.stringify({message: 'Unauthorised'}))})
+                resolve({ status: 401, text: () => Promise.resolve(JSON.stringify({ message: 'Unauthorised' })) })
             }
 
             function error(message) {
-                resolve({status: 400, text: () => Promise.resolve(JSON.stringify({message}))})
+                resolve({ status: 400, text: () => Promise.resolve(JSON.stringify({ message })) })
             }
         });
     };
@@ -267,43 +275,54 @@ export const FakeAPI = (() => {
     const addEvent = (url, opts, ok, unauthorised) => {
         if (url.endsWith("events/add") && opts.method === 'POST') {
             if (authService.currentUser) {
-            const event = JSON.parse(opts.body);
-            const id = Math.round(Math.random() * 100) * 2.5;
-            let events = _events;
-            if (localStorage.getItem('events')) {
-                events = JSON.parse(localStorage.getItem('events'));
-            }
+                const event = JSON.parse(opts.body);
+                const id = Math.round(Math.random() * 100) * 2.5;
+                let events = _events;
+                if (localStorage.getItem('events')) {
+                    events = JSON.parse(localStorage.getItem('events'));
+                }
 
-            const newEvent = {
-                id,
-                ...event,
-                startTime: event.startTime || '',
-                endTime: event.endTime || '',
-                isFullDayEvent: !!event.isFullDayEvent
-            };
+                const newEvent = {
+                    id,
+                    ...event,
+                    startTime: event.startTime || '',
+                    endTime: event.endTime || '',
+                    isFullDayEvent: !!event.isFullDayEvent
+                };
 
-            events.push(newEvent);
-            localStorage.setItem('events', JSON.stringify(events));
+                events.push(newEvent);
+                localStorage.setItem('events', JSON.stringify(events));
 
-            return ok(event);
-        } else return unauthorised();
-        }
-    }
-
-    const deleteEvent= (url, opts, ok, unauthorised) => {
-        if (url.match(/\/events\/\d+$/) && opts.method === 'DELETE') {
-            if (authService.currentUser) {
-            const id = JSON.parse(opts.body);
-            const events = JSON.parse(localStorage.getItem("events"));
-            
-            const eventIndex = events.findIndex(event => event.id === id);
-            const newEvents = events.splice(eventIndex, 1);
-
-            localStorage.setItem('events', JSON.stringify(newEvents));
-            return ok(newEvents);
-            
+                return ok(event);
             } else return unauthorised();
         }
     }
 
+    const deleteEvent = (url, opts, ok, unauthorised) => {
+        if (url.match(/\/events\/\d+$/) && opts.method === 'DELETE') {
+            if (authService.currentUser) {
+                const id = JSON.parse(opts.body);
+                const events = JSON.parse(localStorage.getItem("events"));
+
+                const eventIndex = events.findIndex(event => event.id === id);
+                const newEvents = events.splice(eventIndex, 1);
+
+                localStorage.setItem('events', JSON.stringify(newEvents));
+                return ok(newEvents);
+
+            } else return unauthorised();
+        }
+    }
+
+    const updateEvent = (url, opts, ok, unauthorised) => {
+        if (url.match(/\/events\/update\/\d+$/) && opts.method === 'PUT') {
+            if (authService.currentUser) {
+                const id = JSON.parse(opts.body);
+                const events = JSON.parse(localStorage.getItem("events"));
+                
+            }
+        }
+    }
+
 })();
+
