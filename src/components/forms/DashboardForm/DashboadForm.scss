@@ -1,4 +1,4 @@
-.dashboard{
+.dashboard {
   &__form {
     max-width: 500px;
     margin-top: 40px;
@@ -9,14 +9,17 @@
   &__textarea {
     overflow: auto;
   }
-  &__upload-preview{
+
+  &__upload-preview {
     border-radius: 10px;
   }
 }
-.mb-20{
+
+.mb-20 {
   margin-bottom: 20px;
 }
-.upload-image{
+
+.upload-image {
   display: flex;
   flex-direction: column;
   align-items: center;

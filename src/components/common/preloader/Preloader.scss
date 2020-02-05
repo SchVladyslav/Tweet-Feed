@@ -1,9 +1,5 @@
 @import "../../../assets/scss/variables";
 
-//section {
-//  flex: 1 1 25%;
-//}
-
 .preloader {
   width: $spinkit-size;
   height: $spinkit-size;
@@ -17,7 +13,6 @@
   position: fixed;
   top: 50%;
   left: 50%;
-  //margin-right: -50%;
   margin-left: -35px;
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
@@ -29,7 +24,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(255, 255, 255, 0.7);
+  background-color: #fff;
   z-index: 10;
 }
 
