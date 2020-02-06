@@ -26,7 +26,7 @@ class ProfileForm extends Component {
     };
 
     componentDidMount() {
-        setTimeout(this.fetchUserData, 1000);
+        this.fetchUserData();
     }
 
     fetchUserData = () => {
@@ -74,12 +74,12 @@ class ProfileForm extends Component {
                                 onChange={this.handleInputChange}
                             />
                             <div className="select-container">
-                            <Select
-                                label={'Choose your gender:'}
-                                name="gender"
-                                onChangeHandler={this.handleInputChange}
-                                selectValue={user.gender}
-                            />
+                                <Select
+                                    label={'Choose your gender:'}
+                                    name="gender"
+                                    onChangeHandler={this.handleInputChange}
+                                    selectValue={user.gender}
+                                />
                             </div>
                         </div>
                         <Button
