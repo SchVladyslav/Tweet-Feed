@@ -16,7 +16,7 @@ class Events extends Component {
 
     componentDidMount() {
         eventService.getAllEvents().then(events => {
-            this.setState({ events });
+            this.setState({events});
         });
     }
 
@@ -27,30 +27,32 @@ class Events extends Component {
     render() {
         const {events, isModalShowed} = this.state;
 
-        return(
-            <div className="events">
-                {authService.currentUser.role === Role.Admin &&
-                <div className="events__add-btn">
-                <Button
-                buttonColorScheme="primary"
-                onClick={this.showModalHandler}
-                >
-                    Add Event
-                    </Button>
-                </div> }
+        return (
+            <>
+                <div className="events">
+                    {authService.currentUser.role === Role.Admin &&
+                    <div className="events__add-btn">
+                        <Button
+                            buttonColorScheme="primary"
+                            onClick={this.showModalHandler}
+                        >
+                            Add Event
+                        </Button>
+                    </div>}
+                    {events ?
+                        <EventsList
+                            events={events}
+                        />
+                        : <Preloader/>
+                    }
+                </div>
                 <EventForm
-                isModalOpen={isModalShowed}
-                toggleModalVisibility={this.showModalHandler}
-                updateState={this.updateEventsState}
-                type="add"
+                    isModalOpen={isModalShowed}
+                    toggleModalVisibility={this.showModalHandler}
+                    updateState={this.updateEventsState}
+                    type="add"
                 />
-                {events ?
-                <EventsList
-                    events={events}
-                />
-                : <Preloader/>
-                }
-            </div>
+            </>
         )
     }
 }

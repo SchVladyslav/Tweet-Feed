@@ -3,6 +3,7 @@ import {Button, Input, Checkbox, Modal} from "../../common"
 import {eventService} from "../../../services/event.service";
 import {withRouter} from 'react-router';
 import "./EventForm.scss";
+import PropTypes from "prop-types";
 
 class EventForm extends Component {
 
@@ -64,11 +65,13 @@ class EventForm extends Component {
                     type="text"
                     name="name"
                     defaultValue={type === 'edit' ? event.name : ''}
+                    required={'required'}
                 />
                 <Input
                     type="date"
                     name="date"
                     defaultValue={type === 'edit' ? this.prepareEventDate() : ''}
+                    required={'required'}
                 />
                 <Input
                     type="time"
@@ -96,5 +99,12 @@ class EventForm extends Component {
         )
     }
 }
+
+EventForm.propTypes = {
+    isModalOpen: PropTypes.bool,
+    toggleModalVisibility: PropTypes.func,
+    type: PropTypes.string,
+    event: PropTypes.object
+};
 
 export default withRouter(EventForm);

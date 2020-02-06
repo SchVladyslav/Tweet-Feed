@@ -1,6 +1,6 @@
 import React from 'react';
 import { Preloader } from '../../common';
-import EventsItem from '../eventsItem.jsx/EventsItem';
+import EventsItem from '../eventsItem/EventsItem';
 import './EventsList.scss';
 
 function EventsList(props) {
