@@ -350,9 +350,9 @@ export const FakeAPI = (() => {
                         id,
                         name: event.name || oldEvent.name,
                         date: event.date || oldEvent.date,
-                        startTime: !!event.isFullDayEvent ? '' : event.startTime || oldEvent.startTime,
-                        endTime: !!event.isFullDayEvent ? '' : event.endTime || oldEvent.endTime,
-                        isFullDayEvent: !!event.isFullDayEvent || !!oldEvent.isFullDayEvent
+                        startTime: event.isFullDayEvent ? '' : event.startTime || oldEvent.startTime,
+                        endTime: event.isFullDayEvent ? '' : event.endTime || oldEvent.endTime,
+                        isFullDayEvent: event.isFullDayEvent
                     };
 
                     _events.splice(oldEventIndex, 1, updatedEvent);

@@ -27,11 +27,24 @@ class EventForm extends Component {
     onInputsChangeHandler = event => {
         const {name, value} = event.target;
 
-        this.setState(
-            {
-            event: {
-                ...this.state.event,
-                 [name]: value
+        if (name !== 'isFullDayEvent') {
+            this.setState(
+                {
+                    event: {
+                        ...this.state.event,
+                        [name]: value
+                    }
+                });
+        }
+    };
+
+    onFullDayCheckboxHandler = event => {
+        const {checked} = event.target;
+
+            this.setState({
+                event: {
+                    ...this.state.event,
+                    isFullDayEvent: checked
                 }
             });
     };
@@ -50,52 +63,53 @@ class EventForm extends Component {
     render() {
         const {isModalOpen, toggleModalVisibility, type, event} = this.props;
 
-        return(
+        return (
             <Modal
-            modalTitle={type === 'add' ? 'Add Event' : 'Edit event'}
-            toggleModalVisibility={toggleModalVisibility}
-            isModalOpen={isModalOpen}
-            maxWidth="550px"
+                modalTitle={type === 'add' ? 'Add Event' : 'Edit event'}
+                toggleModalVisibility={toggleModalVisibility}
+                isModalOpen={isModalOpen}
+                maxWidth="550px"
             >
                 <form
-                onSubmit={event => this.formSubmitHandler(event, type)}
-                onChange={this.onInputsChangeHandler}
+                    onSubmit={event => this.formSubmitHandler(event, type)}
+                    onChange={this.onInputsChangeHandler}
                 >
-                <Input
-                    type="text"
-                    name="name"
-                    defaultValue={type === 'edit' ? event.name : ''}
-                    required={'required'}
-                />
-                <Input
-                    type="date"
-                    name="date"
-                    defaultValue={type === 'edit' ? this.prepareEventDate() : ''}
-                    required={'required'}
-                />
-                <Input
-                    type="time"
-                    name="startTime"
-                    defaultValue={type === 'edit' ? event.startTime : ''}
-                />
-                <Input
-                    type="time"
-                    name="endTime"
-                    defaultValue={type === 'edit' ? event.endTime : ''}
-                />
-            <Checkbox
-             label="FullDay Event"
-             name="isFullDayEvent"
-             defaultChecked={type === 'edit' && event.isFullDayEvent}
-            />
-            <Button
-             buttonColorScheme="success"
-             type="submit"
-             >
-                 Submit
-                 </Button>
+                    <Input
+                        type="text"
+                        name="name"
+                        defaultValue={type === 'edit' ? event.name : ''}
+                        required={'required'}
+                    />
+                    <Input
+                        type="date"
+                        name="date"
+                        defaultValue={type === 'edit' ? this.prepareEventDate() : ''}
+                        required={'required'}
+                    />
+                    <Input
+                        type="time"
+                        name="startTime"
+                        defaultValue={type === 'edit' ? event.startTime : ''}
+                    />
+                    <Input
+                        type="time"
+                        name="endTime"
+                        defaultValue={type === 'edit' ? event.endTime : ''}
+                    />
+                    <Checkbox
+                        label="FullDay Event"
+                        name="isFullDayEvent"
+                        defaultChecked={type === 'edit' && event.isFullDayEvent}
+                        handleCheckboxChange={this.onFullDayCheckboxHandler}
+                    />
+                    <Button
+                        buttonColorScheme="success"
+                        type="submit"
+                    >
+                        Submit
+                    </Button>
                 </form>
-                </Modal>
+            </Modal>
         )
     }
 }
