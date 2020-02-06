@@ -1,7 +1,6 @@
 import React from 'react';
-import './eventsItem.scss';
+import './EventsItem.scss';
 import {Button} from '../../common';
-import { Redirect } from 'react-router';
 import { NavLink } from 'react-router-dom';
 
 const EventsItem = props => {
@@ -10,7 +9,7 @@ const EventsItem = props => {
         <li className="events-item">
         <h3 className="events-item__title">{event.name}</h3>
         <p className="events-item__text">Date: {event.date}</p>
-        {event.isFullDayEvent ? 
+        {event.isFullDayEvent ?
         <strong>FULL DAY EVENT</strong>
         :
         <>
