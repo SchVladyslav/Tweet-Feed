@@ -1,9 +1,12 @@
-import React from "react";
-import { FormSignUp } from "../forms/FormSignUp/FormSignUp";
-import { Component } from "react";
-import { authService } from "../../services/auth.service";
+import React, { Component } from "react";
+import { withRouter } from "react-router";
+import { PropTypes } from "prop-types";
 
-export class AuthSignUp extends Component {
+import { FormSignUp } from "../forms/FormSignUp/FormSignUp";
+import { authService } from "../../services/auth.service";
+import { Preloader } from "../common/index";
+
+class AuthSignUp extends Component {
   constructor(props) {
     super(props);
 
@@ -12,7 +15,9 @@ export class AuthSignUp extends Component {
       lastName: "",
       email: "",
       password: "",
-      confirmPassword: ""
+      confirmPassword: "",
+      error: "",
+      isFetching: false
     };
   }
 
@@ -35,28 +40,44 @@ export class AuthSignUp extends Component {
       password,
       confirmPassword
     } = this.state;
+    this.setState({ isFetching: true });
     authService
       .signUp(firstName, lastName, email, password, confirmPassword)
-      .then(
-        () => {
-          const { from } = this.props.location.state || {
-            from: { pathname: "/dashboard" }
-          };
-          this.props.history.push(from);
-        },
-        error => {
-          console.error(error);
-        }
-      );
+      .then(() => {
+        const { from } = this.props.location.state || {
+          from: { pathname: "/signin" }
+        };
+        this.props.history.push(from);
+      })
+      .catch(error => {
+        this.setState({ error: error, isFetching: false });
+      });
   };
 
   render() {
+    const { isFetching, error } = this.state;
     return (
-      <FormSignUp
-        state={this.state}
-        updateState={this.updateState}
-        handleSubmit={this.handleSubmit}
-      />
+      <>
+        {isFetching ? <Preloader /> : ""}
+        {<p className="main-form__error">{error}</p>}
+        <FormSignUp
+          state={this.state}
+          updateState={this.updateState}
+          handleSubmit={this.handleSubmit}
+        />
+      </>
     );
   }
 }
+
+export default withRouter(AuthSignUp);
+
+AuthSignUp.propTypes = {
+  firstName: PropTypes.string,
+  lastName: PropTypes.string,
+  email: PropTypes.string,
+  password: PropTypes.string,
+  confirmPassword: PropTypes.string,
+  isFetching: PropTypes.bool,
+  error: PropTypes.string
+};

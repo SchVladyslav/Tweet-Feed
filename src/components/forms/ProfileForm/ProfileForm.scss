@@ -1,7 +1,12 @@
+@import "../../../assets/scss/variables";
+
 .profile-form {
-  width: 50%;
+  width: 55%;
   display: inline-block;
   color: rgba(74,74,74,0.95);
+  @media only screen and (min-device-width: $small-screen) and (max-device-width: 800px) {
+    width: 90%;
+  }
 }
 
 .form {
@@ -18,4 +23,10 @@
 .input-container {
   width: 100%;
   margin-bottom: 20px;
+}
+
+.select-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }

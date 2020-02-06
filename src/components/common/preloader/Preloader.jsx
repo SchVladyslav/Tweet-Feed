@@ -1,11 +1,11 @@
 import React from "react";
 import "./Preloader.scss";
 
-const Preloader = () => {
+const Preloader = props => {
   return (
-    <section>
-      <div className="sk-rotating-plane"></div>
-    </section>
+    <div className="preloader_background">
+      <div className="preloader preloader_position-center" />
+    </div>
   );
 };
 

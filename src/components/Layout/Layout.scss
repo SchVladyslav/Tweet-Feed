@@ -1,3 +1,5 @@
+@import "../../assets/scss/variables";
+
 .header {
   width: 100%;
   background-color: #343a40;
@@ -9,6 +11,20 @@
   justify-content: space-between;
   align-items: center;
   z-index: 2;
+
+  &__menu-icon {
+    display: none;
+    @media screen and (max-width: $large-screen) {
+      display: block;
+    }
+  }
+
+  &__logo {
+    display: flex;
+    @media screen and (max-width: $large-screen) {
+      display: none;
+    }
+  }
 }
 
 .sidebar {
@@ -16,11 +32,14 @@
   height: 100%;
   box-shadow: 4px 0 5px -5px rgba(0, 0, 0, 0.5);
   background-color: #fff;
+  display: block;
+  @media screen and (max-width: $large-screen) {
+    display: none;
+  }
 
   &__list {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     list-style: none;
     padding: 0 40px;
     margin-top: 25px;
@@ -29,12 +48,40 @@
     &__item {
       padding: 20px 50px;
 
+      &:last-child {
+        margin-top: auto;
+      }
+
       &:hover {
         cursor: pointer;
-        background-color: #e3f2fd;
-        border-radius: 15px;
         a {
           color: #007bff;
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}
+
+.burger {
+  width: 100%;
+  z-index: 120;
+  top: 66px;
+  height: auto;
+  position: fixed;
+  box-shadow: 0 4px 8px -3px rgba(0, 0, 0, 0.5);
+  background-color: #fff;
+  &__list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    &__item {
+      padding: 20px 50px;
+      &:hover {
+        cursor: pointer;
+        a {
+          color: #007bff;
+          text-decoration: underline;
         }
       }
     }
@@ -46,10 +93,19 @@
   position: relative;
   top: 82px;
   z-index: 1;
+
+  @media screen and (max-width: $large-screen) {
+    top: 66px;
+  }
+
   &__content {
     position: relative;
     left: 254px;
     width: calc(100% - 254px);
+    @media screen and (max-width: $large-screen) {
+      left: 0;
+      width: 100%;
+    }
   }
 }
 
@@ -64,5 +120,3 @@
   color: #007bff;
   text-decoration: underline;
 }
-
-

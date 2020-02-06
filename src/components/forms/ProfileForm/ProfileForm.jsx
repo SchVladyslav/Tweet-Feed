@@ -1,64 +1,95 @@
 import React, {Component} from "react";
-import {Button, Input, Select, Checkbox} from "../../common/index";
+import {Button, Input, Select, Preloader} from "../../common";
 import './ProfileForm.scss';
+import {userService} from "../../../services/user.service";
+import {authService} from "../../../services/auth.service";
+import {Role} from "../../../helpers/FakeAPI/Role";
 
 class ProfileForm extends Component {
 
     state = {
-        firstName: 'Irina',
-        lastName: 'Telesheva',
-        email: 'megoirlik11@gmail.com',
-        age: 19,
-        gender: null
+        user: null
     };
 
     onSubmitHandler = event => {
         event.preventDefault();
-        console.log(this.state);
+
+        if (authService.currentUser.role !== Role.Admin) {
+            const isUpdatedProfile = userService.updateUserData(
+                authService.currentUser.id,
+                this.state.user
+            );
+
+            if (isUpdatedProfile) return this.props.toggleLoading();
+
+        } else window.alert('Only readers can change profile!');
     };
 
-    handleFirstName = (event) => this.setState({firstName: event.target.value});
-    handleLastName = (event) => this.setState({lastName: event.target.value});
-    handleAge = (event) => this.setState({age: event.target.value});
-    handleGender = (event) => this.setState({gender: event.target.value});
+    componentDidMount() {
+        setTimeout(this.fetchUserData, 1000);
+    }
+
+    fetchUserData = () => {
+        const user = userService.getUserDataById(authService.currentUser.id);
+        this.setState({user});
+    };
+
+    handleInputChange = event => {
+        const {name, value} = event.target;
+        const {user} = this.state;
+
+        this.setState({user: {...user, [name]: value}});
+
+    };
 
     render() {
+        const {user} = this.state;
         return (
             <div className="profile-form">
-                <form onSubmit={this.onSubmitHandler} className="form">
-                    <div className="input-container">
-                        <Input
-                            placeholder="Enter your first name"
-                            value={this.state.firstName}
-                            onChange={this.handleFirstName}
-                        />
-                        <Input
-                            placeholder="Enter your last name"
-                            value={this.state.lastName}
-                            onChange={this.handleLastName}
-                        />
-                        <Input
-                            placeholder="Enter your email"
-                            value={this.state.email}
-                            onChange={event => console.log(event.target.value)}
-                        />
-                        <Input
-                            placeholder="Enter your age"
-                            value={this.state.age}
-                            type="number"
-                            onChange={this.handleAge}
-                        />
-                        <Select
-                            label={'Choose your gender:'}
-                            onChangeHandler={this.handleGender}
-                        />
-                    </div>
-                    <Button
-                        buttonColorScheme={'primary'}
-                        type={'submit'}
-                    > Save profile
-                    </Button>
-                </form>
+                {user ?
+                    <form onSubmit={this.onSubmitHandler} className="form">
+                        <div className="input-container">
+                            <Input
+                                placeholder="Enter your first name"
+                                name="firstName"
+                                value={user.firstName || ''}
+                                onChange={this.handleInputChange}
+                            />
+                            <Input
+                                placeholder="Enter your last name"
+                                name="lastName"
+                                value={user.lastName || ''}
+                                onChange={this.handleInputChange}
+                            />
+                            <Input
+                                placeholder="Enter your email"
+                                value={user.email || ''}
+                                onChange={() => window.alert("You can't change email!")}
+                            />
+                            <Input
+                                placeholder="Enter your age"
+                                name="age"
+                                value={user.age || ''}
+                                type="number"
+                                onChange={this.handleInputChange}
+                            />
+                            <div className="select-container">
+                            <Select
+                                label={'Choose your gender:'}
+                                name="gender"
+                                onChangeHandler={this.handleInputChange}
+                                selectValue={user.gender}
+                            />
+                            </div>
+                        </div>
+                        <Button
+                            buttonColorScheme={'primary'}
+                            type={'submit'}
+                        > Save profile
+                        </Button>
+                    </form>
+                    : <Preloader/>
+                }
             </div>
         )
     }

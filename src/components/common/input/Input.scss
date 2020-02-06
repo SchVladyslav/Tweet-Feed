@@ -1,6 +1,6 @@
 .input {
   position: relative;
-  height: 73px;
+  height: 40px;
 }
 
 .input__icon {
@@ -15,7 +15,7 @@
   background: 0 0;
   cursor: text;
   outline: transparent;
-  color: rgba(74,74,74,0.95);
+  color: rgba(74, 74, 74, 0.95);
   box-sizing: border-box;
   height: 45px;
   width: 100%;
@@ -44,7 +44,8 @@
 }
 
 .error-message {
-  margin: 10px 0 0 0;
+  margin: -18px 0 0 0;
+  font-size: 13px;
   color: red;
   text-align: center;
 }

@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
+import { PropTypes } from "prop-types";
 
 import { authService } from "../../services/auth.service";
 import FormSignIn from "../forms/FormSignIn/FormSignIn";
+import { Preloader } from "../common/index";
 
 class AuthSignIn extends Component {
   constructor(props) {
@@ -10,12 +12,14 @@ class AuthSignIn extends Component {
 
     this.state = {
       email: "",
-      password: ""
+      password: "",
+      error: "",
+      isFetching: false
     };
 
-    if (authService.currentUser) {
+    /*  if (authService.currentUser) {
       this.props.history.push("/dashboard");
-    }
+    }*/
   }
 
   updateState = state => {
@@ -25,28 +29,41 @@ class AuthSignIn extends Component {
   handleSubmit = e => {
     e.preventDefault();
     const { email, password } = this.state;
-    authService.signIn(email, password).then(
-      () => {
+    this.setState({ isFetching: true });
+    authService
+      .signIn(email, password)
+      .then(() => {
         const { from } = this.props.location.state || {
           from: { pathname: "/dashboard" }
         };
         this.props.history.push(from);
-      },
-      error => {
-        console.error(error);
-      }
-    );
+      })
+      .catch(error => {
+        this.setState({ error: error, isFetching: false });
+      });
   };
 
   render() {
+    const { isFetching, error } = this.state;
     return (
-      <FormSignIn
-        state={this.state}
-        updateState={this.updateState}
-        handleSubmit={this.handleSubmit}
-      />
+      <>
+        {isFetching ? <Preloader /> : ""}
+        {<p className="main-form__error">{error}</p>}
+        <FormSignIn
+          state={this.state}
+          updateState={this.updateState}
+          handleSubmit={this.handleSubmit}
+        />
+      </>
     );
   }
 }
 
 export default withRouter(AuthSignIn);
+
+AuthSignIn.propTypes = {
+  email: PropTypes.string,
+  password: PropTypes.string,
+  isFetching: PropTypes.bool,
+  error: PropTypes.string
+};

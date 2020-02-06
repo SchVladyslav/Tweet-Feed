@@ -1,9 +1,8 @@
 import React from 'react';
-import './textarea.scss'
+import './Textarea.scss'
 import PropTypes from "prop-types";
-import Preloader from "../preloader/Preloader";
 
-function Textarea({key, className, name, cols, rows, placeholder, children, isInvalid, onChange}) {
+function Textarea({key, className, name, cols, rows, placeholder, children, isInvalid, onChange, value, onBlur, onFocus}) {
     return (
         <textarea
             name={name}
@@ -13,6 +12,9 @@ function Textarea({key, className, name, cols, rows, placeholder, children, isIn
             className={`textarea ${className ? className : ''} ${isInvalid ? 'textarea_invalid' : ''}`}
             key={key}
             onChange={onChange}
+            onFocus={onFocus}
+            onBlur={onBlur}
+            value={value}
 
         >{children}</textarea>
     );
@@ -26,6 +28,7 @@ Textarea.propTypes = {
     children: PropTypes.string,
     cols: PropTypes.string,
     rows: PropTypes.string,
+    value: PropTypes.string,
     placeholder: PropTypes.string,
     isInvalid: PropTypes.bool,
     onChange: PropTypes.func

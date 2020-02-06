@@ -1,12 +1,13 @@
 import React from "react";
 import Layout from "../../components/Layout/Layout";
+import Events from '../../components/events/eventsContainer/Events'
 
-function EventsPage() {
+const EventsPage = () => {
   return (
     <Layout>
-      <h1>Events Page!</h1>
+      <Events/>
     </Layout>
   );
-}
+};
 
 export default EventsPage;
