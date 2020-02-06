@@ -23,9 +23,9 @@ class Profile extends Component {
     };
 
     toggleLoading = () => {
-        this.setState({isLoading: true});
+        this.setState({isLoading: !this.state.isLoading});
         setTimeout(() => {
-            this.setState({isLoading: false});
+            this.setState({isLoading: !this.state.isLoading});
         }, 1500);
     };
 

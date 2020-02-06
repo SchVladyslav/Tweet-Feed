@@ -28,8 +28,6 @@
 }
 
 .sidebar {
-  position: fixed;
-  height: 100%;
   box-shadow: 4px 0 5px -5px rgba(0, 0, 0, 0.5);
   background-color: #fff;
   display: block;
@@ -43,7 +41,7 @@
     list-style: none;
     padding: 0 40px;
     margin-top: 25px;
-    height: 85%;
+    height: 93%;
 
     &__item {
       padding: 20px 50px;
@@ -90,22 +88,23 @@
 
 .main {
   display: flex;
-  position: relative;
-  top: 82px;
-  z-index: 1;
+  padding-top: 82px;
+  flex-direction: row;
+
+  @media only screen and (min-height: $big-screen-height) {
+    height: 100vh;
+  }
+
+  @media only screen and (min-width: $small-screen) and (max-width: $medium-screen) and (max-height: $big-screen-height) {
+    height: 100%;
+  }
 
   @media screen and (max-width: $large-screen) {
-    top: 66px;
+    padding-top: 66px;
   }
 
   &__content {
-    position: relative;
-    left: 254px;
-    width: calc(100% - 254px);
-    @media screen and (max-width: $large-screen) {
-      left: 0;
-      width: 100%;
-    }
+    width: 100%;
   }
 }
 
