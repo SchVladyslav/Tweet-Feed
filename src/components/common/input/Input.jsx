@@ -19,7 +19,8 @@ export default function Input({
   value,
   errorMessage,
   onChange,
-  iconName
+  iconName,
+  required
 }) {
   const iconNames = {
     user: "icon-user",
@@ -39,6 +40,7 @@ export default function Input({
           type={type}
           onChange={onChange}
           value={value}
+          required={required}
         />
       </div>
       {iconClass ? <i className={`icon ${iconClass} input__icon`} /> : null}
@@ -56,5 +58,7 @@ Input.propTypes = {
   name: PropTypes.string,
   onChange: PropTypes.func,
   errorMessage: PropTypes.string,
-  iconName: PropTypes.string
+  iconName: PropTypes.string,
+  readOnly: PropTypes.string,
+  ref: PropTypes.string
 };

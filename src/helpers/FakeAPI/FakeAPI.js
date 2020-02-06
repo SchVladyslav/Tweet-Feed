@@ -2,14 +2,17 @@ import {Role} from './Role';
 import jwt from 'jsonwebtoken';
 import {SECRET_KEY} from './secretKey';
 import {Headers} from './Headers';
+import { authService } from '../../services/auth.service';
 
 export const FakeAPI = (() => {
 
     const ADMIN_EMAIL = 'admin@gmail.com';
 
-    const _users = [{
-        email: 'admin@gmail.com', password: 'admin', firstName: 'Admin', lastName: 'Admin', gender: 'male', age: 24, role: Role.Admin
-    }];
+  
+    let _users = [
+        { id: 0, email: 'admin@gmail.com', password: 'admin', firstName: 'Admin', lastName: 'User', role: Role.Admin },
+        { id: 1, email: 'user@gmail.com', password: 'user', firstName: 'Normal', lastName: 'User', role: Role.User }
+    ];
 
     const _news = [
         {
@@ -37,6 +40,11 @@ export const FakeAPI = (() => {
 
     let isLoggedIn;
 
+    const _events = [
+        { id: '0', name: "Javascript lesson", date: "12.01.2020", startTime: "14:00", endTime: "19:00", isFullDayEvent: false },
+        { id: '1', name: "React Native Lecture", date: "22.01.2020", startTime: "", endTime: "", isFullDayEvent: true },
+    ];
+
     window.fetch = function (url, opts) {
         // for getting user info
         const authHeader = opts.headers['Authorization'];
@@ -49,12 +57,21 @@ export const FakeAPI = (() => {
                 signIn(url, opts, ok, error);
                 signUp(url, opts, ok, error);
                 refreshToken(url, opts, ok);
+
                 getNewsList(url, opts, ok, unauthorised);
                 createPost(url, opts, ok, unauthorised);
                 editPost(url, opts, ok, unauthorised);
                 removePost(url, opts, ok, unauthorised);
                 getPostById(url, opts, ok, unauthorised);
+
                 updateUserProfile(url, opts, ok, unauthorised);
+
+                getAllEvents(url, opts, ok, unauthorised);
+                getEventById(url, opts, ok, unauthorised);
+                addEvent(url, opts, ok, unauthorised);
+                deleteEvent(url, opts, ok, unauthorised);
+                editEvent(url, opts, ok, unauthorised);
+
 
                 return ok(_users);
             }, 1000);
@@ -233,4 +250,82 @@ export const FakeAPI = (() => {
         const {accessToken, refreshToken} = createToken(updatedUser);
         localStorage.setItem('currentUser', JSON.stringify({accessToken, refreshToken}));
     };
+
+    /*******EVENTS PART OF FAKE API********/
+
+    const getAllEvents = (url, opts, ok, unauthorised) => {
+        if (url.endsWith(Headers.EVENTS_GET_ALL) && opts.method === 'GET') {
+            if (authService.currentUser) {
+                const events = JSON.parse(localStorage.getItem('events'));
+                return ok(events);
+            } else return unauthorised();
+        }
+    }
+
+    const getEventById = (url, opts, ok, unauthorised) => {
+        if (url.endsWith(Headers.EVENT_GET_BY_ID) && opts.method === 'GET') {
+            if (authService.currentUser) {
+                const id = JSON.parse(opts.body);
+                const events = JSON.parse(localStorage.getItem('events'));
+                const event = events.find(event => event.id === id);
+    
+                return ok(event);
+            } else return unauthorised();
+        }
+    }
+
+    const addEvent = (url, opts, ok, unauthorised) => {
+        if (url.endsWith(Headers.EVENT_ADD) && opts.method === 'POST') {
+            if (authService.currentUser) {
+            const event = JSON.parse(opts.body);
+            let events = _events;
+            if (localStorage.getItem('events')) {
+                events = JSON.parse(localStorage.getItem('events'));
+            }
+
+            const newEvent = {
+                id: genUniqueID(),
+                ...event,
+                startTime: event.startTime || '',
+                endTime: event.endTime || '',
+                isFullDayEvent: !!event.isFullDayEvent
+            };
+
+            events.push(newEvent);
+            localStorage.setItem('events', JSON.stringify(events));
+
+            return ok(event);
+        } else return unauthorised();
+        }
+    }
+
+    const deleteEvent= (url, opts, ok, unauthorised) => {
+        if (url.match(Headers.EVENT_DELETE) && opts.method === 'DELETE') {
+            if (authService.currentUser) {
+            const id = JSON.parse(opts.body);
+            const events = JSON.parse(localStorage.getItem("events"));
+            
+            const newEvents = events.filter(event => event.id !== id);
+
+            localStorage.setItem('events', JSON.stringify(newEvents));
+        
+            } else return unauthorised();
+        }
+    }
+
+    const editEvent = (url, opts, ok, unauthorised) => {
+        if (url.match(Headers.EVENT_EDIT) && opts.method === 'PUT') {
+            if (authService.currentUser) {
+                const updatedEvent = JSON.parse(opts.body);
+                const events = JSON.parse(localStorage.getItem('events'));
+
+                const oldEventIndex = events.findIndex(event => event.id === updatedEvent.id);
+                const newEvents = events.splice(oldEventIndex, 1, updatedEvent);
+
+                localStorage.setItem('events', JSON.stringify(newEvents));
+
+            } else return unauthorised();
+        }
+    };
+
 })();

@@ -1,0 +1,12 @@
+.events-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    &__title{
+        color: darkblue;
+    }
+    &__text {
+        font-size: 22px;
+    }
+}

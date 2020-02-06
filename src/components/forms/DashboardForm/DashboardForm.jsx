@@ -76,7 +76,7 @@ class DashboardForm extends Component {
 
     render() {
         const {buttonText, handleSubmit, handleUserInput, formTitle, formDescription} = this.props;
-        // const {imgSrc} = this.state;
+    
         const {titleStatus, descriptionStatus} = this.state.isFormFieldsValid;
         return (
             <form className="dashboard__form" onSubmit={handleSubmit}

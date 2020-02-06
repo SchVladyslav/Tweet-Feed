@@ -8,4 +8,9 @@ export const Headers = {
     NEWS_GET_POST: '/news/post/',
     NEWS_REMOVE_POST: '/news/remove/',
     NEWS_EDIT_POST: '/news/edit/',
+    EVENTS_GET_ALL: '/events',
+    EVENT_ADD: '/event/add',
+    EVENT_EDIT: '/event/edit',
+    EVENT_DELETE: '/event/delete',
+    EVENT_GET_BY_ID: '/event/get'
 };
