@@ -17,24 +17,24 @@ export const FakeAPI = (() => {
     const _news = [
         {
             id: '1',
-            title: '1The return of the legendary US airline you\'ve probably never heard of',
-            description: 'Miami-based Eastern Airlines\' inaugural flight to New York from the Ecuadorian city of Guayaquil was the first flight to carry the once legendary Eastern name since the failure of the two earlier airlines -- the first in 1991 and the second short-lived iteration in 2017.'
+            title: 'Data Modernization: A Short Overview',
+            description: 'Data modernization is one of the top technologies driving the IT revolution in many markets. Whether on the client or vendor side, this is the technology you’ll encounter quite frequently. On the vendor side, data modernization service providers, offer analytics and big data solutions.'
         }, {
             id: '2',
-            title: '2Inside one of the world\'s newest (and wettest!) national parks',
-            description: 'Some 1.8 million years ago, the Paraná River -- South America\'s second-longest after the Amazon -- carved a rambling path through Argentina\'s Corrientes Province before shifting to its modern location farther west, scientists believe.'
+            title: 'The Growing Role of IoT and Robotics in Warehousing and Supply Chain Management',
+            description: 'The history of robotic process automation in the warehousing and supply chain industry is well documented. Indeed, one of the world’s first robot was created for the sole purpose of moving items from one place to another in the warehouse.'
         }, {
             id: '3',
-            title: '3Inside one of the world\'s newest (and wettest!) national parks',
-            description: 'Some 1.8 million years ago, the Paraná River -- South America\'s second-longest after the Amazon -- carved a rambling path through Argentina\'s Corrientes Province before shifting to its modern location farther west, scientists believe.'
+            title: 'NIX at Laracon EU Amsterdam 2019',
+            description: 'The list of events where you can meet NIX has grown: recently our guys have attended Laracon EU Amsterdam 2019. Our PHP developers came back from Amsterdam inspired for future projects, with new knowledge and improved skills. A leading European conference gathers the international community of Laravel PHP in different cities. This time, the event took place in Amsterdam.'
         }, {
             id: '4',
-            title: '4Inside one of the world\'s newest (and wettest!) national parks',
-            description: 'Some 1.8 million years ago, the Paraná River -- South America\'s second-longest after the Amazon -- carved a rambling path through Argentina\'s Corrientes Province before shifting to its modern location farther west, scientists believe.'
+            title: 'Understanding the Pros and Cons of Big Data',
+            description: 'According to a report by the Tech Jury, the big data market is set to grow by 20% in 2019. Indeed, by 2020, every person in the world will generate a mind-boggling 1.7 megabytes of data every second. In total, internet users will generate about 2.5 quintillion bytes of data in 2020, bringing the total amount of data generated from computer-enabled devices to date to over 40 zettabytes (equivalent to 40 trillion gigabytes).'
         }, {
             id: '5',
-            title: '5Inside one of the world\'s newest (and wettest!) national parks',
-            description: 'Some 1.8 million years ago, the Paraná River -- South America\'s second-longest after the Amazon -- carved a rambling path through Argentina\'s Corrientes Province before shifting to its modern location farther west, scientists believe.'
+            title: 'NIX at Data Council Barcelona 2019',
+            description: 'Today you won’t find any large tech event without NIX representatives on the stage, or mingling among the attendees. Our experts regularly show up at the top world conferences as attendees, speakers or exhibitors to share their knowledge with colleagues from different countries and exchange experiences with them. Recently, our specialists attended the Data Council in Barcelona. Now they are back, rested and ready to share their impressions. '
         },
     ];
 
