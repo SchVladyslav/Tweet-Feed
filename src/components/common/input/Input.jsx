@@ -17,6 +17,7 @@ export default function Input({
   type,
   name,
   value,
+    defaultValue,
   errorMessage,
   onChange,
   iconName,
@@ -41,6 +42,7 @@ export default function Input({
           onChange={onChange}
           value={value}
           required={required}
+          defaultValue={defaultValue}
         />
       </div>
       {iconClass ? <i className={`icon ${iconClass} input__icon`} /> : null}

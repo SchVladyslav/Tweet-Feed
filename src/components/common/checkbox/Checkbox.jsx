@@ -2,7 +2,7 @@ import React from 'react';
 import './Checkbox.scss';
 import PropTypes from 'prop-types';
 
-function Checkbox({label, name, isChecked, handleCheckboxChange}) {
+function Checkbox({label, name, isChecked, defaultChecked, handleCheckboxChange}) {
 
     Checkbox.propTypes = {
         label: PropTypes.string.isRequired,
@@ -21,6 +21,7 @@ function Checkbox({label, name, isChecked, handleCheckboxChange}) {
                 onChange={handleCheckboxChange}
                 className="checkbox"
                 name={name}
+                defaultChecked={defaultChecked}
             />
             <label htmlFor="checkbox" className="checkbox__label">
                 <span className="checkbox__text">{label}</span>

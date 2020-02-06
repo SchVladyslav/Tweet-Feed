@@ -2,16 +2,16 @@ import {Role} from './Role';
 import jwt from 'jsonwebtoken';
 import {SECRET_KEY} from './secretKey';
 import {Headers} from './Headers';
-import { authService } from '../../services/auth.service';
+import {authService} from '../../services/auth.service';
 
 export const FakeAPI = (() => {
 
     const ADMIN_EMAIL = 'admin@gmail.com';
 
-  
+
     let _users = [
-        { id: 0, email: 'admin@gmail.com', password: 'admin', firstName: 'Admin', lastName: 'User', role: Role.Admin },
-        { id: 1, email: 'user@gmail.com', password: 'user', firstName: 'Normal', lastName: 'User', role: Role.User }
+        {id: 0, email: 'admin@gmail.com', password: 'admin', firstName: 'Admin', lastName: 'User', role: Role.Admin},
+        {id: 1, email: 'user@gmail.com', password: 'user', firstName: 'Normal', lastName: 'User', role: Role.User}
     ];
 
     const _news = [
@@ -41,8 +41,39 @@ export const FakeAPI = (() => {
     let isLoggedIn;
 
     const _events = [
-        { id: '0', name: "Javascript lesson", date: "12.01.2020", startTime: "14:00", endTime: "19:00", isFullDayEvent: false },
-        { id: '1', name: "React Native Lecture", date: "22.01.2020", startTime: "", endTime: "", isFullDayEvent: true },
+        {
+            id: '0',
+            name: "Javascript lesson",
+            date: "12.02.2020",
+            startTime: "14:00",
+            endTime: "19:00",
+            isFullDayEvent: false
+        },
+        {id: '1', name: "React Native Lecture", date: "22.02.2020", startTime: "", endTime: "", isFullDayEvent: true},
+        {
+            id: '2',
+            name: "Meeting with developers",
+            date: "25.03.2020",
+            startTime: "09:00",
+            endTime: "11:00",
+            isFullDayEvent: false
+        },
+        {
+            id: '3',
+            name: "Ecology Conference",
+            date: "15.02.2020",
+            startTime: "15:00",
+            endTime: "19:00",
+            isFullDayEvent: false
+        },
+        {
+            id: '4',
+            name: "Company's Birthday Celebration",
+            date: "17.02.2020",
+            startTime: "",
+            endTime: "",
+            isFullDayEvent: true
+        }
     ];
 
     window.fetch = function (url, opts) {
@@ -256,74 +287,77 @@ export const FakeAPI = (() => {
     const getAllEvents = (url, opts, ok, unauthorised) => {
         if (url.endsWith(Headers.EVENTS_GET_ALL) && opts.method === 'GET') {
             if (authService.currentUser) {
-                const events = JSON.parse(localStorage.getItem('events'));
-                return ok(events);
+                localStorage.removeItem('events');
+                localStorage.removeItem('news');
+                return ok(_events);
             } else return unauthorised();
         }
-    }
+    };
 
     const getEventById = (url, opts, ok, unauthorised) => {
         if (url.endsWith(Headers.EVENT_GET_BY_ID) && opts.method === 'GET') {
             if (authService.currentUser) {
                 const id = JSON.parse(opts.body);
-                const events = JSON.parse(localStorage.getItem('events'));
-                const event = events.find(event => event.id === id);
-    
+                const event = _events.find(event => event.id === id);
+
                 return ok(event);
             } else return unauthorised();
         }
-    }
+    };
 
     const addEvent = (url, opts, ok, unauthorised) => {
         if (url.endsWith(Headers.EVENT_ADD) && opts.method === 'POST') {
             if (authService.currentUser) {
-            const event = JSON.parse(opts.body);
-            let events = _events;
-            if (localStorage.getItem('events')) {
-                events = JSON.parse(localStorage.getItem('events'));
-            }
+                const event = JSON.parse(opts.body);
 
-            const newEvent = {
-                id: genUniqueID(),
-                ...event,
-                startTime: event.startTime || '',
-                endTime: event.endTime || '',
-                isFullDayEvent: !!event.isFullDayEvent
-            };
+                const newEvent = {
+                    id: genUniqueID(),
+                    ...event,
+                    startTime: event.startTime || '',
+                    endTime: event.endTime || '',
+                    isFullDayEvent: !!event.isFullDayEvent
+                };
 
-            events.push(newEvent);
-            localStorage.setItem('events', JSON.stringify(events));
+                _events.push(newEvent);
 
-            return ok(event);
-        } else return unauthorised();
-        }
-    }
-
-    const deleteEvent= (url, opts, ok, unauthorised) => {
-        if (url.match(Headers.EVENT_DELETE) && opts.method === 'DELETE') {
-            if (authService.currentUser) {
-            const id = JSON.parse(opts.body);
-            const events = JSON.parse(localStorage.getItem("events"));
-            
-            const newEvents = events.filter(event => event.id !== id);
-
-            localStorage.setItem('events', JSON.stringify(newEvents));
-        
+                return ok(_events);
             } else return unauthorised();
         }
-    }
+    };
+
+    const deleteEvent = (url, opts, ok, unauthorised) => {
+        if (url.match(Headers.EVENT_DELETE) && opts.method === 'DELETE') {
+            if (authService.currentUser) {
+                const id = JSON.parse(opts.body);
+                const eventIndex = _events.findIndex(event => event.id === id);
+
+                _events.splice(eventIndex, 1);
+                return ok(_events);
+            } else return unauthorised();
+        }
+    };
 
     const editEvent = (url, opts, ok, unauthorised) => {
         if (url.match(Headers.EVENT_EDIT) && opts.method === 'PUT') {
             if (authService.currentUser) {
-                const updatedEvent = JSON.parse(opts.body);
-                const events = JSON.parse(localStorage.getItem('events'));
+                const {id, event} = JSON.parse(opts.body);
 
-                const oldEventIndex = events.findIndex(event => event.id === updatedEvent.id);
-                const newEvents = events.splice(oldEventIndex, 1, updatedEvent);
+                const oldEventIndex = _events.findIndex(event => event.id === id);
+                const oldEvent = _events.find(event => event.id === id);
 
-                localStorage.setItem('events', JSON.stringify(newEvents));
+                if (event) {
+                    const updatedEvent = {
+                        id,
+                        name: event.name || oldEvent.name,
+                        date: event.date || oldEvent.date,
+                        startTime: event.isFullDayEvent ? '' : event.startTime || oldEvent.startTime,
+                        endTime: event.isFullDayEvent ? '' : event.endTime || oldEvent.endTime,
+                        isFullDayEvent: event.isFullDayEvent
+                    };
 
+                    _events.splice(oldEventIndex, 1, updatedEvent);
+                    return ok(_events);
+                } else window.alert('You changed nothing!');
             } else return unauthorised();
         }
     };
