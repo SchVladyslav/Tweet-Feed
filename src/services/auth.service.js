@@ -1,13 +1,13 @@
-import { HandleResponse } from '../helpers/FakeAPI/HandleResponse';
+import {HandleResponse} from '../helpers/FakeAPI/HandleResponse';
 import jwt from 'jsonwebtoken';
-import { SECRET_KEY } from '../helpers/FakeAPI/secretKey';
-import { Headers } from '../helpers/FakeAPI/Headers';
+import {SECRET_KEY} from '../helpers/FakeAPI/secretKey';
+import {Headers} from '../helpers/FakeAPI/Headers';
 
 function signIn(email, password) {
     const requestOptions = {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password })
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({email, password})
     };
 
     return fetch(Headers.USER_AUTHENTICATE, requestOptions)
@@ -25,13 +25,15 @@ function signIn(email, password) {
 function signUp(firstName, lastName, email, password, confirmPassword) {
     const requestOptions = {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ firstName, lastName, email, password, confirmPassword, gender: null, age: null }),
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({firstName, lastName, email, password, confirmPassword, gender: null, age: null}),
     };
 
     return fetch(Headers.USER_AUTHORIZATION, requestOptions)
         .then(HandleResponse)
-        .then(users => { localStorage.setItem('users', JSON.stringify(users)); })
+        .then(users => {
+            localStorage.setItem('users', JSON.stringify(users));
+        })
         .then(error => {
             return error;
         });
@@ -40,8 +42,8 @@ function signUp(firstName, lastName, email, password, confirmPassword) {
 function refreshToken(token) {
     const requestOptions = {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ token }),
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({token}),
     };
 
     return fetch(Headers.USER_REFRESH_TOKEN, requestOptions)
@@ -63,7 +65,7 @@ function checkTokenExpiration(userToken) {
         return jwt.verify(userToken.accessToken, SECRET_KEY);
     } catch {
         let decoded = jwt.decode(userToken.accessToken);
-        if (isExpired(decoded.exp)) {
+        if (!decoded.exp || isExpired(decoded.exp)) {
             refreshToken(userToken);
             const decoded = JSON.parse(localStorage.getItem('currentUser'));
             return jwt.decode(decoded.accessToken);
@@ -85,5 +87,7 @@ export const authService = {
     logout,
     refreshToken,
     getUserDataFromToken,
-    get currentUser() { return getUserDataFromToken(JSON.parse(localStorage.getItem('currentUser'))) }
+    get currentUser() {
+        return getUserDataFromToken(JSON.parse(localStorage.getItem('currentUser')))
+    }
 };

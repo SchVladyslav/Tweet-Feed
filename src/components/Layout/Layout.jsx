@@ -3,7 +3,7 @@ import './Layout.scss';
 import {NavLink} from "react-router-dom";
 import {Dropdown, Logout} from "../common";
 import PropTypes from "prop-types";
-import {authService} from "../../services/auth.service";
+import {withRouter} from "react-router";
 
 class Layout extends Component {
 
@@ -34,12 +34,14 @@ class Layout extends Component {
     };
 
     render() {
+        const {pathname} = this.props.location;
+        const isAuthPage = pathname !== '/signin' && pathname !== '/signup';
         return (
             <>
                 <header className="header">
                     <i className="icon icon-menu icon-32 header__menu-icon" onClick={this.onBurderBtnHandler}/>
                     <i className="icon icon-mountains main-logo header__logo"/>
-                    {authService.currentUser ?
+                    {isAuthPage ?
                         <Dropdown>
                             <Logout/>
                         </Dropdown>
@@ -47,7 +49,7 @@ class Layout extends Component {
                     }
                 </header>
                 <main className="main">
-                    {authService.currentUser ?
+                    {isAuthPage ?
                         <>
                             {this.state.isBurgerContentShowed ?
                                 <div className="burger">
@@ -71,9 +73,7 @@ class Layout extends Component {
         )
     }
 }
-
 Layout.propTypes = {
     children: PropTypes.element
 };
-
-export default Layout;
+export default withRouter(Layout);
