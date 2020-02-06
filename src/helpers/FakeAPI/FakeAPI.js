@@ -284,8 +284,6 @@ export const FakeAPI = (() => {
     const getAllEvents = (url, opts, ok, unauthorised) => {
         if (url.endsWith(Headers.EVENTS_GET_ALL) && opts.method === 'GET') {
             if (authService.currentUser) {
-                localStorage.removeItem('events');
-                localStorage.removeItem('news');
                 return ok(_events);
             } else return unauthorised();
         }
