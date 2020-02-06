@@ -73,12 +73,14 @@ class ProfileForm extends Component {
                                 type="number"
                                 onChange={this.handleInputChange}
                             />
+                            <div className="select-container">
                             <Select
                                 label={'Choose your gender:'}
                                 name="gender"
                                 onChangeHandler={this.handleInputChange}
                                 selectValue={user.gender}
                             />
+                            </div>
                         </div>
                         <Button
                             buttonColorScheme={'primary'}
