@@ -94,7 +94,7 @@ export default class Dashboard extends Component {
     render() {
         const {isModalOpen, title, description} = this.state;
         return (
-            <section className="dashboard news-container">
+            <div className="dashboard news-container">
                 <Modal
                     modalTitle="Create news"
                     isModalOpen={isModalOpen}
@@ -112,7 +112,7 @@ export default class Dashboard extends Component {
                 </Modal>
                 {this.renderAddButton()}
                 <div className="posts">{this.renderPosts()}</div>
-            </section>
+            </div>
         );
     }
 

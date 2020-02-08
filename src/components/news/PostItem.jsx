@@ -39,12 +39,12 @@ class PostItem extends Component {
     render() {
         const {post} = this.props;
         return (
-            <div className="post">
+            <article className="post">
                 <h3 className="post__title">{post.title}</h3>
                 <p className="post__description">{post.description}</p>
                 {this.renderControlButtons()}
                 {this.renderDetailsButton()}
-            </div>
+            </article>
         );
     }
 }
